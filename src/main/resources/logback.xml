@@ -32,7 +32,7 @@
     -->
     <logger name="com.jianli" level="debug" additivity="false">
         <!-- <appender-ref ref="FILE"/> -->
-        <!-- <appender-ref ref="STDOUT" /> -->
+         <appender-ref ref="STDOUT" />
     </logger>
     <!--
         name：根logger name已经确定为ROOT，所有logger的顶级父类

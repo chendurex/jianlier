@@ -36,7 +36,9 @@ springBoot {
 
 dependencies {
     compile "org.springframework.boot:spring-boot-starter-web:2.0.0.RELEASE"
+    compile "org.springframework.boot:spring-boot-starter-component:2.0.0.RELEASE"
     compile "org.springframework.boot:spring-boot-starter-test:2.0.0.RELEASE"
     compile "com.fasterxml.jackson.core:2.9.4"
+    compile 'com.docraptor:docraptor:1.1.0'
     compileOnly 'org.projectlombok:lombok:1.16.20'
 }
