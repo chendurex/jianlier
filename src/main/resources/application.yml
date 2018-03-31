@@ -4,9 +4,7 @@ spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost/test
+
 server:
   port: ${port:8080}
 
-upload:
-  image:
-    filepath: /var/www/html/resources/images/

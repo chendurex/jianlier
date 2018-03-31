@@ -13,7 +13,7 @@ public class ResResult<T> {
     private final String desc;
     private final T data;
 
-    ResResult(int status, String desc, T data) {
+    public ResResult(int status, String desc, T data) {
         this.status = status;
         this.desc = desc;
         this.data = data;
