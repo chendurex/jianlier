@@ -9,8 +9,19 @@ import lombok.Data;
  */
 @Data
 public class EduInfo {
+	// 题目
+	private String question;
+	// 用户名为
     private String name;
+    // 联系号码
     private String contact;
+    // 报考原因
     private String whyEdu;
+    // 报考方式
     private String tendEdu;
+
+    @Override
+    public String toString() {
+    	return "用户名为："+name+",联系号码为："+contact+",报考原因:"+whyEdu+",报考方式："+tendEdu + ",题目:"+question;
+    }
 }

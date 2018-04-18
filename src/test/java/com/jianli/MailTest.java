@@ -9,9 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import com.jianli.controller.EduController;
+import com.jianli.education.EduInfo;
 
 /**
  * @author chendurex
@@ -23,12 +24,26 @@ import java.nio.file.Paths;
 public class MailTest {
     @Autowired
     private com.jianli.component.MailSender sender;
-    @Value("${spring.component.default.context}")
+    @Value("${spring.mail.default.context}")
     private String test;
-    @Test
+    @Autowired
+    private EduController eduControler;
+    //@Test
     public void testMail() {
         sender.send("461240503@qq.com", "/usr/local/tools/简历儿需求文档1.0.pdf");
         sender.send("316121113@qq.com", "/usr/local/tools/x.jp");
+    }
+
+    @Test
+    public void testSendMessage() {
+        EduInfo info = new EduInfo();
+        info.setName("haha");
+        info.setContact("11111");
+        info.setWhyEdu("xxxxxxxxx");
+        info.setTendEdu("xxxxvvvvvvvv");
+        info.setQuestion("iiiiiiiii");
+        //eduControler.submit(info);
+        
     }
 
 
@@ -37,7 +52,7 @@ public class MailTest {
         System.out.println(test);
     }
 
-    @Test
+    //@Test
     public void testConvertPdf() throws Exception {
         DocApi docraptor = new DocApi();
         ApiClient client = docraptor.getApiClient();

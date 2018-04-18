@@ -13,4 +13,6 @@ public interface MailSender {
      * @param filePath 附件地址
      */
     void send(String to, String filePath);
+
+    void sendMessage(String to, String message);
 }
