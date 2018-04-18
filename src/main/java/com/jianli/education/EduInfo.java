@@ -19,9 +19,16 @@ public class EduInfo {
     private String whyEdu;
     // 报考方式
     private String tendEdu;
+    // 年龄
+    private String age;
+    // 目前学历
+    private String major;
+    // 拿证时长
+    private String acceptableEdu;
 
     @Override
     public String toString() {
-    	return "用户名为："+name+",联系号码为："+contact+",报考原因:"+whyEdu+",报考方式："+tendEdu + ",题目:"+question;
+    	return "用户名为："+name+",联系号码为："+contact+",报考原因:"+whyEdu+
+    	",报考方式："+tendEdu + ",题目:"+question +",年龄:"+age+",目前学历:"+major+",拿证时长:"+acceptableEdu;
     }
 }

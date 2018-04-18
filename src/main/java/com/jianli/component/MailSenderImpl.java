@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.io.*;
 
 /**
  * @author chendurex
@@ -54,13 +55,32 @@ public class MailSenderImpl implements MailSender {
 
     @Override
     public void sendMessage(String to, String message) {
-        log.info("邮件发送开始开始，接收内容为：{}，消息内容为：{}", to, message);
+        save(message);
+        /*log.info("邮件发送开始开始，接收内容为：{}，消息内容为：{}", to, message);
+        long start = System.currentTimeMillis();
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setText(message);
         mailMessage.setFrom(nickName);
         mailMessage.setTo(to);
         mailMessage.setSubject("来自大表哥的重要邮件!");
         mailSender.send(mailMessage);
+        log.info("发送邮件完成，总共耗时:{}s", (System.currentTimeMillis()-start)/1000);*/
+    }
+
+    private void save(String message) {
+        try {
+        File file = new File("/usr/local/tools/logs.txt");
+        FileWriter fr = new FileWriter(file, true);
+        BufferedWriter br = new BufferedWriter(fr);
+        PrintWriter pr = new PrintWriter(br);
+        pr.println(message);
+        pr.close();
+        br.close();
+        fr.close();    
+    } catch(Exception e) {
+        // ignore
+    }
+        
     }
 
 

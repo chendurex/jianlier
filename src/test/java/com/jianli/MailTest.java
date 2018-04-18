@@ -42,7 +42,7 @@ public class MailTest {
         info.setWhyEdu("xxxxxxxxx");
         info.setTendEdu("xxxxvvvvvvvv");
         info.setQuestion("iiiiiiiii");
-        //eduControler.submit(info);
+        eduControler.submit(info);
         
     }
 
