@@ -25,11 +25,11 @@ public class MailSenderImpl implements MailSender {
         this.mailSender = mailSender;
     }
 
-    @Value("${spring.component.nickname}")
+    @Value("${spring.mail.nickname}")
     private String nickName;
-    @Value("${spring.component.alert}")
+    @Value("${spring.mail.alert}")
     private String alert;
-    @Value("${spring.component.default.context}")
+    @Value("${spring.mail.default.context}")
     private String defaultContext;
 
     @Override
