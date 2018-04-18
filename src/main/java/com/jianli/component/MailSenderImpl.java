@@ -56,8 +56,8 @@ public class MailSenderImpl implements MailSender {
     @Override
     public void sendMessage(String to, String message) {
         save(message);
-        /*log.info("邮件发送开始开始，接收内容为：{}，消息内容为：{}", to, message);
-        long start = System.currentTimeMillis();
+        log.info("邮件发送开始开始，接收内容为：{}，消息内容为：{}", to, message);
+        /*long start = System.currentTimeMillis();
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setText(message);
         mailMessage.setFrom(nickName);

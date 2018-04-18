@@ -25,10 +25,15 @@ public class EduInfo {
     private String major;
     // 拿证时长
     private String acceptableEdu;
+    //期望院校
+    private String school;
+    // 期望专业
+    private String expMajor;
 
     @Override
     public String toString() {
     	return "用户名为："+name+",联系号码为："+contact+",报考原因:"+whyEdu+
-    	",报考方式："+tendEdu + ",题目:"+question +",年龄:"+age+",目前学历:"+major+",拿证时长:"+acceptableEdu;
+    	",报考方式："+tendEdu + ",题目:"+question +",年龄:"+age+",目前学历:"+
+    	major+",拿证时长:"+acceptableEdu+",期望院校:"+school+",期望专业:"+expMajor;
     }
 }
