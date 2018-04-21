@@ -1,15 +1,15 @@
 package com.jianli.controller;
 
+import com.jianli.EduRepository;
+import com.jianli.commons.FileUtils;
+import com.jianli.component.MailSender;
 import com.jianli.education.EduInfo;
 import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.jianli.component.MailSender;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.*;
+
 /**
  * @author chendurex
  * @description
@@ -18,13 +18,29 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @RestController
 @RequestMapping("/edu")
 public class EduController {
+
 	@Autowired
-	private MailSender mailSender;
+    private EduRepository eduRepository;
+	@Value("${edu.user.security}")
+	private String security;
+    @Value("${log.file.path}")
+    private String logPath;
 	@CrossOrigin(origins = "*")
     @PostMapping(value = "submit")
     public ResResult submit(@RequestBody EduInfo eduInfo) {
-        //mailSender.sendMessage("742608173@qq.com", eduInfo.toString());
-        mailSender.sendMessage("316121113@qq.com", eduInfo.toString());
+	    try {
+            eduRepository.save(eduInfo);
+        } catch (Exception e) {
+            FileUtils.writeTo(eduInfo.toString(), logPath);
+        }
         return ResUtils.suc();
+    }
+
+    @GetMapping("list")
+    public ResResult list(@RequestParam String security) {
+	    if (!this.security.equals(security)) {
+	        return ResUtils.fail("security is misspelled");
+        }
+        return ResUtils.data(eduRepository.findAll());
     }
 }

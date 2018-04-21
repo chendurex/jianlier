@@ -39,8 +39,6 @@ public class MailTest {
         EduInfo info = new EduInfo();
         info.setName("haha");
         info.setContact("11111");
-        info.setWhyEdu("xxxxxxxxx");
-        info.setTendEdu("xxxxvvvvvvvv");
         info.setQuestion("iiiiiiiii");
         eduControler.submit(info);
         

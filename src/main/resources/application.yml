@@ -1,10 +1,15 @@
 spring:
   application:
     name: jianli
+  jpa:
+    hibernate:
+      ddl-auto: create
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost/test
+    url: ${spring.data.url}
+    username: ${spring.data.name}
+    password: ${spring.data.password}
 
 server:
-  port: ${port:8080}
+  port: ${port:8081}
 

@@ -12,6 +12,10 @@ public final class ResUtils {
         return result(ResStat.SUC, SUC_DESC, data);
     }
 
+    public static <T>ResResult data(T data) {
+        return result(ResStat.SUC, SUC_DESC, data);
+    }
+
     public static ResResult suc() {
         return result(ResStat.SUC, SUC_DESC, null);
     }

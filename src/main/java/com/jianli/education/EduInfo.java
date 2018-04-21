@@ -1,6 +1,12 @@
 package com.jianli.education;
 
 import lombok.Data;
+import lombok.Value;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * @author chendurex
@@ -8,23 +14,19 @@ import lombok.Data;
  * @date 2018-04-18 20:32
  */
 @Data
+@Entity(name = "edu")
 public class EduInfo {
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Integer id;
 	// 题目
 	private String question;
 	// 用户名为
     private String name;
     // 联系号码
     private String contact;
-    // 报考原因
-    private String whyEdu;
-    // 报考方式
-    private String tendEdu;
     // 年龄
     private String age;
-    // 目前学历
-    private String major;
-    // 拿证时长
-    private String acceptableEdu;
     //期望院校
     private String school;
     // 期望专业
@@ -32,8 +34,8 @@ public class EduInfo {
 
     @Override
     public String toString() {
-    	return "用户名为："+name+",联系号码为："+contact+",报考原因:"+whyEdu+
-    	",报考方式："+tendEdu + ",题目:"+question +",年龄:"+age+",目前学历:"+
-    	major+",拿证时长:"+acceptableEdu+",期望院校:"+school+",期望专业:"+expMajor;
+    	return "用户名为："+name+",联系号码为："+contact+ ",题目:"
+                +question +",年龄:"+age+
+    	",期望院校:"+school+",期望专业:"+expMajor;
     }
 }
