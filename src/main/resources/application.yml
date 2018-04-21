@@ -1,9 +1,6 @@
 spring:
   application:
     name: jianli
-  jpa:
-    hibernate:
-      ddl-auto: create
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: ${spring.data.url}
