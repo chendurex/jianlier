@@ -36,6 +36,7 @@ public class EduController {
         return ResUtils.suc();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("list")
     public ResResult list(@RequestParam String security) {
 	    if (!this.security.equals(security)) {
