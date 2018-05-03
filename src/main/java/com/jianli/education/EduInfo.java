@@ -31,11 +31,12 @@ public class EduInfo {
     private String school;
     // 期望专业
     private String expMajor;
-
+    // 申请时间
+    private String createTime;
     @Override
     public String toString() {
     	return "用户名为："+name+",联系号码为："+contact+ ",题目:"
                 +question +",年龄:"+age+
-    	",期望院校:"+school+",期望专业:"+expMajor;
+    	",期望院校:"+school+",期望专业:"+expMajor + ",创建时间:"+createTime;
     }
 }

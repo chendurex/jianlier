@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @author chendurex
  * @description
@@ -29,6 +32,7 @@ public class EduController {
     @PostMapping(value = "submit")
     public ResResult submit(@RequestBody EduInfo eduInfo) {
 	    try {
+	        eduInfo.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
             eduRepository.save(eduInfo);
         } catch (Exception e) {
             FileUtils.writeTo(eduInfo.toString(), logPath);
