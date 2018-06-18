@@ -13,11 +13,25 @@ public interface ResumeService {
      * @param exp
      * @return
      */
-    ResResult workExpSubmit(WorkExp exp);
+    ResResult submitWorkExp(WorkExp exp);
     /**
      * 修改工作经历
      * @param exp
      * @return
      */
-    ResResult workExpModify(WorkExp exp);
+    ResResult modifyWorkExp(WorkExp exp);
+
+    /**
+     * 查询工作经历列表
+     * @param resumeId
+     * @return
+     */
+    ResResult listWorkExp(int resumeId);
+
+    /**
+     * 显示单个工作经历
+     * @param id
+     * @return
+     */
+    ResResult workExp(int id);
 }

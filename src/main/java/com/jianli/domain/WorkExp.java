@@ -33,15 +33,17 @@ public class WorkExp  {
     private Integer id;
     @Min(value = 1, message = "用户ID必须大于0")
     @ApiModelProperty(notes = "用户ID", required = true)
-    @Column(insertable = false, updatable = false)
     @Transient
     private Integer uid;
     private Integer modifyUid;
+    @Column(updatable = false)
     private Integer createUid;
+    @Column(updatable = false)
     private Timestamp createTime;
     private Timestamp modifyTime;
 
     @ApiModelProperty(notes = "简历ID，新增简历的时候需要挂在到某个简历下")
+    @Column(updatable = false)
     private Integer resumeId;
     @NotBlank
     @Length(min = 1, max = 50, message = "公司名称过长")
@@ -68,7 +70,6 @@ public class WorkExp  {
     public boolean modify() {
         this.modifyTime = Timestamp.from(Instant.now());
         this.modifyUid = uid;
-
         resumeId = null;
         return id != null;
     }

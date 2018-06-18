@@ -18,7 +18,7 @@ public class ResumeServiceImpl implements ResumeService {
         this.workRepo = workRepo;
     }
     @Override
-    public ResResult workExpSubmit(WorkExp exp) {
+    public ResResult submitWorkExp(WorkExp exp) {
         if (!exp.submit()) {
             return ResUtils.fail("请填写简历ID");
         }
@@ -30,7 +30,7 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
-    public ResResult workExpModify(WorkExp exp) {
+    public ResResult modifyWorkExp(WorkExp exp) {
         if (!exp.modify()) {
             return ResUtils.fail("请填写工作经历ID");
         }
@@ -40,5 +40,15 @@ public class ResumeServiceImpl implements ResumeService {
             return ResUtils.fail("保存数据失败");
         }
         return ResUtils.data(modified.getId());
+    }
+
+    @Override
+    public ResResult listWorkExp(int resumeId) {
+        return ResUtils.data(workRepo.listByResumeId(resumeId));
+    }
+
+    @Override
+    public ResResult workExp(int id) {
+        return ResUtils.data(workRepo.findById(id));
     }
 }
