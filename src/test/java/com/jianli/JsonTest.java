@@ -11,7 +11,7 @@ import org.junit.Test;
 public class JsonTest {
     @Test
     public void workExpToJson() {
-        WorkExp exp = WorkExp.builder().corp("吹牛公司").desc("吹牛的天线宝宝").position("吹牛总监").resumeId(4).build();
+        WorkExp exp = WorkExp.builder().corp("吹牛公司").description("吹牛的天线宝宝").position("吹牛总监").resumeId(4).build();
         System.out.println(BeanUtils.deepPrint(exp));
     }
 }

@@ -4,12 +4,11 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import java.sql.Timestamp;
 
 /**
  * @author chendurex
@@ -24,9 +23,17 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class EduBackground extends MetadataInfo {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @ApiModelProperty(notes = "唯一ID，修改、删除教育背景时需要填写")
     private int id;
+    @Min(value = 1, message = "用户ID必须大于0")
+    @ApiModelProperty(notes = "用户ID", required = true)
+    @Column(insertable = false, updatable = false)
+    private Integer uid;
+    private Integer modifyUid;
+    private Integer createUid;
+    private Timestamp createTime;
+    private Timestamp modifyTime;
     @ApiModelProperty(notes = "简历ID，新增简历的时候需要挂在到某个简历下")
     private int resumeId;
     @NotBlank

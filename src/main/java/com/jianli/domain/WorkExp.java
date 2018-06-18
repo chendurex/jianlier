@@ -8,15 +8,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
+import java.time.Instant;
 
-import static javax.persistence.GenerationType.SEQUENCE;
+import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * @author chendurex
@@ -30,13 +28,13 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @AllArgsConstructor
 public class WorkExp  {
     @Id
-    @GeneratedValue(strategy = SEQUENCE)
-    @Column(insertable = false, updatable = false)
+    @GeneratedValue(strategy = IDENTITY)
     @ApiModelProperty(notes = "唯一ID，修改、删除工作经历时需要填写")
     private Integer id;
     @Min(value = 1, message = "用户ID必须大于0")
     @ApiModelProperty(notes = "用户ID", required = true)
     @Column(insertable = false, updatable = false)
+    @Transient
     private Integer uid;
     private Integer modifyUid;
     private Integer createUid;
@@ -56,13 +54,21 @@ public class WorkExp  {
     @NotBlank
     @Length(min = 1, max = 1000, message = "工作简介过长")
     @ApiModelProperty(notes = "工作简介", required = true)
-    private String desc;
+    private String description;
 
     public boolean submit() {
-        return id == null && resumeId != null;
+        this.createTime = Timestamp.from(Instant.now());
+        this.modifyTime = createTime;
+        this.createUid = uid;
+        this.modifyUid = uid;
+        id = null;
+        return resumeId != null;
     }
 
     public boolean modify() {
+        this.modifyTime = Timestamp.from(Instant.now());
+        this.modifyUid = uid;
+
         resumeId = null;
         return id != null;
     }

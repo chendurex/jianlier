@@ -35,15 +35,23 @@ public class ResumeController {
 
     @ApiOperation(value = "新增个人工作经历", response = ResResult.class)
     @PostMapping(value = "/workExp/submit", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult submitWorkExp(@RequestBody @ApiParam("工作经历") WorkExp exp, BindingResult bindingResult) {
+    public ResResult workExpSubmit(@RequestBody @ApiParam("工作经历") WorkExp exp, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
             log.warn("用户数据不正确，用户提交的数据内容为：{}", BeanUtils.deepPrint(exp));
             return ResUtils.fail(bindingResult.getFieldError().getDefaultMessage());
         }
-        exp.setCreateTime(Timestamp.from(Instant.now()));
-        exp.setModifyTime(exp.getCreateTime());
-        exp.setCreateUid(exp.getUid());
-        exp.setModifyUid(exp.getUid());
         return resumeService.workExpSubmit(exp);
+    }
+
+    @ApiOperation(value = "修改个人工作经历", response = ResResult.class)
+    @PostMapping(value = "/workExp/modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult workExpModify(@RequestBody @ApiParam("工作经历") WorkExp exp, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            log.warn("用户数据不正确，用户提交的数据内容为：{}", BeanUtils.deepPrint(exp));
+            return ResUtils.fail(bindingResult.getFieldError().getDefaultMessage());
+        }
+        exp.setModifyTime(exp.getCreateTime());
+        exp.setModifyUid(exp.getUid());
+        return resumeService.workExpModify(exp);
     }
 }

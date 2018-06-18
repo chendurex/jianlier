@@ -20,12 +20,25 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public ResResult workExpSubmit(WorkExp exp) {
         if (!exp.submit()) {
-            return ResUtils.fail("参数有误");
+            return ResUtils.fail("请填写简历ID");
         }
         WorkExp saved = workRepo.save(exp);
         if (saved.getId() == null) {
             return ResUtils.fail("保存数据失败");
         }
         return ResUtils.data(saved.getId());
+    }
+
+    @Override
+    public ResResult workExpModify(WorkExp exp) {
+        if (!exp.modify()) {
+            return ResUtils.fail("请填写工作经历ID");
+        }
+        WorkExp modified = workRepo.save(exp);
+
+        if (modified.getId() == null) {
+            return ResUtils.fail("保存数据失败");
+        }
+        return ResUtils.data(modified.getId());
     }
 }
