@@ -1,8 +1,7 @@
 package com.jianli.controller;
 
-import com.jianli.EduRepository;
+import com.jianli.repo.EduRepo;
 import com.jianli.commons.FileUtils;
-import com.jianli.component.MailSender;
 import com.jianli.education.EduInfo;
 import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
@@ -23,7 +22,7 @@ import java.util.Date;
 public class EduController {
 
 	@Autowired
-    private EduRepository eduRepository;
+    private EduRepo eduRepository;
 	@Value("${edu.user.security}")
 	private String security;
     @Value("${log.file.path}")

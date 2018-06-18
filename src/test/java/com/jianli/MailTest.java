@@ -19,9 +19,8 @@ import com.jianli.education.EduInfo;
  * @description
  * @date 2018-03-31 22:52
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = ApplicationBoot.class)
-public class MailTest {
+
+public class MailTest extends BaseTest {
     @Autowired
     private com.jianli.component.MailSender sender;
     @Value("${spring.mail.default.context}")

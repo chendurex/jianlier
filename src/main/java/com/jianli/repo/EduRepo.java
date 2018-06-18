@@ -1,4 +1,4 @@
-package com.jianli;
+package com.jianli.repo;
 
 import com.jianli.education.EduInfo;
 import org.springframework.data.repository.CrudRepository;
@@ -8,5 +8,5 @@ import org.springframework.data.repository.CrudRepository;
  * @description
  * @date 2018-04-21 15:52
  */
-public interface EduRepository extends CrudRepository<EduInfo, Long> {
+public interface EduRepo extends CrudRepository<EduInfo, Long> {
 }
