@@ -19,7 +19,8 @@ import java.util.Properties;
 @Slf4j
 @Configuration
 public class SpringResourcesInitializer implements ApplicationContextInitializer {
-    private static final String DEFAULT_RESOURCES = "/usr/local/tools/config.properties";
+    private static final String PRO_RESOURCES = "/usr/local/tools/config.properties";
+    private static final String DEFAULT_RESOURCES = "/usr/local/src/tools/config.properties";
 
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
@@ -29,7 +30,11 @@ public class SpringResourcesInitializer implements ApplicationContextInitializer
     private void loadExternal() {
         try {
             Properties properties = System.getProperties();
-            properties.load(new BufferedReader(new InputStreamReader(new FileInputStream(DEFAULT_RESOURCES))));
+            if (properties.contains("product")) {
+                properties.load(new BufferedReader(new InputStreamReader(new FileInputStream(PRO_RESOURCES))));
+            } else {
+                properties.load(new BufferedReader(new InputStreamReader(new FileInputStream(DEFAULT_RESOURCES))));
+            }
         } catch (IOException e) {
             log.error("读取资源文件失败，", e);
             throw new RuntimeException(e);
