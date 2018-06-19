@@ -31,7 +31,7 @@ public class ResumeTest extends BaseTest {
         MockMvc mockMvc = webAppContextSetup(wac).build();
 
         WorkExp exp = WorkExp.builder().corp("吹牛公司").description("吹牛的天线宝宝").position("吹牛总监").resumeId(4).build();
-        MockHttpServletRequestBuilder builder = post("/resume/workExp/submit",
+        MockHttpServletRequestBuilder builder = post("/resume/queryWorkExp/submit",
                 BeanUtils.deepPrint(exp), new BeanPropertyBindingResult(resumeController, ResumeController.class.getSimpleName()));
         builder.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 
