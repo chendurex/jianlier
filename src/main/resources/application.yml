@@ -3,7 +3,9 @@ spring:
     name: jianli
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost/test
+    url: ${spring.data.url}
+    username: ${spring.data.name}
+    password: ${spring.data.password}
 
 server:
   port: ${port:8080}

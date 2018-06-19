@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.io.*;
 
 /**
  * @author chendurex
@@ -47,19 +48,25 @@ public class MailSenderImpl implements MailSender {
             mailSender.send(mimeMessage);
         } catch (Exception e) {
             log.error("邮件发送失败, 当前错误信息为：", e);
-            sendAlert(to);
+            sendMessage(alert, to);
         }
         log.info("发送邮件完成，filepath:{}, to:{}, 总共耗时:{}s", path, to, (System.currentTimeMillis()-start)/1000);
     }
 
-    private void sendAlert(String to) {
+    @Override
+    public void sendMessage(String to, String message) {
+        log.info("邮件发送开始开始，接收内容为：{}，消息内容为：{}", to, message);
+        /*long start = System.currentTimeMillis();
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setText(to);
+        mailMessage.setText(message);
         mailMessage.setFrom(nickName);
-        mailMessage.setTo(alert);
-        mailMessage.setSubject("用户邮件发送失败！");
+        mailMessage.setTo(to);
+        mailMessage.setSubject("来自大表哥的重要邮件!");
         mailSender.send(mailMessage);
+        log.info("发送邮件完成，总共耗时:{}s", (System.currentTimeMillis()-start)/1000);*/
     }
+
+
 
     private String extractFileName(String path) {
         return path.substring(path.lastIndexOf(File.separator) + 1);

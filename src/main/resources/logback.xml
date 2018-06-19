@@ -30,8 +30,8 @@
            <logger>可以包含零个或多个<appender-ref>元素，标识这个appender将会添加到这个logger。
                        如：打印到FILE和打印到控制台
     -->
-    <logger name="com.jianli" level="debug" additivity="false">
-        <!-- <appender-ref ref="FILE"/> -->
+    <logger name="com.jianli" level="info" additivity="false">
+         <!-- <appender-ref ref="FILE"/> -->
          <appender-ref ref="STDOUT" />
     </logger>
     <!--
