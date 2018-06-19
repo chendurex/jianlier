@@ -1,6 +1,7 @@
 package com.jianli;
 
 import com.jianli.commons.BeanUtils;
+import com.jianli.domain.EduBackground;
 import com.jianli.domain.WorkExp;
 import org.junit.Test;
 
@@ -11,7 +12,14 @@ import org.junit.Test;
 public class JsonTest {
     @Test
     public void workExpToJson() {
-        WorkExp exp = WorkExp.builder().corp("吹牛公司").description("吹牛的天线宝宝").position("吹牛总监").resumeId(4).build();
+        WorkExp exp = WorkExp.builder().corp("1").description("2").position("3").resumeId(4).build();
         System.out.println(BeanUtils.deepPrint(exp));
+    }
+
+    @Test
+    public void eduBackgroundToJson() {
+        EduBackground edu = EduBackground.builder().college("1").diploma("2").startTime("2017-01-01").endTime("2018-12-12")
+                .professional("4").resumeId(5).uid(7).build();
+        System.out.println(BeanUtils.deepPrint(edu));
     }
 }
