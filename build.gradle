@@ -44,5 +44,6 @@ dependencies {
     compile "io.springfox:springfox-swagger-ui:2.7.0"
     compile 'mysql:mysql-connector-java:6.0.6'
     compile 'com.docraptor:docraptor:1.1.0'
+    compile 'com.github.dozermapper:dozer-core:6.2.0'
     compileOnly 'org.projectlombok:lombok:1.16.20'
 }

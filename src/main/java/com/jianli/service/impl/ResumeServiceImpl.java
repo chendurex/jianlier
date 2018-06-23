@@ -1,9 +1,11 @@
 package com.jianli.service.impl;
 
+import com.jianli.commons.BeanUtils;
 import com.jianli.domain.EduBackground;
 import com.jianli.domain.Resume;
 import com.jianli.domain.SkillMaturity;
 import com.jianli.domain.WorkExp;
+import com.jianli.dto.*;
 import com.jianli.repo.EduBackgroundRepo;
 import com.jianli.repo.ResumeRepo;
 import com.jianli.repo.SkillRepo;
@@ -34,10 +36,9 @@ public class ResumeServiceImpl implements ResumeService {
 
 
     @Override
-    public ResResult submitResume(Resume resume) {
-        if (!resume.submit()) {
-            return ResUtils.fail("请填写简历信息");
-        }
+    public ResResult submitResume(ResumeInsertParam param) {
+        Resume resume = BeanUtils.copy(param, Resume.class);
+        resume.submit(param.getUid());
         Resume saved = resumeRepo.save(resume);
         if (saved.getId() == null) {
             return ResUtils.fail("保存数据失败");
@@ -46,10 +47,9 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
-    public ResResult modifyResume(Resume resume) {
-        if (!resume.modify()) {
-            return ResUtils.fail("请填写简历ID");
-        }
+    public ResResult modifyResume(ResumeUpdateParam param) {
+        Resume resume = BeanUtils.copy(param, Resume.class);
+        resume.modify(param.getUid());
         Resume modified = resumeRepo.save(resume);
 
         if (modified.getId() == null) {
@@ -72,17 +72,17 @@ public class ResumeServiceImpl implements ResumeService {
             return ResUtils.fail("查询的数据不存在");
         }
         Resume resume = opt.get();
-        resume.setEduBackgrounds(eduBackgroundRepo.listByResumeId(id));
-        resume.setWorkExps(workRepo.listByResumeId(id));
-        resume.setSkillMaturities(skilledRepo.listByResumeId(id));
-        return ResUtils.data(resume);
+        ResumeVo vo = BeanUtils.copy(resume, ResumeVo.class);
+        vo.setEduBackgrounds(eduBackgroundRepo.listByResumeId(id));
+        vo.setWorkExps(workRepo.listByResumeId(id));
+        vo.setSkillMaturities(skilledRepo.listByResumeId(id));
+        return ResUtils.data(vo);
     }
 
     @Override
-    public ResResult submitWorkExp(WorkExp exp) {
-        if (!exp.submit()) {
-            return ResUtils.fail("请填写简历ID");
-        }
+    public ResResult submitWorkExp(WorkExpInsertParam param) {
+        WorkExp exp = BeanUtils.copy(param, WorkExp.class);
+        exp.submit(param.getUid());
         WorkExp saved = workRepo.save(exp);
         if (saved.getId() == null) {
             return ResUtils.fail("保存数据失败");
@@ -91,10 +91,9 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
-    public ResResult modifyWorkExp(WorkExp exp) {
-        if (!exp.modify()) {
-            return ResUtils.fail("请填写工作经历ID");
-        }
+    public ResResult modifyWorkExp(WorkExpUpdateParam param) {
+        WorkExp exp = BeanUtils.copy(param, WorkExp.class);
+        exp.modify(param.getUid());
         WorkExp modified = workRepo.save(exp);
 
         if (modified.getId() == null) {
@@ -120,10 +119,9 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
-    public ResResult submitEduBackground(EduBackground edu) {
-        if (!edu.submit()) {
-            return ResUtils.fail("请填写简历ID");
-        }
+    public ResResult submitEduBackground(EduBackgroundInsertParam param) {
+        EduBackground edu = BeanUtils.copy(param, EduBackground.class);
+        edu.submit(param.getUid());
         EduBackground saved = eduBackgroundRepo.save(edu);
         if (saved.getId() == null) {
             return ResUtils.fail("保存数据失败");
@@ -132,10 +130,9 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
-    public ResResult modifyEduBackground(EduBackground edu) {
-        if (!edu.modify()) {
-            return ResUtils.fail("请填写教育背景ID");
-        }
+    public ResResult modifyEduBackground(EduBackgroundUpdateParam param) {
+        EduBackground edu = BeanUtils.copy(param, EduBackground.class);
+        edu.modify(param.getUid());
         EduBackground modified = eduBackgroundRepo.save(edu);
 
         if (modified.getId() == null) {
@@ -164,10 +161,9 @@ public class ResumeServiceImpl implements ResumeService {
 
 
     @Override
-    public ResResult submitSkillMaturity(SkillMaturity skill) {
-        if (!skill.submit()) {
-            return ResUtils.fail("请填写简历ID");
-        }
+    public ResResult submitSkillMaturity(SkillMaturityInsertParam param) {
+        SkillMaturity skill = BeanUtils.copy(param, SkillMaturity.class);
+        skill.submit(param.getUid());
         SkillMaturity saved = skilledRepo.save(skill);
         if (saved.getId() == null) {
             return ResUtils.fail("保存数据失败");
@@ -176,10 +172,9 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
-    public ResResult modifySkillMaturity(SkillMaturity skill) {
-        if (!skill.modify()) {
-            return ResUtils.fail("请填写教育背景ID");
-        }
+    public ResResult modifySkillMaturity(SkillMaturityUpdateParam param) {
+        SkillMaturity skill = BeanUtils.copy(param, SkillMaturity.class);
+        skill.modify(param.getUid());
         SkillMaturity modified = skilledRepo.save(skill);
 
         if (modified.getId() == null) {

@@ -21,7 +21,7 @@ import java.util.Properties;
 public class SpringResourcesInitializer implements ApplicationContextInitializer {
     private static final String PRO_RESOURCES = "/usr/local/tools/config.properties";
     private static final String DEFAULT_RESOURCES = "/usr/local/src/tools/config.properties";
-
+    private static final String DEFAULT_PRODUCT_PREFIX = "product";
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
         loadExternal();
@@ -30,7 +30,7 @@ public class SpringResourcesInitializer implements ApplicationContextInitializer
     private void loadExternal() {
         try {
             Properties properties = System.getProperties();
-            if (properties.contains("product")) {
+            if (properties.contains(DEFAULT_PRODUCT_PREFIX)) {
                 properties.load(new BufferedReader(new InputStreamReader(new FileInputStream(PRO_RESOURCES))));
             } else {
                 properties.load(new BufferedReader(new InputStreamReader(new FileInputStream(DEFAULT_RESOURCES))));

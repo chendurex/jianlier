@@ -1,9 +1,6 @@
 package com.jianli.service;
 
-import com.jianli.domain.EduBackground;
-import com.jianli.domain.Resume;
-import com.jianli.domain.SkillMaturity;
-import com.jianli.domain.WorkExp;
+import com.jianli.dto.*;
 import com.jianli.response.ResResult;
 
 /**
@@ -14,16 +11,16 @@ public interface ResumeService {
 
     /**
      * 新增简历信息
-     * @param resume
+     * @param param
      * @return
      */
-    ResResult submitResume(Resume resume);
+    ResResult submitResume(ResumeInsertParam param);
     /**
      * 修改简历信息
-     * @param resume
+     * @param param
      * @return
      */
-    ResResult modifyResume(Resume resume);
+    ResResult modifyResume(ResumeUpdateParam param);
 
     /**
      * 删除简历
@@ -41,16 +38,16 @@ public interface ResumeService {
 
     /**
      * 新增工作经历
-     * @param exp
+     * @param param
      * @return
      */
-    ResResult submitWorkExp(WorkExp exp);
+    ResResult submitWorkExp(WorkExpInsertParam param);
     /**
      * 修改工作经历
-     * @param exp
+     * @param param
      * @return
      */
-    ResResult modifyWorkExp(WorkExp exp);
+    ResResult modifyWorkExp(WorkExpUpdateParam param);
 
     /**
      * 删除工作经历
@@ -75,16 +72,16 @@ public interface ResumeService {
 
     /**
      * 新增教育背景
-     * @param edu
+     * @param param
      * @return
      */
-    ResResult submitEduBackground(EduBackground edu);
+    ResResult submitEduBackground(EduBackgroundInsertParam param);
     /**
      * 修改教育背景
-     * @param edu
+     * @param param
      * @return
      */
-    ResResult modifyEduBackground(EduBackground edu);
+    ResResult modifyEduBackground(EduBackgroundUpdateParam param);
     /**
      * 删除教育背景
      * @param id
@@ -107,16 +104,16 @@ public interface ResumeService {
 
     /**
      * 新增技能成熟度
-     * @param edu
+     * @param param
      * @return
      */
-    ResResult submitSkillMaturity(SkillMaturity edu);
+    ResResult submitSkillMaturity(SkillMaturityInsertParam param);
     /**
      * 修改技能成熟度
-     * @param edu
+     * @param param
      * @return
      */
-    ResResult modifySkillMaturity(SkillMaturity edu);
+    ResResult modifySkillMaturity(SkillMaturityUpdateParam param);
     /**
      * 删除技能数量度
      * @param id

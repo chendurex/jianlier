@@ -1,10 +1,7 @@
 package com.jianli.controller;
 
 import com.jianli.commons.BeanUtils;
-import com.jianli.domain.EduBackground;
-import com.jianli.domain.Resume;
-import com.jianli.domain.SkillMaturity;
-import com.jianli.domain.WorkExp;
+import com.jianli.dto.*;
 import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
 import com.jianli.service.ResumeService;
@@ -35,118 +32,116 @@ public class ResumeController {
 
     @ApiOperation(value = "新增简历基本信息", response = ResResult.class)
     @PostMapping(value = "/submit", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult submitResume(@RequestBody @ApiParam("简历信息") Resume resume, BindingResult bindingResult) {
+    public ResResult submitResume(@RequestBody ResumeInsertParam param, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
-            log.warn("用户数据不正确，用户提交的数据内容为：{}", BeanUtils.deepPrint(resume));
+            log.warn("用户数据不正确，用户提交的数据内容为：{}", BeanUtils.deepPrint(param));
             return ResUtils.fail(bindingResult.getFieldError().getDefaultMessage());
         }
-        return resumeService.submitResume(resume);
+        return resumeService.submitResume(param);
     }
 
     @ApiOperation(value = "修改简历信息", response = ResResult.class)
     @PostMapping(value = "/modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult modifyResume(@RequestBody @ApiParam("简历信息") Resume resume, BindingResult bindingResult) {
+    public ResResult modifyResume(@RequestBody ResumeUpdateParam param, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
-            log.warn("用户数据不正确，用户提交的数据内容为：{}", BeanUtils.deepPrint(resume));
+            log.warn("用户数据不正确，用户提交的数据内容为：{}", BeanUtils.deepPrint(param));
             return ResUtils.fail(bindingResult.getFieldError().getDefaultMessage());
         }
-        return resumeService.modifyResume(resume);
+        return resumeService.modifyResume(param);
     }
 
     @ApiOperation(value = "删除简历", response = ResResult.class)
-    @PostMapping(value = "/remove")
-    public ResResult removeResume(@ApiParam("简历ID")@Min(value = 1)Integer id) {
+    @GetMapping(value = "/remove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult removeResume(@ApiParam(name = "id", value = "简历ID", example = "1")@Min(value = 1) @RequestParam("id") Integer id) {
         return resumeService.removeResume(id);
     }
 
     @ApiOperation(value = "查询简历信息", response = ResResult.class)
-    @GetMapping(value = "/query")
-    public ResResult queryResume(@ApiParam("简历ID")@Min(value = 1) Integer id) {
+    @GetMapping(value = "/query", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult queryResume(@ApiParam(name = "id", value = "简历ID", example = "1")@Min(value = 1) @RequestParam("id") Integer id) {
         return resumeService.queryResume(id);
     }
 
 
     @ApiOperation(value = "新增个人工作经历", response = ResResult.class)
     @PostMapping(value = "/workExp/submit", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult submitWorkExp(@RequestBody @ApiParam("工作经历") WorkExp exp, BindingResult bindingResult) {
+    public ResResult submitWorkExp(@RequestBody WorkExpInsertParam param, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
-            log.warn("用户数据不正确，用户提交的数据内容为：{}", BeanUtils.deepPrint(exp));
+            log.warn("用户数据不正确，用户提交的数据内容为：{}", BeanUtils.deepPrint(param));
             return ResUtils.fail(bindingResult.getFieldError().getDefaultMessage());
         }
-        return resumeService.submitWorkExp(exp);
+        return resumeService.submitWorkExp(param);
     }
 
     @ApiOperation(value = "修改个人工作经历", response = ResResult.class)
     @PostMapping(value = "/workExp/modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult modifyWorkExp(@RequestBody @ApiParam("工作经历") WorkExp exp, BindingResult bindingResult) {
+    public ResResult modifyWorkExp(@RequestBody WorkExpUpdateParam param, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
-            log.warn("用户数据不正确，用户提交的数据内容为：{}", BeanUtils.deepPrint(exp));
+            log.warn("用户数据不正确，用户提交的数据内容为：{}", BeanUtils.deepPrint(param));
             return ResUtils.fail(bindingResult.getFieldError().getDefaultMessage());
         }
-        return resumeService.modifyWorkExp(exp);
+        return resumeService.modifyWorkExp(param);
     }
 
     @ApiOperation(value = "删除工作经历", response = ResResult.class)
-    @PostMapping(value = "/workExp/remove")
-    public ResResult removeWorkExp(@ApiParam("工作经历ID")@Min(value = 1)Integer id) {
+    @GetMapping(value = "/workExp/remove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult removeWorkExp(@ApiParam(name = "id", value = "工作经历ID", example = "1")@Min(value = 1) @RequestParam("id") Integer id) {
         return resumeService.removeWorkExp(id);
     }
 
-    @ApiOperation(value = "查询个人工作经历列表", response = ResResult.class)
-    @GetMapping(value = "/workExp/list")
-    public ResResult listWorkExp(@ApiParam("简历ID")@Min(value = 1) Integer resumeId) {
-        return resumeService.listWorkExp(resumeId);
-    }
-
     @ApiOperation(value = "查询个人工作经历", response = ResResult.class)
-    @GetMapping(value = "/workExp/query")
-    public ResResult queryWorkExp(@ApiParam("工作经历ID")@Min(value = 1) Integer id) {
+    @GetMapping(value = "/workExp/query", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult queryWorkExp(@ApiParam(name = "id", value = "工作经历ID", example = "1")@Min(value = 1) @RequestParam("id") Integer id) {
         return resumeService.queryWorkExp(id);
     }
 
-
+    @ApiOperation(value = "查询个人工作经历列表", response = ResResult.class)
+    @GetMapping(value = "/workExp/list", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult listWorkExp(@ApiParam(name = "resumeId", value = "简历ID", example = "1")@Min(value = 1) @RequestParam("resumeId") Integer resumeId) {
+        return resumeService.listWorkExp(resumeId);
+    }
 
     @ApiOperation(value = "新增个人教育背景", response = ResResult.class)
     @PostMapping(value = "/eduBackground/submit", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult submitEduBackground(@RequestBody @ApiParam("教育背景") EduBackground edu, BindingResult bindingResult) {
+    public ResResult submitEduBackground(@RequestBody EduBackgroundInsertParam param, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
-            log.warn("用户数据不正确，用户提交的数据内容为：{}", BeanUtils.deepPrint(edu));
+            log.warn("用户数据不正确，用户提交的数据内容为：{}", BeanUtils.deepPrint(param));
             return ResUtils.fail(bindingResult.getFieldError().getDefaultMessage());
         }
-        return resumeService.submitEduBackground(edu);
+        return resumeService.submitEduBackground(param);
     }
 
     @ApiOperation(value = "修改个人教育背景", response = ResResult.class)
     @PostMapping(value = "/eduBackground/modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult modifyEduBackground(@RequestBody @ApiParam("教育背景") EduBackground edu, BindingResult bindingResult) {
+    public ResResult modifyEduBackground(@RequestBody EduBackgroundUpdateParam param, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
-            log.warn("用户数据不正确，用户提交的数据内容为：{}", BeanUtils.deepPrint(edu));
+            log.warn("用户数据不正确，用户提交的数据内容为：{}", BeanUtils.deepPrint(param));
             return ResUtils.fail(bindingResult.getFieldError().getDefaultMessage());
         }
-        return resumeService.modifyEduBackground(edu);
+        return resumeService.modifyEduBackground(param);
     }
 
     @ApiOperation(value = "删除教育背景", response = ResResult.class)
-    @PostMapping(value = "/eduBackground/remove")
-    public ResResult removeEduBackground(@ApiParam("教育背景ID")@Min(value = 1) Integer id) {
+    @GetMapping(value = "/eduBackground/remove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult removeEduBackground(@ApiParam(name = "id", value = "教育背景ID", example = "1")@Min(value = 1) @RequestParam("id") Integer id) {
         return resumeService.removeEduBackground(id);
     }
 
-    @ApiOperation(value = "查询个人教育背景列表", response = ResResult.class)
-    @GetMapping(value = "/eduBackground/list")
-    public ResResult lisEduBackground(@ApiParam("简历ID")@Min(value = 1) Integer resumeId) {
-        return resumeService.listEduBackground(resumeId);
+    @ApiOperation(value = "查询个人教育背景", response = ResResult.class)
+    @GetMapping(value = "/eduBackground/query", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult queryEduBackground(@ApiParam(name = "id", value = "教育背景ID", example = "1")@Min(value = 1) @RequestParam("id") Integer id) {
+        return resumeService.queryEduBackground(id);
     }
 
-    @ApiOperation(value = "查询个人教育背景", response = ResResult.class)
-    @GetMapping(value = "/eduBackground/query")
-    public ResResult queryEduBackground(@ApiParam("教育背景ID")@Min(value = 1) Integer id) {
-        return resumeService.queryEduBackground(id);
+    @ApiOperation(value = "查询个人教育背景列表", response = ResResult.class)
+    @GetMapping(value = "/eduBackground/list", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult lisEduBackground(@ApiParam(name = "resumeId", value = "简历ID", example = "1")@Min(value = 1) @RequestParam("resumeId") Integer resumeId) {
+        return resumeService.listEduBackground(resumeId);
     }
 
     @ApiOperation(value = "新增个人技能熟练度", response = ResResult.class)
     @PostMapping(value = "/skillMaturity/submit", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult submitSkillMaturity(@RequestBody @ApiParam("技能熟练度") SkillMaturity skill, BindingResult bindingResult) {
+    public ResResult submitSkillMaturity(@RequestBody SkillMaturityInsertParam skill, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
             log.warn("用户数据不正确，用户提交的数据内容为：{}", BeanUtils.deepPrint(skill));
             return ResUtils.fail(bindingResult.getFieldError().getDefaultMessage());
@@ -156,7 +151,7 @@ public class ResumeController {
 
     @ApiOperation(value = "修改个人技能熟练度", response = ResResult.class)
     @PostMapping(value = "/skillMaturity/modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult modifySkillMaturity(@RequestBody @ApiParam("技能熟练度") SkillMaturity skill, BindingResult bindingResult) {
+    public ResResult modifySkillMaturity(@RequestBody SkillMaturityUpdateParam skill, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
             log.warn("用户数据不正确，用户提交的数据内容为：{}", BeanUtils.deepPrint(skill));
             return ResUtils.fail(bindingResult.getFieldError().getDefaultMessage());
@@ -165,20 +160,20 @@ public class ResumeController {
     }
 
     @ApiOperation(value = "删除技能熟悉度", response = ResResult.class)
-    @PostMapping(value = "/skillMaturity/remove")
-    public ResResult removeSkillMaturity(@ApiParam("技能熟悉度ID")@Min(value = 1) Integer id) {
+    @GetMapping(value = "/skillMaturity/remove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult removeSkillMaturity(@ApiParam(name = "id", value = "技能熟练度ID", example = "1")@Min(value = 1) @RequestParam("id") Integer id) {
         return resumeService.removeSkillMaturity(id);
     }
 
-    @ApiOperation(value = "查询个人技能熟练度列表", response = ResResult.class)
-    @GetMapping(value = "/skillMaturity/list")
-    public ResResult listSkillMaturity(@ApiParam("简历ID")@Min(value = 1) Integer resumeId) {
-        return resumeService.listSkillMaturity(resumeId);
+    @ApiOperation(value = "查询个人技能熟练度", response = ResResult.class)
+    @GetMapping(value = "/skillMaturity/query", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult querySkillMaturity(@ApiParam(name = "id", value = "技能熟练度ID", example = "1")@Min(value = 1) @RequestParam("id") Integer id) {
+        return resumeService.querySkillMaturity(id);
     }
 
-    @ApiOperation(value = "查询个人技能熟练度", response = ResResult.class)
-    @GetMapping(value = "/skillMaturity/query")
-    public ResResult querySkillMaturity(@ApiParam("技能熟练度ID")@Min(value = 1) Integer id) {
-        return resumeService.querySkillMaturity(id);
+    @ApiOperation(value = "查询个人技能熟练度列表", response = ResResult.class)
+    @GetMapping(value = "/skillMaturity/list", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult listSkillMaturity(@ApiParam(name = "resumeId", value = "简历ID", example = "1")@Min(value = 1) @RequestParam("resumeId") Integer resumeId) {
+        return resumeService.listSkillMaturity(resumeId);
     }
 }

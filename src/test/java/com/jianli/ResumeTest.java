@@ -3,6 +3,8 @@ package com.jianli;
 import com.jianli.commons.BeanUtils;
 import com.jianli.controller.ResumeController;
 import com.jianli.domain.WorkExp;
+import com.jianli.dto.WorkExpInsertParam;
+import com.jianli.dto.WorkExpParam;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -30,7 +32,7 @@ public class ResumeTest extends BaseTest {
     public void testWorkExpSubmit() throws Exception {
         MockMvc mockMvc = webAppContextSetup(wac).build();
 
-        WorkExp exp = WorkExp.builder().corp("吹牛公司").description("吹牛的天线宝宝").position("吹牛总监").resumeId(4).build();
+        WorkExpParam exp = WorkExpInsertParam.builder().corp("吹牛公司").description("吹牛的天线宝宝").position("吹牛总监").build();
         MockHttpServletRequestBuilder builder = post("/resume/queryWorkExp/submit",
                 BeanUtils.deepPrint(exp), new BeanPropertyBindingResult(resumeController, ResumeController.class.getSimpleName()));
         builder.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
