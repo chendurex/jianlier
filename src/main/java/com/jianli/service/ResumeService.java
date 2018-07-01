@@ -50,6 +50,14 @@ public interface ResumeService {
     ResResult modifyWorkExp(WorkExpUpdateParam param);
 
     /**
+     * 修改工作经历标题
+     * @param resumeId
+     * @param title
+     * @return
+     */
+    ResResult modifyWorkExpTitle(int resumeId, String title);
+
+    /**
      * 删除工作经历
      * @param id
      * @return
@@ -82,6 +90,15 @@ public interface ResumeService {
      * @return
      */
     ResResult modifyEduBackground(EduBackgroundUpdateParam param);
+
+    /**
+     * 修改教育背景标题
+     * @param resumeId
+     * @param title
+     * @return
+     */
+    ResResult modifyEduBackgroundTitle(int resumeId, String title);
+
     /**
      * 删除教育背景
      * @param id
@@ -114,6 +131,15 @@ public interface ResumeService {
      * @return
      */
     ResResult modifySkillMaturity(SkillMaturityUpdateParam param);
+
+    /**
+     * 修改技能成熟度标题
+     * @param resumeId
+     * @param title
+     * @return
+     */
+    ResResult modifySkillMaturityTitle(int resumeId, String title);
+
     /**
      * 删除技能数量度
      * @param id

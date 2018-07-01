@@ -39,8 +39,11 @@ public class Resume {
     private String name;
     private String summaryTitle;
     private String objectiveTitle;
+    @Column(insertable = false, updatable = false)
     private String expTitle;
+    @Column(insertable = false, updatable = false)
     private String eduTitle;
+    @Column(insertable = false, updatable = false)
     private String skillTitle;
 
 
@@ -55,4 +58,5 @@ public class Resume {
         this.modifyTime = Timestamp.from(Instant.now());
         this.modifyUid = uid;
     }
+
 }

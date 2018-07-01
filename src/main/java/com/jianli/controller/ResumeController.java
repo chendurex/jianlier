@@ -9,11 +9,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author chendurex
@@ -83,6 +85,14 @@ public class ResumeController {
         return resumeService.modifyWorkExp(param);
     }
 
+    @ApiOperation(value = "修改个人工作经历标题", response = ResResult.class)
+    @GetMapping(value = "/workExp/modifyTitle", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult modifyWorkExpTitle(@ApiParam(name = "resumeId", value = "简历ID", example = "1") @Min(1)  @RequestParam("resumeId") Integer resumeId,
+                                              @ApiParam(name = "title", value = "工作经历标题", example = "工作经历") @NotBlank
+                                              @Length(min = 1, max = 50, message = "工作经历标题太长或者不能为空") @RequestParam("title") String title) {
+        return resumeService.modifyWorkExpTitle(resumeId, title);
+    }
+
     @ApiOperation(value = "删除工作经历", response = ResResult.class)
     @GetMapping(value = "/workExp/remove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult removeWorkExp(@ApiParam(name = "id", value = "工作经历ID", example = "1")@Min(value = 1) @RequestParam("id") Integer id) {
@@ -95,11 +105,11 @@ public class ResumeController {
         return resumeService.queryWorkExp(id);
     }
 
-    @ApiOperation(value = "查询个人工作经历列表", response = ResResult.class)
+   /* @ApiOperation(value = "查询个人工作经历列表", response = ResResult.class)
     @GetMapping(value = "/workExp/list", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult listWorkExp(@ApiParam(name = "resumeId", value = "简历ID", example = "1")@Min(value = 1) @RequestParam("resumeId") Integer resumeId) {
         return resumeService.listWorkExp(resumeId);
-    }
+    }*/
 
     @ApiOperation(value = "新增个人教育背景", response = ResResult.class)
     @PostMapping(value = "/eduBackground/submit", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -121,6 +131,14 @@ public class ResumeController {
         return resumeService.modifyEduBackground(param);
     }
 
+    @ApiOperation(value = "修改个人教育背景标题", response = ResResult.class)
+    @GetMapping(value = "/eduBackground/modifyTitle", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult modifyEduBackgroundTitle(@ApiParam(name = "resumeId", value = "简历ID", example = "1") @Min(1)  @RequestParam("resumeId") Integer resumeId,
+                                      @ApiParam(name = "title", value = "教育背景标题", example = "教育背景") @NotBlank
+                                      @Length(min = 1, max = 50, message = "教育背景标题太长或者不能为空") @RequestParam("title") String title) {
+        return resumeService.modifyEduBackgroundTitle(resumeId, title);
+    }
+
     @ApiOperation(value = "删除教育背景", response = ResResult.class)
     @GetMapping(value = "/eduBackground/remove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult removeEduBackground(@ApiParam(name = "id", value = "教育背景ID", example = "1")@Min(value = 1) @RequestParam("id") Integer id) {
@@ -133,11 +151,11 @@ public class ResumeController {
         return resumeService.queryEduBackground(id);
     }
 
-    @ApiOperation(value = "查询个人教育背景列表", response = ResResult.class)
+   /* @ApiOperation(value = "查询个人教育背景列表", response = ResResult.class)
     @GetMapping(value = "/eduBackground/list", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult lisEduBackground(@ApiParam(name = "resumeId", value = "简历ID", example = "1")@Min(value = 1) @RequestParam("resumeId") Integer resumeId) {
         return resumeService.listEduBackground(resumeId);
-    }
+    }*/
 
     @ApiOperation(value = "新增个人技能熟练度", response = ResResult.class)
     @PostMapping(value = "/skillMaturity/submit", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -159,6 +177,14 @@ public class ResumeController {
         return resumeService.modifySkillMaturity(skill);
     }
 
+    @ApiOperation(value = "修改个人技能熟练度标题", response = ResResult.class)
+    @GetMapping(value = "/skillMaturity/modifyTitle", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult modifySkillTitle(@ApiParam(name = "resumeId", value = "简历ID", example = "1") @Min(1)  @RequestParam("resumeId") Integer resumeId,
+                                    @ApiParam(name = "title", value = "技能熟练度标题", example = "技能熟练度") @NotBlank
+                                    @Length(min = 1, max = 50, message = "技能熟练度标题太长或者不能为空") @RequestParam("title") String title) {
+        return resumeService.modifySkillMaturityTitle(resumeId, title);
+    }
+
     @ApiOperation(value = "删除技能熟悉度", response = ResResult.class)
     @GetMapping(value = "/skillMaturity/remove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult removeSkillMaturity(@ApiParam(name = "id", value = "技能熟练度ID", example = "1")@Min(value = 1) @RequestParam("id") Integer id) {
@@ -171,9 +197,11 @@ public class ResumeController {
         return resumeService.querySkillMaturity(id);
     }
 
-    @ApiOperation(value = "查询个人技能熟练度列表", response = ResResult.class)
+  /*  @ApiOperation(value = "查询个人技能熟练度列表", response = ResResult.class)
     @GetMapping(value = "/skillMaturity/list", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult listSkillMaturity(@ApiParam(name = "resumeId", value = "简历ID", example = "1")@Min(value = 1) @RequestParam("resumeId") Integer resumeId) {
         return resumeService.listSkillMaturity(resumeId);
-    }
+    }*/
+
+
 }

@@ -15,6 +15,7 @@ import com.jianli.response.ResUtils;
 import com.jianli.service.ResumeService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 /**
@@ -73,9 +74,10 @@ public class ResumeServiceImpl implements ResumeService {
         }
         Resume resume = opt.get();
         ResumeVo vo = BeanUtils.copy(resume, ResumeVo.class);
-        vo.setEduBackgrounds(eduBackgroundRepo.listByResumeId(id));
-        vo.setWorkExps(workRepo.listByResumeId(id));
-        vo.setSkillMaturities(skilledRepo.listByResumeId(id));
+
+        vo.setEduBackground(resume.getEduTitle(), eduBackgroundRepo.listByResumeId(id));
+        vo.setWorkExp(resume.getSkillTitle(), workRepo.listByResumeId(id));
+        vo.setSkillMaturity(resume.getExpTitle(), skilledRepo.listByResumeId(id));
         return ResUtils.data(vo);
     }
 
@@ -100,6 +102,14 @@ public class ResumeServiceImpl implements ResumeService {
             return ResUtils.fail("保存数据失败");
         }
         return ResUtils.data(modified.getId());
+    }
+
+
+    @Transactional
+    @Override
+    public ResResult modifyWorkExpTitle(int resumeId, String title) {
+        resumeRepo.updateExpTitle(title, resumeId);
+        return ResUtils.suc();
     }
 
     @Override
@@ -139,6 +149,13 @@ public class ResumeServiceImpl implements ResumeService {
             return ResUtils.fail("保存数据失败");
         }
         return ResUtils.data(modified.getId());
+    }
+
+    @Transactional
+    @Override
+    public ResResult modifyEduBackgroundTitle(int resumeId, String title) {
+        resumeRepo.updateEduTitle(title, resumeId);
+        return ResUtils.suc();
     }
 
 
@@ -181,6 +198,13 @@ public class ResumeServiceImpl implements ResumeService {
             return ResUtils.fail("保存数据失败");
         }
         return ResUtils.data(modified.getId());
+    }
+
+    @Transactional
+    @Override
+    public ResResult modifySkillMaturityTitle(int resumeId, String title) {
+        resumeRepo.updateSkillTitle(title, resumeId);
+        return ResUtils.suc();
     }
 
     @Override
