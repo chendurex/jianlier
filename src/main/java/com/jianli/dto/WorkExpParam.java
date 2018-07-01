@@ -34,4 +34,12 @@ public class WorkExpParam {
     @Length(min = 1, max = 1000, message = "工作简介过长")
     @ApiModelProperty(notes = "工作简介", example = "帮老板在客户面前吹牛，增加公司逼格", required = true)
     private String description;
+    @NotBlank
+    @Length(min = 1, max = 20, message = "工作开始时间过长")
+    @ApiModelProperty(notes = "工作开始时间", example = "2019-12-03", required = true)
+    private String startTime;
+    @NotBlank
+    @Length(min = 1, max = 20, message = "工作结束时间过长")
+    @ApiModelProperty(notes = "工作结束时间", example = "2019-12-03", required = true)
+    private String endTime;
 }

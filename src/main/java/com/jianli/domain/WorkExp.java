@@ -35,6 +35,8 @@ public class WorkExp  {
     private String corp;
     private String position;
     private String description;
+    private String startTime;
+    private String endTime;
 
     public void submit(int uid) {
         this.createTime = Timestamp.from(Instant.now());
