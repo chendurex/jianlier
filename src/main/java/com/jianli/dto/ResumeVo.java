@@ -45,14 +45,14 @@ public class ResumeVo extends ResumeParam {
 
     @AllArgsConstructor
     @Getter
-    public class SkillMaturityVo {
+    private class SkillMaturityVo {
         private String title;
         private List<SkillMaturity> skillMaturities;
     }
 
     @Getter
     @AllArgsConstructor
-    public class WorkExpVo {
+    private class WorkExpVo {
         private String title;
         private List<WorkExp> workExps;
     }

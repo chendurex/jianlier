@@ -24,6 +24,10 @@ public final class ResUtils {
         return result(ResStat.FAIL, FAIL_DESC, desc);
     }
 
+    public static ResResult fail(Object desc) {
+        return result(ResStat.FAIL, FAIL_DESC, desc);
+    }
+
     private static <T> ResResult result(int code, String desc, T data) {
         return new ResResult<>(code, desc, data);
     }

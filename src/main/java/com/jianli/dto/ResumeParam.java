@@ -1,5 +1,7 @@
 package com.jianli.dto;
 
+import com.jianli.commons.BeanUtils;
+import com.jianli.domain.Resume;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,4 +47,8 @@ public class ResumeParam {
     @NotBlank(message = "求职意向标题不能为空")
     @ApiModelProperty(notes = "求职意向标题", example = "求职意向", required = true)
     private String objectiveTitle;
+
+    public Resume toResume() {
+        return BeanUtils.copy(this, Resume.class);
+    }
 }

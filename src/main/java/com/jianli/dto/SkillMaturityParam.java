@@ -1,5 +1,7 @@
 package com.jianli.dto;
 
+import com.jianli.commons.BeanUtils;
+import com.jianli.domain.SkillMaturity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +26,7 @@ public class SkillMaturityParam {
     @Min(value = 1, message = "用户ID必须大于0")
     @ApiModelProperty(notes = "用户ID", example = "1", required = true)
     private Integer uid;
-    @NotBlank
+    @NotBlank(message = "技能名称不能为空")
     @Length(min = 1, max = 50, message = "技能名称太长")
     @ApiModelProperty(notes = "技能名称", example = "吹牛", required = true)
     private String skill;
@@ -32,5 +34,9 @@ public class SkillMaturityParam {
     @Max(value = 10, message = "技能熟练度只能在1-10之间")
     @ApiModelProperty(notes = "熟练度", example = "10", required = true)
     private Integer maturity;
+
+    public SkillMaturity toSkillMaturity() {
+        return BeanUtils.copy(this, SkillMaturity.class);
+    }
 
 }

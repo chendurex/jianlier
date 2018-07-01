@@ -10,7 +10,7 @@ import javax.validation.constraints.Min;
  * @author chendurex
  * @date 2018-06-18 12:27
  */
-@ApiModel("新增教育背景")
+@ApiModel("新增工作经历")
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class WorkExpInsertParam extends WorkExpParam {

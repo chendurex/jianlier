@@ -38,7 +38,7 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public ResResult submitResume(ResumeInsertParam param) {
-        Resume resume = BeanUtils.copy(param, Resume.class);
+        Resume resume = param.toResume();
         resume.submit(param.getUid());
         Resume saved = resumeRepo.save(resume);
         if (saved.getId() == null) {
@@ -49,7 +49,7 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public ResResult modifyResume(ResumeUpdateParam param) {
-        Resume resume = BeanUtils.copy(param, Resume.class);
+        Resume resume = param.toResume();
         resume.modify(param.getUid());
         Resume modified = resumeRepo.save(resume);
 
@@ -83,7 +83,7 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public ResResult submitWorkExp(WorkExpInsertParam param) {
-        WorkExp exp = BeanUtils.copy(param, WorkExp.class);
+        WorkExp exp = param.toWorkExp();
         exp.submit(param.getUid());
         WorkExp saved = workRepo.save(exp);
         if (saved.getId() == null) {
@@ -94,7 +94,7 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public ResResult modifyWorkExp(WorkExpUpdateParam param) {
-        WorkExp exp = BeanUtils.copy(param, WorkExp.class);
+        WorkExp exp = param.toWorkExp();
         exp.modify(param.getUid());
         WorkExp modified = workRepo.save(exp);
 
@@ -130,7 +130,7 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public ResResult submitEduBackground(EduBackgroundInsertParam param) {
-        EduBackground edu = BeanUtils.copy(param, EduBackground.class);
+        EduBackground edu = param.toEduBackground();
         edu.submit(param.getUid());
         EduBackground saved = eduBackgroundRepo.save(edu);
         if (saved.getId() == null) {
@@ -141,7 +141,7 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public ResResult modifyEduBackground(EduBackgroundUpdateParam param) {
-        EduBackground edu = BeanUtils.copy(param, EduBackground.class);
+        EduBackground edu = param.toEduBackground();
         edu.modify(param.getUid());
         EduBackground modified = eduBackgroundRepo.save(edu);
 
@@ -179,7 +179,7 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public ResResult submitSkillMaturity(SkillMaturityInsertParam param) {
-        SkillMaturity skill = BeanUtils.copy(param, SkillMaturity.class);
+        SkillMaturity skill = param.toSkillMaturity();
         skill.submit(param.getUid());
         SkillMaturity saved = skilledRepo.save(skill);
         if (saved.getId() == null) {
@@ -190,7 +190,7 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public ResResult modifySkillMaturity(SkillMaturityUpdateParam param) {
-        SkillMaturity skill = BeanUtils.copy(param, SkillMaturity.class);
+        SkillMaturity skill = param.toSkillMaturity();
         skill.modify(param.getUid());
         SkillMaturity modified = skilledRepo.save(skill);
 
