@@ -45,4 +45,16 @@ public class ResumeParam {
     @NotBlank(message = "求职意向标题不能为空")
     @ApiModelProperty(notes = "求职意向标题", example = "求职意向", required = true)
     private String objectiveTitle;
+    @NotBlank
+    @Length(min = 1, max = 50, message = "工作经历标题太长或者不能为空")
+    @ApiModelProperty(notes = "工作经历标题", example = "工作经历", required = true)
+    private String expTitle;
+    @NotBlank
+    @Length(min = 1, max = 50, message = "教育背景标题太长或者不能为空")
+    @ApiModelProperty(notes = "教育背景标题", example = "教育背景", required = true)
+    private String eduTitle;
+    @NotBlank
+    @Length(min = 1, max = 50, message = "技能熟练度标题太长或者不能为空")
+    @ApiModelProperty(notes = "技能熟练度标题", example = "技能熟练度", required = true)
+    private String skillTitle;
 }

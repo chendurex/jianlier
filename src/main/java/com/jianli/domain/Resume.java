@@ -39,6 +39,9 @@ public class Resume {
     private String name;
     private String summaryTitle;
     private String objectiveTitle;
+    private String expTitle;
+    private String eduTitle;
+    private String skillTitle;
 
 
     public void submit(int uid) {

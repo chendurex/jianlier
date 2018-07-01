@@ -43,9 +43,5 @@ public class EduBackgroundParam {
     @Length(max = 50, message = "教育结束时间过长")
     @ApiModelProperty(notes = "结束时间", example = "2018-09-01", required = true)
     private String endTime;
-    @NotBlank
-    @Length(min = 1, max = 50, message = "教育背景标题太长或者不能为空")
-    @ApiModelProperty(notes = "教育背景标题", example = "教育背景", required = true)
-    private String title;
 
 }

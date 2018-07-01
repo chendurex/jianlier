@@ -34,7 +34,6 @@ public class SkillMaturity {
     private Integer resumeId;
     private String skill;
     private Integer maturity;
-    private String title;
 
     public void submit(int uid) {
         this.createTime = Timestamp.from(Instant.now());

@@ -32,9 +32,5 @@ public class SkillMaturityParam {
     @Max(value = 10, message = "技能熟练度只能在1-10之间")
     @ApiModelProperty(notes = "熟练度", example = "10", required = true)
     private Integer maturity;
-    @NotBlank
-    @Length(min = 1, max = 50, message = "技能熟练度标题太长或者不能为空")
-    @ApiModelProperty(notes = "技能熟练度标题", example = "技能熟练度", required = true)
-    private String title;
 
 }
