@@ -36,6 +36,9 @@ public class Resume {
     private String wechat;
     private String email;
     private String summary;
+    private String name;
+    private String summaryTitle;
+    private String objectiveTitle;
 
 
     public void submit(int uid) {
