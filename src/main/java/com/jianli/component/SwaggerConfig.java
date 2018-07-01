@@ -1,5 +1,6 @@
 package com.jianli.component;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +25,8 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+    @Value("${spring.swagger.host}")
+    private String host;
     @Bean
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -32,6 +35,7 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .build()
+                .host(host)
                 .globalResponseMessage(RequestMethod.GET, defaultResponseMessage())
                 .globalResponseMessage(RequestMethod.HEAD, defaultResponseMessage())
                 .globalResponseMessage(RequestMethod.OPTIONS, defaultResponseMessage())
