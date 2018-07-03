@@ -31,6 +31,7 @@ public class EduBackground {
     private String diploma;
     private String startTime;
     private String endTime;
+    private String summary;
 
     public void submit(int uid) {
         this.createTime = Timestamp.from(Instant.now());
