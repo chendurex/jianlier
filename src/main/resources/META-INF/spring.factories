@@ -1,6 +1,3 @@
-# Initializers
-org.springframework.context.ApplicationContextInitializer=\
-com.jianli.component.SpringResourcesInitializer
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.jianli.component.SwaggerConfig
 

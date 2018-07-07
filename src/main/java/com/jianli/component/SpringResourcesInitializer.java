@@ -1,43 +1,35 @@
 package com.jianli.component;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Properties;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * @author chendurex
- * @description 在spring 容器初始化之后，bean实例生成之前注入资源
+ * @description 注入配置属性
+ *     这里默认分为线上与开发两种配置，我通过{@link ConditionalOnProperty#havingValue()} 来匹配处理的
+ *     启动项目的时候通过-Dcom.jianlier.boot.pro=true则表示生产，改为false则为开发
+ *     注意，因为开发环境每次配置启动变量比较麻烦，所以我增加了一个matchIfMissing属性来控制默认匹配规则(matchIfMissing作为未匹配的备选方案，
+ *     而不是与havingValue作为互斥条件，理解这点很重要，它是前置匹配失败后，然后再次判断这个key是否存在，如果true则表示key不存在则执行，否则不执行)
+ *     而且，另外还增加了havingValue=false这个匹配条件，如果不加的话，havingValue默认值是""，而文档介绍""是可以匹配到除false意外的任何值，
+ *     这样导致了只要我设置了变量就可以匹配成功，所以默认不能让它匹配到设置的值，这样就变成了匹配除false意外的任何条件了
+ *     在没有匹配到任何条件的情况，matchIfMissing就可以作为备选条件来再次检查是否有这个key，如果没有这个key则执行条件
  * @date 2018-04-01 01:50
  */
 @Slf4j
 @Configuration
-public class SpringResourcesInitializer implements ApplicationContextInitializer {
-    private static final String PRO_RESOURCES = "/usr/local/tools/config.properties";
-    private static final String DEFAULT_RESOURCES = "/usr/local/src/tools/config.properties";
-    private static final String DEFAULT_PRODUCT_PREFIX = "product";
-    @Override
-    public void initialize(ConfigurableApplicationContext applicationContext) {
-        loadExternal();
+public class SpringResourcesInitializer {
+
+    @Configuration
+    @ConditionalOnProperty(prefix = "com.jianlier.boot", name = "pro", havingValue = "true")
+    @PropertySource(value = "file:/usr/local/tools/config.properties", encoding="UTF-8")
+    class ProductConfig {
     }
 
-    private void loadExternal() {
-        try {
-            Properties properties = System.getProperties();
-            if (properties.getProperty(DEFAULT_PRODUCT_PREFIX) != null) {
-                properties.load(new BufferedReader(new InputStreamReader(new FileInputStream(PRO_RESOURCES))));
-            } else {
-                properties.load(new BufferedReader(new InputStreamReader(new FileInputStream(DEFAULT_RESOURCES))));
-            }
-        } catch (IOException e) {
-            log.error("读取资源文件失败，", e);
-            throw new RuntimeException(e);
-        }
+    @Configuration
+    @PropertySource(value = "file:/usr/local/src/tools/config.properties", encoding="UTF-8")
+    @ConditionalOnProperty(prefix = "com.jianlier.boot", name = "pro", havingValue = "false", matchIfMissing = true)
+    class DevConfig {
     }
 }
