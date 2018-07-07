@@ -30,7 +30,7 @@ public class SpringResourcesInitializer implements ApplicationContextInitializer
     private void loadExternal() {
         try {
             Properties properties = System.getProperties();
-            if (properties.contains(DEFAULT_PRODUCT_PREFIX)) {
+            if (properties.getProperty(DEFAULT_PRODUCT_PREFIX) != null) {
                 properties.load(new BufferedReader(new InputStreamReader(new FileInputStream(PRO_RESOURCES))));
             } else {
                 properties.load(new BufferedReader(new InputStreamReader(new FileInputStream(DEFAULT_RESOURCES))));
