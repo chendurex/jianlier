@@ -17,12 +17,9 @@ public class FileUtils {
         try (FileWriter fr = new FileWriter(file, true);
              BufferedWriter br = new BufferedWriter(fr);
              PrintWriter pr = new PrintWriter(br)){
-            pr.println(message);
-            pr.close();
-            br.close();
-            fr.close();
+             pr.println(message);
         } catch(Exception e) {
-            // ignore
+            e.printStackTrace();
         }
     }
 }

@@ -3,14 +3,14 @@ package com.jianli;
 import com.docraptor.ApiClient;
 import com.docraptor.Doc;
 import com.docraptor.DocApi;
+import com.jianli.controller.BinEducationController;
+import com.jianli.domain.BinEducation;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import com.jianli.controller.BinEducationController;
-import com.jianli.domain.BinEducation;
 
 /**
  * @author chendurex
@@ -23,12 +23,13 @@ public class MailTest extends BaseTest {
     private com.jianli.component.MailSender sender;
     @Value("${spring.mail.default.context}")
     private String test;
+    @Value("${edu.mail.received}")
+    private String received;
     @Autowired
     private BinEducationController eduControler;
     @Test
     public void testMail() {
-       // sender.send("461240503@qq.com", "/usr/local/tools/简历儿需求文档1.0.pdf");
-        sender.send("316121113@qq.com", "/usr/local/tools/x.jp");
+        sender.send(received, "/usr/local/tools/x.jp");
     }
 
     @Test
