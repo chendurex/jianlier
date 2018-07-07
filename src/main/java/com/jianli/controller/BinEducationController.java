@@ -1,6 +1,6 @@
 package com.jianli.controller;
 
-import com.jianli.education.EduInfo;
+import com.jianli.domain.BinEducation;
 import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +23,7 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/edu")
-public class EduController {
+public class BinEducationController {
 
 	@Autowired
     private EduRepo eduRepository;
@@ -33,7 +33,7 @@ public class EduController {
     private String logPath;
 	@CrossOrigin(origins = "*")
     @PostMapping(value = "submit")
-    public ResResult submit(@RequestBody EduInfo eduInfo) {
+    public ResResult submit(@RequestBody BinEducation eduInfo) {
 	    try {
 	        eduInfo.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
             eduRepository.save(eduInfo);

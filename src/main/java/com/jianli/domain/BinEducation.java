@@ -1,4 +1,4 @@
-package com.jianli.education;
+package com.jianli.domain;
 
 import lombok.Data;
 import javax.persistence.Entity;
@@ -13,24 +13,40 @@ import javax.persistence.Id;
  */
 @Data
 @Entity(name = "edu")
-public class EduInfo {
+public class BinEducation {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-	// 题目
+
+    /**
+     * 题目
+     */
 	private String question;
-	// 用户名为
+    /**
+     * 用户名为
+     */
     private String name;
-    // 联系号码
+    /**
+     * 联系号码
+     */
     private String contact;
-    // 年龄
+    /**
+     * 年龄
+     */
     private String age;
-    //期望院校
+    /**
+     * 期望院校
+     */
     private String school;
-    // 期望专业
+    /**
+     * 期望专业
+      */
     private String expMajor;
-    // 申请时间
+    /**
+     * 申请时间
+     */
     private String createTime;
+
     @Override
     public String toString() {
     	return "用户名为："+name+",联系号码为："+contact+ ",题目:"

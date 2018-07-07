@@ -1,6 +1,6 @@
 package com.jianli.repo;
 
-import com.jianli.education.EduInfo;
+import com.jianli.domain.BinEducation;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -8,5 +8,5 @@ import org.springframework.data.repository.CrudRepository;
  * @description
  * @date 2018-04-21 15:52
  */
-public interface EduRepo extends CrudRepository<EduInfo, Integer> {
+public interface EduRepo extends CrudRepository<BinEducation, Integer> {
 }

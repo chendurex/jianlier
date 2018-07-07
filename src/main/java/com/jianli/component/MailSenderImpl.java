@@ -56,14 +56,14 @@ public class MailSenderImpl implements MailSender {
     @Override
     public void sendMessage(String to, String message) {
         log.info("邮件发送开始开始，接收内容为：{}，消息内容为：{}", to, message);
-        /*long start = System.currentTimeMillis();
+        long start = System.currentTimeMillis();
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setText(message);
         mailMessage.setFrom(nickName);
         mailMessage.setTo(to);
         mailMessage.setSubject("来自大表哥的重要邮件!");
         mailSender.send(mailMessage);
-        log.info("发送邮件完成，总共耗时:{}s", (System.currentTimeMillis()-start)/1000);*/
+        log.info("发送邮件完成，总共耗时:{}s", (System.currentTimeMillis()-start)/1000);
     }
 
 
