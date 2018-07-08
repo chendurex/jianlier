@@ -1,6 +1,7 @@
 package com.jianli.component;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +23,7 @@ import java.util.List;
  * @author chendurex
  * @date 2018-06-19 22:36
  */
+@ConditionalOnProperty(prefix = "com.jianlier.boot", name = "pro", havingValue = "false", matchIfMissing = true)
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {

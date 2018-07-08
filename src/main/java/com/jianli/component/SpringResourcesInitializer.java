@@ -1,6 +1,5 @@
 package com.jianli.component;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -17,7 +16,6 @@ import org.springframework.context.annotation.PropertySource;
  *     在没有匹配到任何条件的情况，matchIfMissing就可以作为备选条件来再次检查是否有这个key，如果没有这个key则执行条件
  * @date 2018-04-01 01:50
  */
-@Slf4j
 @Configuration
 public class SpringResourcesInitializer {
 

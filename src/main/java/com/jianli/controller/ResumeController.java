@@ -165,4 +165,5 @@ public class ResumeController {
                                             @Validated @Min(value = 1) @RequestParam("id") Integer id) {
         return resumeService.querySkillMaturity(id);
     }
+
 }
