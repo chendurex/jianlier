@@ -13,10 +13,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Data
-public class AccessTokenDTO {
-    private String accessToken;
-    private Integer expiresIn;
-    private String refreshToken;
+class AccessTokenDTO {
+    private String access_token;
+    private Integer expires_in;
+    private String refresh_token;
     private String openid;
     private String scope;
+    private String errcode;
+    private String errmsg;
 }

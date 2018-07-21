@@ -28,8 +28,9 @@ public class SpringResourcesInitializer {
     }
 
     @Configuration
-    @PropertySource(value = "file:/usr/local/src/tools/config.properties", encoding="UTF-8")
     @ConditionalOnProperty(prefix = "com.jianlier.boot", name = "pro", havingValue = "false", matchIfMissing = true)
+    //@PropertySource(value = "file:/usr/local/src/tools/config.properties", encoding="UTF-8")
+    @PropertySource(value = "file:C:\\Users\\CHENY.HUANG\\Desktop\\config.properties", encoding="UTF-8")
     class DevConfig {
     }
 }

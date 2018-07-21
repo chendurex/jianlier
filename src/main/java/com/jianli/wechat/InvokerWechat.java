@@ -2,9 +2,15 @@ package com.jianli.wechat;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.Collections;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -44,7 +50,21 @@ public class InvokerWechat implements AuthInvoker {
     @Override
     public AccessTokenDTO getAccessToken(String code) {
         String url = Constant.assembleAccessTokenUrl(appId, secret, code);
-        // todo 访问远程请求
+        ClientResponse response = null;
+        try {
+            WebResource webResource = Client.create().resource(url);
+            WebResource.Builder requestBuilder = webResource.getRequestBuilder();
+            response = requestBuilder.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON_TYPE).get(ClientResponse.class);
+            if (response.getStatus() == Response.Status.OK.getStatusCode() && response.hasEntity()) {
+                // 微信返回的content-type是text/plain，但是实际的内容是json格式的，所以重新转换下格式为json
+                response.getHeaders().put("Content-Type", Collections.singletonList(MediaType.APPLICATION_JSON));
+                return response.getEntity(AccessTokenDTO.class);
+            }
+        } finally {
+            if (response != null) {
+                response.close();
+            }
+        }
         return null;
     }
 
