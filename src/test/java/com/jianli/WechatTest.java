@@ -13,7 +13,7 @@ public class WechatTest extends BaseTest {
     private AuthInvoker authInvoker;
     @Test
     public void testGetAccessToken() {
-        System.out.println(authInvoker.getAccessToken("fffffffff"));
+        System.out.println(authInvoker.getAccessToken("fffffffff", "v"));
     }
 
 }

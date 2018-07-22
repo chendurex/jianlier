@@ -13,13 +13,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Data
-public class UserInfoDTO {
+class UserInfoDTO {
     private String openid;
     private String nickname;
     private String sex;
     private String province;
     private String city;
     private String country;
-    private String headImgUrl;
+    private String headimgurl;
     private String unionId;
+    private String errcode;
+    private String errmsg;
 }

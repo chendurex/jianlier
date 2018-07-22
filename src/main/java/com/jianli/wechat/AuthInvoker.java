@@ -1,5 +1,7 @@
 package com.jianli.wechat;
 
+import com.jianli.dto.UserParam;
+
 /**
  * @author cheny.huang
  * @date 2018-07-21 15:01.
@@ -7,23 +9,16 @@ package com.jianli.wechat;
 public interface AuthInvoker {
 
     /**
-     * 跳转至第三方登录系统
+     * 获取跳转至第三方登录系统的URL
      */
-    void redirect();
-
-    /**
-     * 验证当前请求是否本系统产生的合法请求
-     * @param state
-     * @return
-     */
-    boolean valid(String state);
+    String redirect();
 
     /**
      * 获取accessToken
      * @param code
      * @return
      */
-    AccessTokenDTO getAccessToken(String code);
+    UserParam getAccessToken(String code, String state);
 
     /**
      * 获取用户信息
@@ -31,5 +26,5 @@ public interface AuthInvoker {
      * @param openid
      * @return
      */
-    UserInfoDTO getUserInfo(String accessToken, String refreshToken, String openid);
+    UserParam getUserInfo(String accessToken, String openid);
 }
