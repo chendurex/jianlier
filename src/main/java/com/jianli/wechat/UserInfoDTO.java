@@ -1,5 +1,6 @@
 package com.jianli.wechat;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Data
+@JsonIgnoreProperties(value = {"language", "privilege"})
 class UserInfoDTO {
     private String openid;
     private String nickname;
@@ -21,7 +23,7 @@ class UserInfoDTO {
     private String city;
     private String country;
     private String headimgurl;
-    private String unionId;
+    private String unionid;
     private String errcode;
     private String errmsg;
 }

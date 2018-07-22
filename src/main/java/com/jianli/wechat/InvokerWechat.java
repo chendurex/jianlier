@@ -3,7 +3,6 @@ package com.jianli.wechat;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.jianli.commons.StringUtils;
-import com.jianli.domain.User;
 import com.jianli.dto.UserParam;
 import com.jianli.exception.WechatException;
 import com.sun.jersey.api.client.Client;
@@ -49,7 +48,7 @@ public class InvokerWechat implements AuthInvoker {
 
     @Override
     public UserParam getAccessToken(String code, String state) {
-        /*if (StringUtils.isEmpty(CODE_CACHE.getIfPresent(state))) {
+        if (StringUtils.isEmpty(CODE_CACHE.getIfPresent(state))) {
             log.warn("state已经失效");
             throw new WechatException("请求已经过期，请重新登录");
         }
@@ -60,6 +59,7 @@ public class InvokerWechat implements AuthInvoker {
             WebResource.Builder requestBuilder = webResource.getRequestBuilder();
             response = requestBuilder.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON_TYPE).get(ClientResponse.class);
             log.info("请求wechat,status:{}", response.getStatus());
+
             if (response.getStatus() == Response.Status.OK.getStatusCode() && response.hasEntity()) {
                 // 微信返回的content-type是text/plain，但是实际的内容是json格式的，所以重新转换下格式为json
                 response.getHeaders().put("Content-Type", Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -75,7 +75,7 @@ public class InvokerWechat implements AuthInvoker {
             if (response != null) {
                 response.close();
             }
-        }*/
+        }
         throw new WechatException("登录微信失败，请重新登录");
     }
 
@@ -89,7 +89,6 @@ public class InvokerWechat implements AuthInvoker {
             response = requestBuilder.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON_TYPE).get(ClientResponse.class);
             log.info("请求wechat,status:{}", response.getStatus());
             if (response.getStatus() == Response.Status.OK.getStatusCode() && response.hasEntity()) {
-                // 微信返回的content-type是text/plain，但是实际的内容是json格式的，所以重新转换下格式为json
                 response.getHeaders().put("Content-Type", Collections.singletonList(MediaType.APPLICATION_JSON));
                 UserInfoDTO user = response.getEntity(UserInfoDTO.class);
                 if (StringUtils.isNotEmpty(user.getErrcode())) {
@@ -97,7 +96,7 @@ public class InvokerWechat implements AuthInvoker {
                     throw new WechatException("获取微信信息失败，msg"+user.getErrmsg());
                 }
                 return UserParam.builder().nickname(user.getNickname()).headImgUrl(user.getHeadimgurl()).country(user.getCountry())
-                        .province(user.getProvince()).city(user.getCity()).sex(user.getSex()).unionId(user.getUnionId()).build();
+                        .province(user.getProvince()).city(user.getCity()).sex(user.getSex()).unionId(user.getUnionid()).build();
             }
         } finally {
             if (response != null) {
