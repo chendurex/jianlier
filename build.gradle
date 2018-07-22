@@ -46,4 +46,8 @@ dependencies {
     compile 'com.docraptor:docraptor:1.1.0'
     compile 'com.github.dozermapper:dozer-core:6.2.0'
     compileOnly 'org.projectlombok:lombok:1.16.20'
+
+    compile 'com.sun.jersey:jersey-servlet:1.19.1'
+    compile 'com.sun.jersey:jersey-core:1.19.1'
+    compile 'com.sun.jersey:jersey-client:1.19.1'
 }

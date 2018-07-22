@@ -167,6 +167,12 @@ public class GlobalExceptionHandler {
         return error(exception.getMessage());
     }
 
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResResult handle(BaseException exception) {
+        return error(exception.getMessage());
+    }
+
     private ResResult error(Object message) {
         return ResUtils.fail(message);
     }
