@@ -44,7 +44,7 @@
         logger捕捉的方式为：LoggerFactory.getLogger(xxx.class)则传递的是xxx.class全限定名;
         如果为字符串定义的则传入是字符串定义的名称
     -->
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>
