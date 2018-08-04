@@ -2,15 +2,12 @@ package com.jianli;
 
 import com.jianli.commons.BeanUtils;
 import com.jianli.controller.ResumeController;
-import com.jianli.domain.WorkExp;
 import com.jianli.dto.WorkExpInsertParam;
 import com.jianli.dto.WorkExpParam;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.web.context.WebApplicationContext;

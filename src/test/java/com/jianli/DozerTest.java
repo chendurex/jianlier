@@ -2,7 +2,6 @@ package com.jianli;
 
 import com.jianli.commons.BeanUtils;
 import com.jianli.domain.SkillMaturity;
-import com.jianli.dto.SkillMaturityInsertParam;
 import com.jianli.dto.SkillMaturityParam;
 import org.junit.Test;
 

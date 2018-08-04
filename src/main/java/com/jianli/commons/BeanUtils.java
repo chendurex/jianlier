@@ -23,7 +23,7 @@ public class BeanUtils {
             return OW.writeValueAsString(o);
         } catch (Exception e) {
             log.error("格式化数据失败，", e);
-            throw new RuntimeException(e);
+            return String.valueOf(o);
         }
     }
 
@@ -39,4 +39,5 @@ public class BeanUtils {
             throw new RuntimeException(e);
         }
     }
+
 }
