@@ -2,6 +2,7 @@ package com.jianli.exception;
 
 import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -31,6 +32,7 @@ import java.util.stream.Collectors;
  */
 @ControllerAdvice
 @ResponseBody
+@Slf4j
 public class GlobalExceptionHandler {
 
 
@@ -164,12 +166,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResResult handle(Exception exception) {
+        log.error("服务器内部错误,", exception);
         return error(exception.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResResult handle(BaseException exception) {
+        log.error("请求参数错误,", exception);
         return error(exception.getMessage());
     }
 
