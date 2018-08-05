@@ -55,7 +55,7 @@ public interface ResumeService {
      * @param title
      * @return
      */
-    ResResult modifyWorkExpTitle(int resumeId, String title);
+    ResResult modifyWorkExpTitle(int resumeId, int sort, String title);
 
     /**
      * 删除工作经历
@@ -64,12 +64,6 @@ public interface ResumeService {
      */
     ResResult removeWorkExp(int id);
 
-    /**
-     * 查询工作经历列表
-     * @param resumeId
-     * @return
-     */
-    ResResult listWorkExp(int resumeId);
 
     /**
      * 显示单个工作经历
@@ -97,7 +91,7 @@ public interface ResumeService {
      * @param title
      * @return
      */
-    ResResult modifyEduBackgroundTitle(int resumeId, String title);
+    ResResult modifyEduBackgroundTitle(int resumeId,int sort,  String title);
 
     /**
      * 删除教育背景
@@ -105,12 +99,7 @@ public interface ResumeService {
      * @return
      */
     ResResult removeEduBackground(int id);
-    /**
-     * 查询教育背景列表
-     * @param resumeId
-     * @return
-     */
-    ResResult listEduBackground(int resumeId);
+
 
     /**
      * 显示单个教育背景
@@ -138,7 +127,7 @@ public interface ResumeService {
      * @param title
      * @return
      */
-    ResResult modifySkillMaturityTitle(int resumeId, String title);
+    ResResult modifySkillMaturityTitle(int resumeId,int sort,  String title);
 
     /**
      * 删除技能数量度
@@ -146,12 +135,7 @@ public interface ResumeService {
      * @return
      */
     ResResult removeSkillMaturity(int id);
-    /**
-     * 查询技能成熟度
-     * @param resumeId
-     * @return
-     */
-    ResResult listSkillMaturity(int resumeId);
+
 
     /**
      * 显示单个技能成熟度

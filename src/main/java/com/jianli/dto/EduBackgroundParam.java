@@ -50,6 +50,7 @@ public class EduBackgroundParam {
     @ApiModelProperty(notes = "结束时间", example = "2018-09-01", required = true)
     private String endTime;
 
+
     public EduBackground toEduBackground() {
         return BeanUtils.copy(this, EduBackground.class);
     }

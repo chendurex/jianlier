@@ -6,10 +6,7 @@ import com.jianli.domain.Resume;
 import com.jianli.domain.SkillMaturity;
 import com.jianli.domain.WorkExp;
 import com.jianli.dto.*;
-import com.jianli.repo.EduBackgroundRepo;
-import com.jianli.repo.ResumeRepo;
-import com.jianli.repo.SkillRepo;
-import com.jianli.repo.WorkRepo;
+import com.jianli.repo.*;
 import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
 import com.jianli.service.ResumeService;
@@ -28,11 +25,16 @@ public class ResumeServiceImpl implements ResumeService {
     private final EduBackgroundRepo eduBackgroundRepo;
     private final SkillRepo skilledRepo;
     private final ResumeRepo resumeRepo;
-    public ResumeServiceImpl(WorkRepo workRepo, EduBackgroundRepo eduBackgroundRepo, SkillRepo skilledRepo, ResumeRepo resumeRepo) {
+    private final CustomResumeDescRepo customResumeDescRepo;
+    private final CustomWorkRepo customWorkRepo;
+    public ResumeServiceImpl(WorkRepo workRepo, EduBackgroundRepo eduBackgroundRepo, SkillRepo skilledRepo,
+                             ResumeRepo resumeRepo, CustomResumeDescRepo customResumeDescRepo, CustomWorkRepo customWorkRepo) {
         this.workRepo = workRepo;
         this.eduBackgroundRepo = eduBackgroundRepo;
         this.skilledRepo = skilledRepo;
         this.resumeRepo = resumeRepo;
+        this.customWorkRepo = customWorkRepo;
+        this.customResumeDescRepo = customResumeDescRepo;
     }
 
 
@@ -75,9 +77,11 @@ public class ResumeServiceImpl implements ResumeService {
         Resume resume = opt.get();
         ResumeVo vo = BeanUtils.copy(resume, ResumeVo.class);
 
-        vo.setEduBackground(resume.getEduTitle(), eduBackgroundRepo.listByResumeId(id));
-        vo.setWorkExp(resume.getSkillTitle(), workRepo.listByResumeId(id));
-        vo.setSkillMaturity(resume.getExpTitle(), skilledRepo.listByResumeId(id));
+        vo.setEduBackground(resume.getEduTitle(), resume.getEduSort(), eduBackgroundRepo.listByResumeId(id));
+        vo.setWorkExp(resume.getSkillTitle(), resume.getExpSort(), workRepo.listByResumeId(id));
+        vo.setSkillMaturity(resume.getExpTitle(), resume.getSkillSort(), skilledRepo.listByResumeId(id));
+        vo.setCustomResumeDesc(customResumeDescRepo.listByResumeId(id));
+        vo.setCustomWorkExp(customWorkRepo.listByResumeId(id));
         return ResUtils.data(vo);
     }
 
@@ -107,8 +111,8 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Transactional
     @Override
-    public ResResult modifyWorkExpTitle(int resumeId, String title) {
-        resumeRepo.updateExpTitle(title, resumeId);
+    public ResResult modifyWorkExpTitle(int resumeId, int sort, String title) {
+        resumeRepo.updateExpTitle(title, sort, resumeId);
         return ResUtils.suc();
     }
 
@@ -116,11 +120,6 @@ public class ResumeServiceImpl implements ResumeService {
     public ResResult removeWorkExp(int id) {
         workRepo.deleteById(id);
         return ResUtils.suc();
-    }
-
-    @Override
-    public ResResult listWorkExp(int resumeId) {
-        return ResUtils.data(workRepo.listByResumeId(resumeId));
     }
 
     @Override
@@ -153,8 +152,8 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Transactional
     @Override
-    public ResResult modifyEduBackgroundTitle(int resumeId, String title) {
-        resumeRepo.updateEduTitle(title, resumeId);
+    public ResResult modifyEduBackgroundTitle(int resumeId, int sort, String title) {
+        resumeRepo.updateEduTitle(title, sort, resumeId);
         return ResUtils.suc();
     }
 
@@ -165,10 +164,6 @@ public class ResumeServiceImpl implements ResumeService {
         return ResUtils.suc();
     }
 
-    @Override
-    public ResResult listEduBackground(int resumeId) {
-        return ResUtils.data(eduBackgroundRepo.listByResumeId(resumeId));
-    }
 
     @Override
     public ResResult queryEduBackground(int id) {
@@ -202,8 +197,8 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Transactional
     @Override
-    public ResResult modifySkillMaturityTitle(int resumeId, String title) {
-        resumeRepo.updateSkillTitle(title, resumeId);
+    public ResResult modifySkillMaturityTitle(int resumeId,int sort, String title) {
+        resumeRepo.updateSkillTitle(title, sort, resumeId);
         return ResUtils.suc();
     }
 
@@ -213,10 +208,6 @@ public class ResumeServiceImpl implements ResumeService {
         return ResUtils.suc();
     }
 
-    @Override
-    public ResResult listSkillMaturity(int resumeId) {
-        return ResUtils.data(skilledRepo.listByResumeId(resumeId));
-    }
 
     @Override
     public ResResult querySkillMaturity(int id) {

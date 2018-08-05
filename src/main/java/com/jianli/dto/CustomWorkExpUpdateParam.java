@@ -12,11 +12,11 @@ import javax.validation.constraints.Min;
  * @date 2018-06-18 12:27
  */
 @EqualsAndHashCode(callSuper = true)
-@ApiModel("修改工作经历")
+@ApiModel("修改自定义工作经历")
 @Data
-public class WorkExpUpdateParam extends WorkExpParam {
+public class CustomWorkExpUpdateParam extends CustomWorkExpParam {
     @ApiModelProperty(notes = "唯一ID", example = "1", required = true)
-    @Min(value = 1, message = "工作经历ID必须大于1")
+    @Min(value = 1, message = "自定义工作经历ID必须大于1")
     private Integer id;
 
 }

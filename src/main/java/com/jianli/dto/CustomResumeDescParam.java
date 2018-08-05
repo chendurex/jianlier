@@ -1,13 +1,13 @@
 package com.jianli.dto;
 
 import com.jianli.commons.BeanUtils;
-import com.jianli.domain.ResumeModule;
-import io.swagger.annotations.ApiModel;
+import com.jianli.domain.CustomResumeDesc;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -20,12 +20,7 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "修改简历模块")
-public class ResumeModuleUpdateParam {
-
-    @Min(value = 1, message = "模块ID必须大于1")
-    @ApiModelProperty(notes = "模块ID", example = "1", required = true)
-    private Integer id;
+public class CustomResumeDescParam {
 
     @Min(value = 1, message = "用户ID必须大于1")
     @ApiModelProperty(notes = "用户ID", example = "1", required = true)
@@ -39,7 +34,12 @@ public class ResumeModuleUpdateParam {
     @ApiModelProperty(notes = "内容", example = "内容")
     private String txt;
 
-    public ResumeModule toResumeModule() {
-        return BeanUtils.copy(this, ResumeModule.class);
+    @NotBlank(message = "自定义简历描述标题不能为空")
+    @Length(min = 1, max = 1000, message = "自定义简历描述标题过长")
+    @ApiModelProperty(notes = "自定义简历描述标题", example = "增加公司逼格经历", required = true)
+    private String title;
+
+    public CustomResumeDesc toCustomResumeDesc() {
+        return BeanUtils.copy(this, CustomResumeDesc.class);
     }
 }

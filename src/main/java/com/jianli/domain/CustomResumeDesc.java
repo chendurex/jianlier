@@ -17,40 +17,25 @@ import static javax.persistence.GenerationType.IDENTITY;
  * @date 2018-06-18 11:52
  */
 @Data
-@Entity(name = "resume")
+@Entity(name = "custom_resume_desc")
 @JsonIgnoreProperties(value = {"modifyUid", "createUid", "createTime", "modifyTime"})
-public class Resume {
+public class CustomResumeDesc {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Integer id;
+
     private Integer modifyUid;
     @Column(updatable = false)
     private Integer createUid;
     @Column(updatable = false)
     private Timestamp createTime;
     private Timestamp modifyTime;
-
-    private String mobile;
-    private String address;
-    private String wechat;
-    private String email;
-    private String summary;
-    private String name;
-    private String summaryTitle;
-    private String objectiveTitle;
-    @Column(insertable = false, updatable = false)
-    private String expTitle;
-    @Column(insertable = false, updatable = false)
-    private Integer expSort;
-    @Column(insertable = false, updatable = false)
-    private String eduTitle;
-    @Column(insertable = false, updatable = false)
-    private Integer eduSort;
-    @Column(insertable = false, updatable = false)
-    private String skillTitle;
-    @Column(insertable = false, updatable = false)
-    private Integer skillSort;
+    @Column(updatable = false)
+    private Integer resumeId;
+    private String title;
+    private Integer sort;
+    private String txt;
 
 
     public void submit(int uid) {

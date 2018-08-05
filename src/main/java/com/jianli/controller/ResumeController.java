@@ -7,14 +7,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 
 /**
  * @author chendurex
@@ -46,14 +41,14 @@ public class ResumeController {
     @ApiOperation(value = "删除简历", response = ResResult.class)
     @GetMapping(value = "/remove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult removeResume(@ApiParam(name = "id", value = "简历ID", example = "1")
-                                      @Validated @Min(value = 1) @RequestParam("id") Integer id) {
+                                  @RequestParam("id") Integer id) {
         return resumeService.removeResume(id);
     }
 
     @ApiOperation(value = "查询简历信息", response = ResResult.class)
     @GetMapping(value = "/query", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult queryResume(@ApiParam(name = "id", value = "简历ID", example = "1")
-                                     @Validated @Min(value = 1) @RequestParam("id") Integer id) {
+                                 @RequestParam("id") Integer id) {
         return resumeService.queryResume(id);
     }
 
@@ -73,24 +68,25 @@ public class ResumeController {
     @ApiOperation(value = "修改个人工作经历标题", response = ResResult.class)
     @GetMapping(value = "/workExp/modifyTitle", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult modifyWorkExpTitle(@ApiParam(name = "resumeId", value = "简历ID", example = "1")
-                                            @Min(1)  @Validated @RequestParam("resumeId") Integer resumeId,
-                                              @ApiParam(name = "title", value = "工作经历标题", example = "工作经历") @NotBlank
-                                              @Length(min = 1, max = 50, message = "工作经历标题太长或者不能为空")
-                                              @Validated @RequestParam("title") String title) {
-        return resumeService.modifyWorkExpTitle(resumeId, title);
+                                       @RequestParam("resumeId") Integer resumeId,
+                                       @ApiParam(name = "title", value = "工作经历标题", example = "工作经历")
+                                       @RequestParam("title") String title,
+                                       @ApiParam(name = "sort", value = "工作经历排序", example = "1")
+                                       @RequestParam("sort")Integer sort) {
+        return resumeService.modifyWorkExpTitle(resumeId, sort, title);
     }
 
     @ApiOperation(value = "删除工作经历", response = ResResult.class)
     @GetMapping(value = "/workExp/remove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult removeWorkExp(@ApiParam(name = "id", value = "工作经历ID", example = "1")
-                                       @Validated @Min(value = 1) @RequestParam("id") Integer id) {
+                                       @RequestParam("id") Integer id) {
         return resumeService.removeWorkExp(id);
     }
 
     @ApiOperation(value = "查询个人工作经历", response = ResResult.class)
     @GetMapping(value = "/workExp/query", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult queryWorkExp(@ApiParam(name = "id", value = "工作经历ID", example = "1")
-                                      @Validated @Min(value = 1) @RequestParam("id") Integer id) {
+                                      @RequestParam("id") Integer id) {
         return resumeService.queryWorkExp(id);
     }
 
@@ -109,24 +105,25 @@ public class ResumeController {
     @ApiOperation(value = "修改个人教育背景标题", response = ResResult.class)
     @GetMapping(value = "/eduBackground/modifyTitle", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult modifyEduBackgroundTitle(@ApiParam(name = "resumeId", value = "简历ID", example = "1")
-                                                  @Validated @Min(1)  @RequestParam("resumeId") Integer resumeId,
-                                      @ApiParam(name = "title", value = "教育背景标题", example = "教育背景") @NotBlank
-                                      @Length(min = 1, max = 50, message = "教育背景标题太长或者不能为空")
-                                      @Validated  @RequestParam("title") String title) {
-        return resumeService.modifyEduBackgroundTitle(resumeId, title);
+                                      @RequestParam("resumeId") Integer resumeId,
+                                      @ApiParam(name = "title", value = "教育背景标题", example = "教育背景")
+                                      @RequestParam("title") String title,
+                                      @ApiParam(name = "sort", value = "教育背景排序", example = "1")
+                                      @RequestParam("sort")Integer sort) {
+        return resumeService.modifyEduBackgroundTitle(resumeId, sort, title);
     }
 
     @ApiOperation(value = "删除教育背景", response = ResResult.class)
     @GetMapping(value = "/eduBackground/remove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult removeEduBackground(@ApiParam(name = "id", value = "教育背景ID", example = "1")
-                                             @Validated @Min(value = 1) @RequestParam("id") Integer id) {
+                                             @RequestParam("id") Integer id) {
         return resumeService.removeEduBackground(id);
     }
 
     @ApiOperation(value = "查询个人教育背景", response = ResResult.class)
     @GetMapping(value = "/eduBackground/query", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult queryEduBackground(@ApiParam(name = "id", value = "教育背景ID", example = "1")
-                                            @Valid @Min(value = 1) @RequestParam("id") Integer id) {
+                                            @RequestParam("id") Integer id) {
         return resumeService.queryEduBackground(id);
     }
 
@@ -145,24 +142,25 @@ public class ResumeController {
     @ApiOperation(value = "修改个人技能熟练度标题", response = ResResult.class)
     @GetMapping(value = "/skillMaturity/modifyTitle", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult modifySkillTitle(@ApiParam(name = "resumeId", value = "简历ID", example = "1")
-                                          @Validated @Min(1)  @RequestParam("resumeId") Integer resumeId,
-                                    @ApiParam(name = "title", value = "技能熟练度标题", example = "技能熟练度") @NotBlank
-                                    @Length(min = 1, max = 50, message = "技能熟练度标题太长或者不能为空")
-                                    @Validated @RequestParam("title") String title) {
-        return resumeService.modifySkillMaturityTitle(resumeId, title);
+                                    @RequestParam("resumeId") Integer resumeId,
+                                    @ApiParam(name = "title", value = "技能熟练度标题", example = "技能熟练度")
+                                    @RequestParam("title") String title,
+                                    @ApiParam(name = "sort", value = "技能熟练度排序", example = "1")
+                                    @RequestParam("sort")Integer sort) {
+        return resumeService.modifySkillMaturityTitle(resumeId, sort, title);
     }
 
     @ApiOperation(value = "删除技能熟悉度", response = ResResult.class)
     @GetMapping(value = "/skillMaturity/remove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult removeSkillMaturity(@ApiParam(name = "id", value = "技能熟练度ID", example = "1")
-                                             @Validated @Min(value = 1) @RequestParam("id") Integer id) {
+                                             @RequestParam("id") Integer id) {
         return resumeService.removeSkillMaturity(id);
     }
 
     @ApiOperation(value = "查询个人技能熟练度", response = ResResult.class)
     @GetMapping(value = "/skillMaturity/query", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult querySkillMaturity(@ApiParam(name = "id", value = "技能熟练度ID", example = "1")
-                                            @Validated @Min(value = 1) @RequestParam("id") Integer id) {
+                                            @RequestParam("id") Integer id) {
         return resumeService.querySkillMaturity(id);
     }
 

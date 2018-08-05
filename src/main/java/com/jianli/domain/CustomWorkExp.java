@@ -14,17 +14,15 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * @author chendurex
- * @date 2018-06-18 11:52
+ * @date 2018-08-04 12:27
  */
+@Entity(name = "custom_work_exp")
 @Data
-@Entity(name = "resume_module")
 @JsonIgnoreProperties(value = {"modifyUid", "createUid", "createTime", "modifyTime"})
-public class ResumeModule {
-
+public class CustomWorkExp {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Integer id;
-
     private Integer modifyUid;
     @Column(updatable = false)
     private Integer createUid;
@@ -32,10 +30,15 @@ public class ResumeModule {
     private Timestamp createTime;
     private Timestamp modifyTime;
 
-    private Integer uid;
+    @Column(updatable = false)
+    private Integer resumeId;
+    private String title;
+    private String name;
+    private String position;
+    private String description;
+    private String startTime;
+    private String endTime;
     private Integer sort;
-    private String txt;
-
 
     public void submit(int uid) {
         this.createTime = Timestamp.from(Instant.now());
@@ -48,5 +51,4 @@ public class ResumeModule {
         this.modifyTime = Timestamp.from(Instant.now());
         this.modifyUid = uid;
     }
-
 }
