@@ -1,5 +1,6 @@
 package com.jianli.dto;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -11,6 +12,7 @@ import javax.validation.constraints.Min;
  * @date 2018-08-06 18:58.
  */
 @Data
+@ApiModel(value = "修改简历标题")
 public class ResumeTitleParam {
     @ApiModelProperty(notes = "简历ID", example = "1")
     @Min(value = 1, message = "简历ID必须大于1")

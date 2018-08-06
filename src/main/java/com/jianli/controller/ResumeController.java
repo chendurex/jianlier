@@ -67,7 +67,7 @@ public class ResumeController {
 
     @ApiOperation(value = "修改个人工作经历标题", response = ResResult.class)
     @PostMapping(value = "/workExp/modifyTitle", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult modifyWorkExpTitle(@Validated ResumeTitleParam param) {
+    public ResResult modifyWorkExpTitle(@Validated @RequestBody ResumeTitleParam param) {
         return resumeService.modifyWorkExpTitle(param.getResumeId(), param.getSort(), param.getTitle());
     }
 
@@ -131,7 +131,7 @@ public class ResumeController {
 
     @ApiOperation(value = "修改个人技能熟练度标题", response = ResResult.class)
     @PostMapping(value = "/skillMaturity/modifyTitle", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult modifySkillTitle(@Validated ResumeTitleParam param) {
+    public ResResult modifySkillTitle(@RequestBody @Validated ResumeTitleParam param) {
         return resumeService.modifySkillMaturityTitle(param.getResumeId(), param.getSort(), param.getTitle());
     }
 
