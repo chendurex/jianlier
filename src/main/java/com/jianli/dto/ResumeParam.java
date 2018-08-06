@@ -24,7 +24,7 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 public class ResumeParam {
 
-    @Pattern(regexp = "^1([34578])\\d{9}$",message = "手机号码格式错误")
+    //@Pattern(regexp = "^1([34578])\\d{9}$",message = "手机号码格式错误")
     @NotBlank(message = "手机号码不能为空")
     @ApiModelProperty(notes = "手机号码", example = "13838381438", required = true)
     private String mobile;
@@ -32,7 +32,7 @@ public class ResumeParam {
     private String address;
     @ApiModelProperty(notes = "微信号，用户绑定的微信号", example = "chendurex@ccc.com")
     private String wechat;
-    @Email(message = "邮箱格式错误")
+   //@Email(message = "邮箱格式错误")
     @ApiModelProperty(notes = "邮箱，用户在需要发送简历时候需要填写", example = "chendurex@gmail.com")
     private String email;
     @Length(max = 5000, message = "个人简介过长")

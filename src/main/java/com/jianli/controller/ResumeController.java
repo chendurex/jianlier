@@ -66,14 +66,9 @@ public class ResumeController {
     }
 
     @ApiOperation(value = "修改个人工作经历标题", response = ResResult.class)
-    @GetMapping(value = "/workExp/modifyTitle", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult modifyWorkExpTitle(@ApiParam(name = "resumeId", value = "简历ID", example = "1")
-                                       @RequestParam("resumeId") Integer resumeId,
-                                       @ApiParam(name = "title", value = "工作经历标题", example = "工作经历")
-                                       @RequestParam("title") String title,
-                                       @ApiParam(name = "sort", value = "工作经历排序", example = "1")
-                                       @RequestParam("sort")Integer sort) {
-        return resumeService.modifyWorkExpTitle(resumeId, sort, title);
+    @PostMapping(value = "/workExp/modifyTitle", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult modifyWorkExpTitle(@Validated ResumeTitleParam param) {
+        return resumeService.modifyWorkExpTitle(param.getResumeId(), param.getSort(), param.getTitle());
     }
 
     @ApiOperation(value = "删除工作经历", response = ResResult.class)
@@ -103,14 +98,9 @@ public class ResumeController {
     }
 
     @ApiOperation(value = "修改个人教育背景标题", response = ResResult.class)
-    @GetMapping(value = "/eduBackground/modifyTitle", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult modifyEduBackgroundTitle(@ApiParam(name = "resumeId", value = "简历ID", example = "1")
-                                      @RequestParam("resumeId") Integer resumeId,
-                                      @ApiParam(name = "title", value = "教育背景标题", example = "教育背景")
-                                      @RequestParam("title") String title,
-                                      @ApiParam(name = "sort", value = "教育背景排序", example = "1")
-                                      @RequestParam("sort")Integer sort) {
-        return resumeService.modifyEduBackgroundTitle(resumeId, sort, title);
+    @PostMapping(value = "/eduBackground/modifyTitle", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult modifyEduBackgroundTitle(@Validated ResumeTitleParam param) {
+        return resumeService.modifyEduBackgroundTitle(param.getResumeId(), param.getSort(), param.getTitle());
     }
 
     @ApiOperation(value = "删除教育背景", response = ResResult.class)
@@ -140,14 +130,9 @@ public class ResumeController {
     }
 
     @ApiOperation(value = "修改个人技能熟练度标题", response = ResResult.class)
-    @GetMapping(value = "/skillMaturity/modifyTitle", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult modifySkillTitle(@ApiParam(name = "resumeId", value = "简历ID", example = "1")
-                                    @RequestParam("resumeId") Integer resumeId,
-                                    @ApiParam(name = "title", value = "技能熟练度标题", example = "技能熟练度")
-                                    @RequestParam("title") String title,
-                                    @ApiParam(name = "sort", value = "技能熟练度排序", example = "1")
-                                    @RequestParam("sort")Integer sort) {
-        return resumeService.modifySkillMaturityTitle(resumeId, sort, title);
+    @PostMapping(value = "/skillMaturity/modifyTitle", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult modifySkillTitle(@Validated ResumeTitleParam param) {
+        return resumeService.modifySkillMaturityTitle(param.getResumeId(), param.getSort(), param.getTitle());
     }
 
     @ApiOperation(value = "删除技能熟悉度", response = ResResult.class)
