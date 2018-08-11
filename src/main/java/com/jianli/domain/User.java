@@ -1,5 +1,6 @@
 package com.jianli.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,15 +20,12 @@ import java.time.Instant;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(value = {"refreshToken", "accessToken", "unionId", "createTime", "modifyTime"})
 public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @ApiModelProperty(notes = "用户ID，修改用户信息时需要填写")
     private Integer id;
-    /*private String mobile;
-    private String address;
-    private String email;
-    private String summary;*/
     private String accessToken;
     private Integer expiresIn;
     private String refreshToken;

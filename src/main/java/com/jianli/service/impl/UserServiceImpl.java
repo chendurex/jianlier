@@ -50,6 +50,6 @@ public class UserServiceImpl implements UserService {
         if (real.getId() == null) {
             return ResUtils.fail("保存数据失败");
         }
-        return ResUtils.data(real.getId());
+        return ResUtils.data(user);
     }
 }

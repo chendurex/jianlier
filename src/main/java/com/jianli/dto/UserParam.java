@@ -1,5 +1,6 @@
 package com.jianli.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jianli.commons.BeanUtils;
 import com.jianli.domain.User;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Data
+@JsonIgnoreProperties()
 public class UserParam {
     private String accessToken;
     private Integer expiresIn;

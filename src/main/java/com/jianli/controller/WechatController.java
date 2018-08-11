@@ -2,6 +2,7 @@ package com.jianli.controller;
 
 import com.jianli.commons.StringUtils;
 import com.jianli.response.ResResult;
+import com.jianli.response.ResUtils;
 import com.jianli.service.UserService;
 import com.jianli.wechat.AuthInvoker;
 import lombok.extern.slf4j.Slf4j;
@@ -40,9 +41,13 @@ public class WechatController {
         }
     }
 
+    @GetMapping(value = "/internal/login")
+    public ResResult login() {
+        return ResUtils.data(invoker.getWechatParam());
+    }
+
     @GetMapping(value = "/callback")
     public ResResult callback(@RequestParam(value = "code") String code, @RequestParam(value = "state") String state) {
         return userService.submit(code, state);
-        // 需要回调前段页面
     }
 }

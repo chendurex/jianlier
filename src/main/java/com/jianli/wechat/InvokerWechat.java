@@ -4,6 +4,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.jianli.commons.StringUtils;
 import com.jianli.dto.UserParam;
+import com.jianli.dto.WechatLoginParamVO;
 import com.jianli.exception.WechatException;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -37,7 +38,7 @@ public class InvokerWechat implements AuthInvoker {
     }
 
     private static final Cache<String, Integer> CODE_CACHE =
-            CacheBuilder.newBuilder().maximumSize(1000).expireAfterWrite(1, TimeUnit.MINUTES).build();
+            CacheBuilder.newBuilder().maximumSize(1000).expireAfterWrite(10, TimeUnit.MINUTES).build();
 
     @Override
     public String redirect() {
@@ -47,11 +48,18 @@ public class InvokerWechat implements AuthInvoker {
     }
 
     @Override
+    public WechatLoginParamVO getWechatParam() {
+        final String key = CACHE_PREFIX + UUID.randomUUID().toString();
+        CODE_CACHE.put(key, 1);
+        return WechatLoginParamVO.builder().appId(appId).redirectUri(redirectUri).scope("snsapi_login").state(key).build();
+    }
+
+    @Override
     public UserParam getAccessToken(String code, String state) {
-        /*if (StringUtils.isEmpty(CODE_CACHE.getIfPresent(state))) {
+        if (StringUtils.isEmpty(CODE_CACHE.getIfPresent(state))) {
             log.warn("state已经失效");
             throw new WechatException("请求已经过期，请重新登录");
-        }*/
+        }
         String url = Constant.assembleAccessTokenUrl(appId, secret, code);
         ClientResponse response = null;
         try {

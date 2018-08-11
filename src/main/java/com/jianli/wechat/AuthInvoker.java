@@ -1,6 +1,7 @@
 package com.jianli.wechat;
 
 import com.jianli.dto.UserParam;
+import com.jianli.dto.WechatLoginParamVO;
 
 /**
  * @author cheny.huang
@@ -12,6 +13,12 @@ public interface AuthInvoker {
      * 获取跳转至第三方登录系统的URL
      */
     String redirect();
+
+    /**
+     * 获取wechat登录参数
+     * @return
+     */
+    WechatLoginParamVO getWechatParam();
 
     /**
      * 获取accessToken
