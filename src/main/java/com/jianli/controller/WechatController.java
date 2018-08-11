@@ -42,7 +42,12 @@ public class WechatController {
     }
 
     @GetMapping(value = "/internal/login")
-    public ResResult login() {
+    public ResResult login(@RequestParam(value = "openid", required = false) String openid) {
+        if (StringUtils.isNotEmpty(openid)) {
+            // 直接通过openid获取用户信息
+            return null;
+        }
+
         return ResUtils.data(invoker.getWechatParam());
     }
 

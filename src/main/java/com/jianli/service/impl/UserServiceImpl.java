@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
             real = userRepo.save(user);
         } else {
             user.modify();
+            user.setId(origin.getId());
             real = userRepo.save(user);
         }
 
