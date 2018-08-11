@@ -74,7 +74,7 @@ public class WechatController {
             log.error("用户数据回调失败");
             return ;
         }
-        String url = mainUrl + user.getOpenid();
+        String url = mainUrl + "?openid=" + user.getOpenid();
         try {
             response.sendRedirect(url);
         } catch (IOException e) {
