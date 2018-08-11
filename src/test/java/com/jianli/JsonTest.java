@@ -25,10 +25,4 @@ public class JsonTest {
         System.out.println(BeanUtils.deepPrint(edu));
     }
 
-    @Test
-    public void resumeToJson() {
-        ResumeParam edu = ResumeParam.builder().address("1").email("316122221@qq.com").wechat("hahaha")
-                .mobile("13975845481").summary("hehe").build();
-        System.out.println(BeanUtils.deepPrint(edu));
-    }
 }

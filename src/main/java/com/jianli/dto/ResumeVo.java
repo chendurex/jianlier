@@ -1,8 +1,12 @@
 package com.jianli.dto;
 
-import com.jianli.domain.*;
+import com.jianli.domain.EduBackground;
+import com.jianli.domain.Resume;
+import com.jianli.domain.SkillMaturity;
+import com.jianli.domain.WorkExp;
 import io.swagger.annotations.ApiModel;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.List;
 
@@ -10,72 +14,79 @@ import java.util.List;
  * @author chendurex
  * @date 2018-06-18 11:52
  */
-@EqualsAndHashCode(callSuper = true)
-@Getter
 @ApiModel(value = "显示简历信息")
-public class ResumeVo extends ResumeParam {
-
+@Getter
+public class ResumeVo {
+    private Integer id;
+    private UserInfoVO userInfoVO;
+    private SummaryVO summaryVO;
     private EduBackgroundVO eduBackground;
     private SkillMaturityVO skillMaturity;
     private WorkExpVO workExp;
-    private CustomResumeDescVO customResumeDesc;
-    private CustomWorkExpVO customWorkExp;
 
-    public void setEduBackground(String title, Integer sort, List<EduBackground> eduBackgrounds) {
-        eduBackground = new EduBackgroundVO(title, sort, eduBackgrounds);
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setSkillMaturity(String title, Integer sort, List<SkillMaturity> skillMaturities) {
-        skillMaturity = new SkillMaturityVO(title, sort, skillMaturities);
+    public void setUserInfoVO(Resume resume) {
+        userInfoVO = new UserInfoVO(resume.getAddress(), resume.getEmail(), resume.getMobile(),
+                resume.getName(), resume.getWechat());
     }
 
-    public void setWorkExp(String title, Integer sort, List<WorkExp> workExps) {
-        workExp = new WorkExpVO(title, sort, workExps);
+    public void setSummary(String title, String text) {
+        this.summaryVO = new SummaryVO(title, text);
     }
 
-    public void setCustomWorkExp(List<CustomWorkExp> customWorkExps) {
-        customWorkExp = new CustomWorkExpVO(customWorkExps);
+    public void setEduBackground(String title, List<EduBackground> eduBackgrounds) {
+        eduBackground = new EduBackgroundVO(title, eduBackgrounds);
     }
 
-    public void setCustomResumeDesc(List<CustomResumeDesc> customResumeDescs) {
-        customResumeDesc = new CustomResumeDescVO(customResumeDescs);
+    public void setSkillMaturity(String title, List<SkillMaturity> skillMaturities) {
+        skillMaturity = new SkillMaturityVO(title, skillMaturities);
+    }
+
+    public void setWorkExp(String title, List<WorkExp> workExps) {
+        workExp = new WorkExpVO(title, workExps);
+    }
+
+
+    @AllArgsConstructor
+    @Getter
+    public static class UserInfoVO {
+        private String mobile;
+        private String address;
+        private String wechat;
+        private String email;
+        private String name;
     }
 
     @AllArgsConstructor
     @Getter
-    private class EduBackgroundVO {
+    public static class SummaryVO {
         private String title;
-        private Integer sort;
+        private String text;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class EduBackgroundVO {
+        private String title;
         private List<EduBackground> eduBackgrounds;
 
     }
 
     @AllArgsConstructor
     @Getter
-    private class SkillMaturityVO {
+    public static class SkillMaturityVO {
         private String title;
-        private Integer sort;
         private List<SkillMaturity> skillMaturities;
     }
 
     @Getter
     @AllArgsConstructor
-    private class WorkExpVO {
+    public static class WorkExpVO {
         private String title;
-        private Integer sort;
         private List<WorkExp> workExps;
-    }
-
-    @Getter
-    @AllArgsConstructor
-    private class CustomWorkExpVO {
-        private List<CustomWorkExp> customWorkExps;
-    }
-
-    @Getter
-    @AllArgsConstructor
-    private class CustomResumeDescVO {
-        private List<CustomResumeDesc> customResumeDescs;
     }
 
 }

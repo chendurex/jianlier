@@ -9,13 +9,15 @@ import javax.validation.constraints.Min;
 
 /**
  * @author chendurex
- * @date 2018-06-18 11:52
+ * @date 2018-08-11 23:52
  */
 @EqualsAndHashCode(callSuper = true)
+@ApiModel(value = "新增自我介绍")
 @Data
-@ApiModel(value = "新增简历信息")
-public class ResumeInsertParam extends ResumeParam {
+public class ResumeSummaryInsertParam extends ResumeSummaryParam {
+
     @Min(value = 1, message = "用户ID必须大于0")
     @ApiModelProperty(notes = "用户ID", example = "1", required = true)
     private Integer uid;
+
 }

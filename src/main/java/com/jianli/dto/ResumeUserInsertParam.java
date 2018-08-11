@@ -13,13 +13,9 @@ import javax.validation.constraints.Min;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@ApiModel(value = "修改简历信息")
-public class ResumeUpdateParam extends ResumeParam {
+@ApiModel(value = "新增简历信息")
+public class ResumeUserInsertParam extends ResumeParam {
     @Min(value = 1, message = "用户ID必须大于0")
     @ApiModelProperty(notes = "用户ID", example = "1", required = true)
     private Integer uid;
-
-    @ApiModelProperty(notes = "唯一ID", example = "1")
-    @Min(value = 1, message = "简历ID必须大于1")
-    private Integer id;
 }

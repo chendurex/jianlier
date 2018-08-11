@@ -1,19 +1,16 @@
 package com.jianli.service.impl;
 
-import com.jianli.commons.BeanUtils;
-import com.jianli.domain.EduBackground;
-import com.jianli.domain.Resume;
-import com.jianli.domain.SkillMaturity;
-import com.jianli.domain.WorkExp;
+import com.google.common.collect.ImmutableMap;
+import com.jianli.domain.*;
 import com.jianli.dto.*;
 import com.jianli.repo.*;
 import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
 import com.jianli.service.ResumeService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author chendurex
@@ -39,7 +36,7 @@ public class ResumeServiceImpl implements ResumeService {
 
 
     @Override
-    public ResResult submitResume(ResumeInsertParam param) {
+    public ResResult submitResumeUserInfo(ResumeUserInsertParam param) {
         Resume resume = param.toResume();
         resume.submit(param.getUid());
         Resume saved = resumeRepo.save(resume);
@@ -50,7 +47,7 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
-    public ResResult modifyResume(ResumeUpdateParam param) {
+    public ResResult modifyResumeUserInfo(ResumeUserUpdateParam param) {
         Resume resume = param.toResume();
         resume.modify(param.getUid());
         Resume modified = resumeRepo.save(resume);
@@ -75,14 +72,84 @@ public class ResumeServiceImpl implements ResumeService {
             return ResUtils.fail("查询的数据不存在");
         }
         Resume resume = opt.get();
-        ResumeVo vo = BeanUtils.copy(resume, ResumeVo.class);
+        ResumeVo.SummaryVO summaryVO = new ResumeVo.SummaryVO(resume.getSummaryTitle(), resume.getSummary());
 
-        vo.setEduBackground(resume.getEduTitle(), resume.getEduSort(), eduBackgroundRepo.listByResumeId(id));
-        vo.setWorkExp(resume.getExpTitle(), resume.getExpSort(), workRepo.listByResumeId(id));
-        vo.setSkillMaturity(resume.getSkillTitle(), resume.getSkillSort(), skilledRepo.listByResumeId(id));
-        vo.setCustomResumeDesc(customResumeDescRepo.listByResumeId(id));
-        vo.setCustomWorkExp(customWorkRepo.listByResumeId(id));
-        return ResUtils.data(vo);
+        ResumeVo.UserInfoVO  userInfoVO = new ResumeVo.UserInfoVO(resume.getAddress(), resume.getEmail(), resume.getMobile(),
+                resume.getName(), resume.getWechat());
+
+        ResumeVo.EduBackgroundVO eduBackgroundVO = new ResumeVo.EduBackgroundVO(resume.getEduTitle(),
+                eduBackgroundRepo.listByResumeId(id));
+
+
+        ResumeVo.WorkExpVO expVO = new ResumeVo.WorkExpVO(resume.getExpTitle(), workRepo.listByResumeId(id));
+
+        ResumeVo.SkillMaturityVO skillMaturityVO = new ResumeVo.SkillMaturityVO(resume.getSkillTitle(),
+                skilledRepo.listByResumeId(id));
+
+        Map<String, Integer> sorted = new TreeMap<>();
+        sorted.put("userInfo", -1);
+        sorted.put("summary", 1);
+        sorted.put("eduBackground", resume.getEduSort());
+        sorted.put("skillMaturity", resume.getSkillSort());
+        sorted.put("workExp", resume.getExpSort());
+
+
+        Map<String, Object> maps = ImmutableMap.<String, Object>builder()
+                .put("id", resume.getId())
+                .put("sorted", sorted)
+                .put("userInfo", userInfoVO)
+                .put("summary", summaryVO)
+                .put("eduBackground", eduBackgroundVO)
+                .put("skillMaturity", skillMaturityVO)
+                .put("workExp", expVO).build();
+        Map<String, Object> copys = new HashMap<>(maps);
+
+        List<CustomResumeDesc> customResumeDesc = customResumeDescRepo.listByResumeId(resume.getId());
+        for (int i=0; i<customResumeDesc.size(); i++) {
+            String key = "customDesc_"+i;
+            CustomResumeDesc desc = customResumeDesc.get(i);
+            sorted.put(key, desc.getSort());
+            copys.put(key, desc);
+        }
+
+        List<CustomWorkExp> customWorkExps = customWorkRepo.listByResumeId(resume.getId());
+        for (int i = 0; i < customWorkExps.size(); i++) {
+            String key = "customExp_"+i;
+            CustomWorkExp exp = customWorkExps.get(i);
+            sorted.put(key, exp.getSort());
+            copys.put(key, exp);
+        }
+
+
+        return ResUtils.data(copys);
+    }
+
+    @Transactional
+    @Override
+    public ResResult submitResumeSummary(int resumeId, String summary) {
+        resumeRepo.updateSummaryContent(summary, resumeId);
+        return ResUtils.suc();
+    }
+
+    @Transactional
+    @Override
+    public ResResult modifyResumeSummary(int id, String summary) {
+        resumeRepo.updateSummaryContent(summary, id);
+        return ResUtils.suc();
+    }
+
+    @Transactional
+    @Override
+    public ResResult removeResumeSummary(int id) {
+        resumeRepo.removeSummary(id);
+        return ResUtils.suc();
+    }
+
+    @Transactional
+    @Override
+    public ResResult modifyResumeSummaryTitle(int resumeId, int sort, String title) {
+        resumeRepo.updateSummaryTitle(title, sort, resumeId);
+        return ResUtils.suc();
     }
 
     @Override

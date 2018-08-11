@@ -28,14 +28,14 @@ public class ResumeController {
 
     @ApiOperation(value = "新增简历基本信息", response = ResResult.class)
     @PostMapping(value = "/submit", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult submitResume(@RequestBody @Validated ResumeInsertParam param) {
-        return resumeService.submitResume(param);
+    public ResResult submitResume(@RequestBody @Validated ResumeUserInsertParam param) {
+        return resumeService.submitResumeUserInfo(param);
     }
 
-    @ApiOperation(value = "修改简历信息", response = ResResult.class)
+    @ApiOperation(value = "修改简历基本信息", response = ResResult.class)
     @PostMapping(value = "/modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult modifyResume(@RequestBody @Validated ResumeUpdateParam param) {
-        return resumeService.modifyResume(param);
+    public ResResult modifyResume(@RequestBody @Validated ResumeUserUpdateParam param) {
+        return resumeService.modifyResumeUserInfo(param);
     }
 
     @ApiOperation(value = "删除简历", response = ResResult.class)
@@ -43,6 +43,32 @@ public class ResumeController {
     public ResResult removeResume(@ApiParam(name = "id", value = "简历ID", example = "1")
                                   @RequestParam("id") Integer id) {
         return resumeService.removeResume(id);
+    }
+
+
+    @ApiOperation(value = "新增简历自我介绍", response = ResResult.class)
+    @PostMapping(value = "/summary/submit", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult submitResumeSummary(@RequestBody @Validated ResumeSummaryInsertParam param) {
+        return resumeService.submitResumeSummary(param.getResumeId(), param.getSummary());
+    }
+
+    @ApiOperation(value = "修改简历自我介绍", response = ResResult.class)
+    @PostMapping(value = "/summary/modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult modifyResumeSummary(@RequestBody @Validated ResumeSummaryParam param) {
+        return resumeService.modifyResumeSummary(param.getResumeId(), param.getSummary());
+    }
+
+    @ApiOperation(value = "删除简历自我介绍", response = ResResult.class)
+    @GetMapping(value = "/summary/remove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult removeResumeSummary(@ApiParam(name = "id", value = "简历ID", example = "1")
+                                  @RequestParam("id") Integer id) {
+        return resumeService.removeResumeSummary(id);
+    }
+
+    @ApiOperation(value = "修改简历自我介绍标题", response = ResResult.class)
+    @PostMapping(value = "/summary/modifyTitle", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult modifySummaryTitle(@RequestBody @Validated ResumeTitleParam param) {
+        return resumeService.modifyResumeSummaryTitle(param.getResumeId(), param.getSort(), param.getTitle());
     }
 
     @ApiOperation(value = "查询简历信息", response = ResResult.class)

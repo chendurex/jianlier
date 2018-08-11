@@ -35,15 +35,9 @@ public class ResumeParam {
    //@Email(message = "邮箱格式错误")
     @ApiModelProperty(notes = "邮箱，用户在需要发送简历时候需要填写", example = "chendurex@gmail.com")
     private String email;
-    @Length(max = 5000, message = "个人简介过长")
-    @ApiModelProperty(notes = "个人简介", example = "专业吹牛三十年，不服来战")
-    private String summary;
     @NotBlank(message = "姓名不能为空")
     @ApiModelProperty(notes = "姓名", example = "爱吹牛的天线宝宝", required = true)
     private String name;
-    @NotBlank(message = "简介标题不能为空")
-    @ApiModelProperty(notes = "简介标题", example = "自我介绍", required = true)
-    private String summaryTitle;
     @NotBlank(message = "求职意向标题不能为空")
     @ApiModelProperty(notes = "求职意向标题", example = "求职意向", required = true)
     private String objectiveTitle;

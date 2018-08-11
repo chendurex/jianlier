@@ -14,13 +14,13 @@ public interface ResumeService {
      * @param param
      * @return
      */
-    ResResult submitResume(ResumeInsertParam param);
+    ResResult submitResumeUserInfo(ResumeUserInsertParam param);
     /**
      * 修改简历信息
      * @param param
      * @return
      */
-    ResResult modifyResume(ResumeUpdateParam param);
+    ResResult modifyResumeUserInfo(ResumeUserUpdateParam param);
 
     /**
      * 删除简历
@@ -28,6 +28,34 @@ public interface ResumeService {
      * @return
      */
     ResResult removeResume(int id);
+
+    /**
+     * 新增简历介绍
+     * @param
+     * @return
+     */
+    ResResult submitResumeSummary(int resumeId, String summary);
+    /**
+     * 修改简历介绍
+     * @return
+     */
+    ResResult modifyResumeSummary(int id, String summary);
+
+    /**
+     * 删除简历介绍
+     * @param id
+     * @return
+     */
+    ResResult removeResumeSummary(int id);
+
+    /**
+     * 修改简介介绍标题
+     * @param resumeId
+     * @param sort
+     * @param title
+     * @return
+     */
+    ResResult modifyResumeSummaryTitle(int resumeId, int sort, String title);
 
     /**
      * 显示简历信息

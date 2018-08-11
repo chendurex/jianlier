@@ -35,10 +35,13 @@ public class Resume {
     private String address;
     private String wechat;
     private String email;
-    private String summary;
     private String name;
-    private String summaryTitle;
     private String objectiveTitle;
+
+    @Column(insertable = false, updatable = false)
+    private String summary;
+    @Column(insertable = false, updatable = false)
+    private String summaryTitle;
     @Column(insertable = false, updatable = false)
     private String expTitle;
     @Column(insertable = false, updatable = false)
@@ -51,7 +54,8 @@ public class Resume {
     private String skillTitle;
     @Column(insertable = false, updatable = false)
     private Integer skillSort;
-
+    @Column(insertable = false, updatable = false)
+    private Integer summarySort;
 
     public void submit(int uid) {
         this.createTime = Timestamp.from(Instant.now());
