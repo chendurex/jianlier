@@ -52,7 +52,7 @@ public class WechatController {
                                @ApiParam(name = "openid", value = "微信openid", example = "of0EF1tJkDVdHOTTlp4xI9iun9bE")String openid) {
         if (StringUtils.isNotEmpty(openid)) {
             // 直接通过openid获取用户信息
-            return null;
+            return userService.getInfoByOpenid(openid);
         }
 
         return ResUtils.data(invoker.getWechatParam());

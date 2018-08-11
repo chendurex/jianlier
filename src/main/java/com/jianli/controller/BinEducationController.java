@@ -44,6 +44,7 @@ public class BinEducationController {
     private String logPath;
 	@CrossOrigin(origins = "*")
     @PostMapping(value = "submit")
+    @ApiOperation(value = "教育提交", hidden = true)
     public ResResult submit(@RequestBody BinEducation eduInfo) {
 	    try {
 	        eduInfo.setCreateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
@@ -58,6 +59,7 @@ public class BinEducationController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("list")
+    @ApiOperation(value = "教育修改", hidden = true)
     public ResResult list(@RequestParam String security) {
 	    if (!this.security.equals(security)) {
 	        return ResUtils.fail("security is misspelled");
