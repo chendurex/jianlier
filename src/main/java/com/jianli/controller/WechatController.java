@@ -33,6 +33,7 @@ public class WechatController {
     }
 
     @GetMapping(value = "/login")
+    @ApiOperation(value = "微信页面登录", hidden = true)
     public void login(HttpServletResponse response) {
         String url = invoker.redirect();
         if (StringUtils.isEmpty(url)) {
@@ -48,7 +49,7 @@ public class WechatController {
     @ApiOperation(value = "微信登录", response = ResResult.class)
     @GetMapping(value = "/internal/login")
     public ResResult login(@RequestParam(value = "openid", required = false)
-                               @ApiParam(name = "openid", value = "微信openid", example = "xxfdsfdsfd")String openid) {
+                               @ApiParam(name = "openid", value = "微信openid", example = "of0EF1tJkDVdHOTTlp4xI9iun9bE")String openid) {
         if (StringUtils.isNotEmpty(openid)) {
             // 直接通过openid获取用户信息
             return null;
@@ -57,6 +58,7 @@ public class WechatController {
         return ResUtils.data(invoker.getWechatParam());
     }
 
+    @ApiOperation(value = "微信登录后的回调", hidden = true)
     @GetMapping(value = "/callback")
     public ResResult callback(@RequestParam(value = "code") String code, @RequestParam(value = "state") String state) {
         return userService.submit(code, state);

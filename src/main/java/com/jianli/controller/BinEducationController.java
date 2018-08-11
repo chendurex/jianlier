@@ -4,6 +4,8 @@ import com.jianli.component.MailSender;
 import com.jianli.domain.BinEducation;
 import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,7 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/edu")
+@Api(description = "无用的", hidden = true)
 public class BinEducationController {
     private final BinEducationRepo eduRepository;
     private final MailSender sender;

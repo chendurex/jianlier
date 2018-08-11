@@ -12,4 +12,11 @@ public interface UserService {
      * @return
      */
     ResResult submit(String code, String state);
+
+    /**
+     * 用户通过openid获取用户信息
+     * @param openid
+     * @return
+     */
+    ResResult getInfoByOpenid(String openid);
 }

@@ -25,6 +25,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ResResult getInfoByOpenid(String openid) {
+        User origin = userRepo.get(openid);
+        // todo 验证下，如果超过一定的时间则重新获取用户信息
+        return ResUtils.data(origin);
+    }
+
+    @Override
     public ResResult submit(String code, String state) {
         log.info("获取到用户code：{}， state：{}", code, state);
         UserParam param = authInvoker.getAccessToken(code, state);
