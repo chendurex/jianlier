@@ -78,8 +78,8 @@ public class ResumeServiceImpl implements ResumeService {
         ResumeVo vo = BeanUtils.copy(resume, ResumeVo.class);
 
         vo.setEduBackground(resume.getEduTitle(), resume.getEduSort(), eduBackgroundRepo.listByResumeId(id));
-        vo.setWorkExp(resume.getSkillTitle(), resume.getExpSort(), workRepo.listByResumeId(id));
-        vo.setSkillMaturity(resume.getExpTitle(), resume.getSkillSort(), skilledRepo.listByResumeId(id));
+        vo.setWorkExp(resume.getExpTitle(), resume.getExpSort(), workRepo.listByResumeId(id));
+        vo.setSkillMaturity(resume.getSkillTitle(), resume.getSkillSort(), skilledRepo.listByResumeId(id));
         vo.setCustomResumeDesc(customResumeDescRepo.listByResumeId(id));
         vo.setCustomWorkExp(customWorkRepo.listByResumeId(id));
         return ResUtils.data(vo);
