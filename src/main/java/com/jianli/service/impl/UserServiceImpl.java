@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResResult submit(String code, String state) {
+    public User submit(String code, String state) {
         log.info("获取到用户code：{}， state：{}", code, state);
         UserParam param = authInvoker.getAccessToken(code, state);
         log.info("获取到用户登录信息，param:{}", param);
@@ -55,9 +55,6 @@ public class UserServiceImpl implements UserService {
             real = userRepo.save(user);
         }
 
-        if (real.getId() == null) {
-            return ResUtils.fail("保存数据失败");
-        }
-        return ResUtils.data(user);
+        return real;
     }
 }

@@ -1,6 +1,7 @@
 package com.jianli.controller;
 
 import com.jianli.commons.StringUtils;
+import com.jianli.domain.User;
 import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
 import com.jianli.service.UserService;
@@ -9,7 +10,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -26,10 +29,11 @@ public class WechatController {
 
     private final AuthInvoker invoker;
     private final UserService userService;
-
-    public WechatController(AuthInvoker invoker, UserService userService) {
+    private final String mainUrl;
+    public WechatController(AuthInvoker invoker, UserService userService, @Value("${main.url}") String mainUrl) {
         this.invoker = invoker;
         this.userService = userService;
+        this.mainUrl = mainUrl;
     }
 
     @GetMapping(value = "/login")
@@ -46,21 +50,36 @@ public class WechatController {
         }
     }
 
-    @ApiOperation(value = "微信登录", response = ResResult.class)
+    @ApiOperation(value = "获取微信登录基本信息", response = ResResult.class)
     @GetMapping(value = "/internal/login")
-    public ResResult login(@RequestParam(value = "openid", required = false)
-                               @ApiParam(name = "openid", value = "微信openid", example = "of0EF1tJkDVdHOTTlp4xI9iun9bE")String openid) {
-        if (StringUtils.isNotEmpty(openid)) {
-            // 直接通过openid获取用户信息
-            return userService.getInfoByOpenid(openid);
-        }
-
+    public ResResult login() {
         return ResUtils.data(invoker.getWechatParam());
+    }
+
+    @ApiOperation(value = "根据openid获取用户信息", response = ResResult.class)
+    @GetMapping(value = "/getInfo")
+    public ResResult genInfo(@RequestParam(value = "openid")
+                           @ApiParam(name = "openid", value = "微信openid", example = "of0EF1tJkDVdHOTTlp4xI9iun9bE")String openid) {
+        return userService.getInfoByOpenid(openid);
     }
 
     @ApiOperation(value = "微信登录后的回调", hidden = true)
     @GetMapping(value = "/callback")
-    public ResResult callback(@RequestParam(value = "code") String code, @RequestParam(value = "state") String state) {
-        return userService.submit(code, state);
+    public void callback(HttpServletResponse response,
+                              @RequestParam(value = "code") String code,
+                              @RequestParam(value = "state") String state) {
+
+        User user = userService.submit(code, state);
+        if (user == null) {
+            log.error("用户数据回调失败");
+            return ;
+        }
+        String url = mainUrl + user.getOpenid();
+        try {
+            response.sendRedirect(url);
+        } catch (IOException e) {
+            log.error("回调给前段页面失败", e);
+        }
+
     }
 }

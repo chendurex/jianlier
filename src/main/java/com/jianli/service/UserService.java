@@ -1,5 +1,6 @@
 package com.jianli.service;
 
+import com.jianli.domain.User;
 import com.jianli.response.ResResult;
 
 /**
@@ -11,7 +12,7 @@ public interface UserService {
      * 微信回调
      * @return
      */
-    ResResult submit(String code, String state);
+    User submit(String code, String state);
 
     /**
      * 用户通过openid获取用户信息
