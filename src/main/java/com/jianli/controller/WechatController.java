@@ -5,6 +5,9 @@ import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
 import com.jianli.service.UserService;
 import com.jianli.wechat.AuthInvoker;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +20,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/wechat")
 @CrossOrigin(origins = "*")
+@Api(description = "微信登录模块")
 @Slf4j
 public class WechatController {
 
@@ -41,8 +45,10 @@ public class WechatController {
         }
     }
 
+    @ApiOperation(value = "微信登录", response = ResResult.class)
     @GetMapping(value = "/internal/login")
-    public ResResult login(@RequestParam(value = "openid", required = false) String openid) {
+    public ResResult login(@RequestParam(value = "openid", required = false)
+                               @ApiParam(name = "openid", value = "微信openid", example = "xxfdsfdsfd")String openid) {
         if (StringUtils.isNotEmpty(openid)) {
             // 直接通过openid获取用户信息
             return null;
