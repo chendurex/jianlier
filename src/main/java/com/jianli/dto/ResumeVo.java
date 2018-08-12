@@ -5,8 +5,7 @@ import com.jianli.domain.Resume;
 import com.jianli.domain.SkillMaturity;
 import com.jianli.domain.WorkExp;
 import io.swagger.annotations.ApiModel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.List;
 
@@ -29,8 +28,8 @@ public class ResumeVo {
     }
 
     public void setUserInfoVO(Resume resume) {
-        userInfoVO = new UserInfoVO(resume.getAddress(), resume.getEmail(), resume.getMobile(),
-                resume.getName(), resume.getWechat());
+        userInfoVO = UserInfoVO.builder().address(resume.getAddress()).email(resume.getEmail()).mobile(resume.getMobile())
+                .wechat(resume.getWechat()).name(resume.getName()).objectiveTitle(resume.getObjectiveTitle()).build();
     }
 
     public void setSummary(String title, String text) {
@@ -51,13 +50,16 @@ public class ResumeVo {
 
 
     @AllArgsConstructor
-    @Getter
+    @Data
+    @NoArgsConstructor
+    @Builder
     public static class UserInfoVO {
         private String mobile;
         private String address;
         private String wechat;
         private String email;
         private String name;
+        private String objectiveTitle;
     }
 
     @AllArgsConstructor

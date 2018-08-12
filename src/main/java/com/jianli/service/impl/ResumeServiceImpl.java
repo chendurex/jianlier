@@ -74,8 +74,8 @@ public class ResumeServiceImpl implements ResumeService {
         Resume resume = opt.get();
         ResumeVo.SummaryVO summaryVO = new ResumeVo.SummaryVO(resume.getSummaryTitle(), resume.getSummary());
 
-        ResumeVo.UserInfoVO  userInfoVO = new ResumeVo.UserInfoVO(resume.getAddress(), resume.getEmail(), resume.getMobile(),
-                resume.getName(), resume.getWechat());
+        ResumeVo.UserInfoVO  userInfoVO = ResumeVo.UserInfoVO.builder().address(resume.getAddress()).email(resume.getEmail()).mobile(resume.getMobile())
+                .wechat(resume.getWechat()).name(resume.getName()).objectiveTitle(resume.getObjectiveTitle()).build();
 
         ResumeVo.EduBackgroundVO eduBackgroundVO = new ResumeVo.EduBackgroundVO(resume.getEduTitle(),
                 eduBackgroundRepo.listByResumeId(id));
