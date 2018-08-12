@@ -1,9 +1,6 @@
 package com.jianli.service;
 
-import com.jianli.dto.CustomResumeDescInsertParam;
-import com.jianli.dto.CustomResumeDescUpdateParam;
-import com.jianli.dto.CustomWorkExpInsertParam;
-import com.jianli.dto.CustomWorkExpUpdateParam;
+import com.jianli.dto.*;
 import com.jianli.response.ResResult;
 
 /**
@@ -32,6 +29,26 @@ public interface CustomResumeService {
      */
     ResResult removeCustomResumeDesc(int id);
 
+
+    /**
+     * 新增自定义工作经历标题
+     * @param param
+     * @return
+     */
+    ResResult submitCustomWorkExpSub(CustomWorkExpSubInsertParam param);
+    /**
+     * 修改自定义工作经历标题
+     * @param param
+     * @return
+     */
+    ResResult modifyCustomWorkExpSub(CustomWorkExpSubUpdateParam param);
+
+    /**
+     * 删除自定义工作经历标题
+     * @param id
+     * @return
+     */
+    ResResult removeCustomWorkExpSub(int id);
     /**
      * 新增自定义工作经历
      * @param param

@@ -14,29 +14,32 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * @author chendurex
- * @date 2018-06-18 11:52
+ * @date 2018-08-04 12:27
  */
+@Entity(name = "custom_work_exp_sub")
 @Data
-@Entity(name = "custom_resume_desc")
-@JsonIgnoreProperties(value = {"modifyUid", "createUid", "createTime", "modifyTime", "resumeId"})
-public class CustomResumeDesc {
-
+@JsonIgnoreProperties(value = {"modifyUid", "createUid", "createTime", "modifyTime", "resumeId", "pid"})
+public class CustomWorkExpSub {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Integer id;
-
     private Integer modifyUid;
     @Column(updatable = false)
     private Integer createUid;
     @Column(updatable = false)
     private Timestamp createTime;
     private Timestamp modifyTime;
+
     @Column(updatable = false)
     private Integer resumeId;
-    private String title;
+    @Column(updatable = false)
+    private Integer pid;
+    private String name;
+    private String position;
+    private String description;
+    private String startTime;
+    private String endTime;
     private Integer sort;
-    private String txt;
-
 
     public void submit(int uid) {
         this.createTime = Timestamp.from(Instant.now());
@@ -49,5 +52,4 @@ public class CustomResumeDesc {
         this.modifyTime = Timestamp.from(Instant.now());
         this.modifyUid = uid;
     }
-
 }

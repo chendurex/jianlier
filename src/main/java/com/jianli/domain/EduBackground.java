@@ -13,7 +13,7 @@ import java.time.Instant;
  */
 @Entity(name = "edu_background")
 @Data
-@JsonIgnoreProperties(value = {"modifyUid", "createUid", "createTime", "modifyTime"})
+@JsonIgnoreProperties(value = {"modifyUid", "createUid", "createTime", "modifyTime", "resumeId"})
 public class EduBackground {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

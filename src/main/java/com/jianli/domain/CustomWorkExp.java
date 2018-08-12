@@ -18,7 +18,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity(name = "custom_work_exp")
 @Data
-@JsonIgnoreProperties(value = {"modifyUid", "createUid", "createTime", "modifyTime"})
+@JsonIgnoreProperties(value = {"modifyUid", "createUid", "createTime", "modifyTime", "resumeId"})
 public class CustomWorkExp {
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -33,11 +33,6 @@ public class CustomWorkExp {
     @Column(updatable = false)
     private Integer resumeId;
     private String title;
-    private String name;
-    private String position;
-    private String description;
-    private String startTime;
-    private String endTime;
     private Integer sort;
 
     public void submit(int uid) {

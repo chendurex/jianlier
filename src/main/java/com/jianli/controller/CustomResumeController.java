@@ -1,9 +1,6 @@
 package com.jianli.controller;
 
-import com.jianli.dto.CustomResumeDescInsertParam;
-import com.jianli.dto.CustomResumeDescUpdateParam;
-import com.jianli.dto.CustomWorkExpInsertParam;
-import com.jianli.dto.CustomWorkExpUpdateParam;
+import com.jianli.dto.*;
 import com.jianli.response.ResResult;
 import com.jianli.service.CustomResumeService;
 import io.swagger.annotations.Api;
@@ -68,5 +65,24 @@ public class CustomResumeController {
     public ResResult removeCustomWorkExp(@ApiParam(name = "id", value = "自定义工作经历ID", example = "1")
                                         @Validated @Min(value = 1) @RequestParam("id") Integer id) {
         return customResumeService.removeCustomWorkExp(id);
+    }
+
+    @ApiOperation(value = "新增工作经历列表", response = ResResult.class)
+    @PostMapping(value = "/workExp/sub/submit", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult submitCustomWorkExpSub(@RequestBody @Validated CustomWorkExpSubInsertParam param) {
+        return customResumeService.submitCustomWorkExpSub(param);
+    }
+
+    @ApiOperation(value = "修改工作经历列表", response = ResResult.class)
+    @PostMapping(value = "/workExp/sub/modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult modifyCustomWorkExpSub(@RequestBody @Validated CustomWorkExpSubUpdateParam param) {
+        return customResumeService.modifyCustomWorkExpSub(param);
+    }
+
+    @ApiOperation(value = "删除工作经历列表", response = ResResult.class)
+    @GetMapping(value = "/workExp/sub/remove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult removeCustomWorkExpSub(@ApiParam(name = "id", value = "自定义工作经历ID", example = "1")
+                                         @Validated @Min(value = 1) @RequestParam("id") Integer id) {
+        return customResumeService.removeCustomWorkExpSub(id);
     }
 }

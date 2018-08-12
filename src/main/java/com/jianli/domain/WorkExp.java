@@ -18,7 +18,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity(name = "work_exp")
 @Data
-@JsonIgnoreProperties(value = {"modifyUid", "createUid", "createTime", "modifyTime"})
+@JsonIgnoreProperties(value = {"modifyUid", "createUid", "createTime", "modifyTime", "resumeId"})
 public class WorkExp  {
     @Id
     @GeneratedValue(strategy = IDENTITY)

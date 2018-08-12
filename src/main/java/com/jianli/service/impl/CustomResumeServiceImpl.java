@@ -2,12 +2,11 @@ package com.jianli.service.impl;
 
 import com.jianli.domain.CustomResumeDesc;
 import com.jianli.domain.CustomWorkExp;
-import com.jianli.dto.CustomResumeDescInsertParam;
-import com.jianli.dto.CustomResumeDescUpdateParam;
-import com.jianli.dto.CustomWorkExpInsertParam;
-import com.jianli.dto.CustomWorkExpUpdateParam;
+import com.jianli.domain.CustomWorkExpSub;
+import com.jianli.dto.*;
 import com.jianli.repo.CustomResumeDescRepo;
 import com.jianli.repo.CustomWorkRepo;
+import com.jianli.repo.CustomWorkSubRepo;
 import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
 import com.jianli.service.CustomResumeService;
@@ -21,11 +20,12 @@ import org.springframework.stereotype.Service;
 public class CustomResumeServiceImpl implements CustomResumeService {
     private final CustomResumeDescRepo customResumeDescRepo;
     private final CustomWorkRepo customWorkRepo;
-
+    private final CustomWorkSubRepo customWorkSubRepo;
     public CustomResumeServiceImpl(CustomResumeDescRepo customResumeDescRepo,
-                                   CustomWorkRepo customWorkRepo) {
+                                   CustomWorkRepo customWorkRepo, CustomWorkSubRepo customWorkSubRepo) {
         this.customResumeDescRepo = customResumeDescRepo;
         this.customWorkRepo = customWorkRepo;
+        this.customWorkSubRepo = customWorkSubRepo;
     }
 
     @Override
@@ -53,6 +53,34 @@ public class CustomResumeServiceImpl implements CustomResumeService {
     @Override
     public ResResult removeCustomResumeDesc(int id) {
         customResumeDescRepo.deleteById(id);
+        return ResUtils.suc();
+    }
+
+    @Override
+    public ResResult submitCustomWorkExpSub(CustomWorkExpSubInsertParam param) {
+        CustomWorkExpSub customWorkExpSub = param.toCustomWorkExpSub();
+        customWorkExpSub.submit(param.getUid());
+        CustomWorkExpSub saved = customWorkSubRepo.save(customWorkExpSub);
+        if (saved.getId() == null) {
+            return ResUtils.fail("保存数据失败");
+        }
+        return ResUtils.data(saved.getId());
+    }
+
+    @Override
+    public ResResult modifyCustomWorkExpSub(CustomWorkExpSubUpdateParam param) {
+        CustomWorkExpSub customWorkExpSub = param.toCustomWorkExpSub();
+        customWorkExpSub.modify(param.getUid());
+        CustomWorkExpSub modified = customWorkSubRepo.save(customWorkExpSub);
+        if (modified.getId() == null) {
+            return ResUtils.fail("保存数据失败");
+        }
+        return ResUtils.data(modified.getId());
+    }
+
+    @Override
+    public ResResult removeCustomWorkExpSub(int id) {
+        customWorkSubRepo.deleteById(id);
         return ResUtils.suc();
     }
 

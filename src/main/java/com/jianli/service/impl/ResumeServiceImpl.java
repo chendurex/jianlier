@@ -1,6 +1,7 @@
 package com.jianli.service.impl;
 
 import com.google.common.collect.ImmutableMap;
+import com.jianli.commons.BeanUtils;
 import com.jianli.domain.*;
 import com.jianli.dto.*;
 import com.jianli.repo.*;
@@ -24,14 +25,17 @@ public class ResumeServiceImpl implements ResumeService {
     private final ResumeRepo resumeRepo;
     private final CustomResumeDescRepo customResumeDescRepo;
     private final CustomWorkRepo customWorkRepo;
+    private final CustomWorkSubRepo customWorkSubRepo;
     public ResumeServiceImpl(WorkRepo workRepo, EduBackgroundRepo eduBackgroundRepo, SkillRepo skilledRepo,
-                             ResumeRepo resumeRepo, CustomResumeDescRepo customResumeDescRepo, CustomWorkRepo customWorkRepo) {
+                             ResumeRepo resumeRepo, CustomResumeDescRepo customResumeDescRepo,
+                             CustomWorkRepo customWorkRepo, CustomWorkSubRepo customWorkSubRepo) {
         this.workRepo = workRepo;
         this.eduBackgroundRepo = eduBackgroundRepo;
         this.skilledRepo = skilledRepo;
         this.resumeRepo = resumeRepo;
         this.customWorkRepo = customWorkRepo;
         this.customResumeDescRepo = customResumeDescRepo;
+        this.customWorkSubRepo = customWorkSubRepo;
     }
 
 
@@ -117,7 +121,10 @@ public class ResumeServiceImpl implements ResumeService {
             String key = "customExp_"+i;
             CustomWorkExp exp = customWorkExps.get(i);
             sorted.put(key, exp.getSort());
-            copys.put(key, exp);
+
+            CustomWorkExpParamVO vo = BeanUtils.copy(exp, CustomWorkExpParamVO.class);
+            vo.setCustomWorkExpSubs(customWorkSubRepo.listBypid(vo.getId()));
+            copys.put(key, vo);
         }
 
 
