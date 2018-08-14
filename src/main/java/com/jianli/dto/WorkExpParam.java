@@ -11,6 +11,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author chendurex
@@ -22,6 +23,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class WorkExpParam {
     @Min(value = 1, message = "用户ID必须大于1")
+    @NotNull(message = "用户ID不能为空")
     @ApiModelProperty(notes = "用户ID", example = "1", required = true)
     private Integer uid;
     @NotBlank(message = "公司名称不能为空")

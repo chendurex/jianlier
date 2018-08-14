@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author chendurex
@@ -17,6 +18,7 @@ import javax.validation.constraints.Min;
 public class CustomWorkExpSubUpdateParam extends CustomWorkExpSubParam {
     @ApiModelProperty(notes = "唯一ID", example = "1", required = true)
     @Min(value = 1, message = "自定义工作经历ID必须大于1")
+    @NotNull(message = "自定义工作经历ID不能为空")
     private Integer id;
 
 }

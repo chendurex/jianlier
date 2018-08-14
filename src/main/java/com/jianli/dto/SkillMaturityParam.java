@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author chendurex
@@ -24,6 +25,7 @@ import javax.validation.constraints.NotBlank;
 public class SkillMaturityParam {
 
     @Min(value = 1, message = "用户ID必须大于0")
+    @NotNull(message = "用户ID不能为空")
     @ApiModelProperty(notes = "用户ID", example = "1", required = true)
     private Integer uid;
     @NotBlank(message = "技能名称不能为空")
@@ -32,6 +34,7 @@ public class SkillMaturityParam {
     private String skill;
     @Min(value= 1, message = "技能熟练度只能在1-10之间")
     @Max(value = 10, message = "技能熟练度只能在1-10之间")
+    @NotNull(message = "熟练度不能为空")
     @ApiModelProperty(notes = "熟练度", example = "10", required = true)
     private Integer maturity;
 

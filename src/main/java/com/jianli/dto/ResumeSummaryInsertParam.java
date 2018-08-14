@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author chendurex
@@ -18,6 +19,7 @@ public class ResumeSummaryInsertParam extends ResumeSummaryParam {
 
     @Min(value = 1, message = "用户ID必须大于0")
     @ApiModelProperty(notes = "用户ID", example = "1", required = true)
+    @NotNull(message = "用户ID不能为空")
     private Integer uid;
 
 }

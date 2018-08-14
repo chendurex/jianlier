@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author chendurex
@@ -20,6 +21,7 @@ import javax.validation.constraints.Min;
 public class ResumeSummaryParam {
 
     @Min(value= 1, message = "简历ID必须大于1")
+    @NotNull(message = "简历ID不能为空")
     @ApiModelProperty(notes = "简历ID", example = "1", required = true)
     private Integer resumeId;
 

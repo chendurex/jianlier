@@ -6,6 +6,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author cheny.huang
@@ -15,6 +16,7 @@ import javax.validation.constraints.Min;
 @ApiModel(value = "修改简历标题")
 public class ResumeTitleParam {
     @ApiModelProperty(notes = "简历ID", example = "1")
+    @NotNull(message = "简历ID不能为空")
     @Min(value = 1, message = "简历ID必须大于1")
     private Integer resumeId;
 
@@ -24,5 +26,6 @@ public class ResumeTitleParam {
 
     @ApiModelProperty(notes = "排序值", example = "1")
     @Min(value = 0, message = "排序值不能小于0")
+    @NotNull(message = "排序值不能为空")
     private Integer sort;
 }

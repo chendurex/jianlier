@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author chendurex
@@ -23,6 +24,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class CustomWorkExpSubParam {
     @Min(value = 1, message = "用户ID必须大于1")
+    @NotNull(message = "用户ID不能为空")
     @ApiModelProperty(notes = "用户ID", example = "1", required = true)
     private Integer uid;
     @NotBlank(message = "自定义工作经历名称不能为空")
@@ -38,6 +40,7 @@ public class CustomWorkExpSubParam {
     @ApiModelProperty(notes = "自定义工作经历简介", example = "帮老板在客户面前吹牛，增加公司逼格", required = true)
     private String description;
     @Min(value = 0, message = "排序值不能为空")
+    @NotNull(message = "排序值不能为空")
     @ApiModelProperty(notes = "排序值", example = "1", required = true)
     private Integer sort;
 
