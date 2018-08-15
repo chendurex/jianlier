@@ -92,7 +92,7 @@ public class ResumeServiceImpl implements ResumeService {
 
         Map<String, Integer> sorted = new TreeMap<>();
         sorted.put("userInfo", -1);
-        sorted.put("summary", 1);
+        sorted.put("summary", resume.getSummarySort());
         sorted.put("eduBackground", resume.getEduSort());
         sorted.put("skillMaturity", resume.getSkillSort());
         sorted.put("workExp", resume.getExpSort());
