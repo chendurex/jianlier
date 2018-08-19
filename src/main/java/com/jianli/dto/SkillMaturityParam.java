@@ -11,7 +11,6 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -28,7 +27,7 @@ public class SkillMaturityParam {
     @NotNull(message = "用户ID不能为空")
     @ApiModelProperty(notes = "用户ID", example = "1", required = true)
     private Integer uid;
-    @NotBlank(message = "技能名称不能为空")
+    @NotNull(message = "技能名称不能为空")
     @Length(min = 1, max = 1000, message = "技能名称太长")
     @ApiModelProperty(notes = "技能名称", example = "吹牛", required = true)
     private String skill;

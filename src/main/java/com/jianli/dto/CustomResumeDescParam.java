@@ -33,11 +33,11 @@ public class CustomResumeDescParam {
     @NotNull(message = "排序值不能为空")
     private Integer sort;
 
-    @NotBlank
+    @NotNull(message = "内容不能为空")
     @ApiModelProperty(notes = "内容", example = "内容")
     private String txt;
 
-    @NotBlank(message = "自定义简历描述标题不能为空")
+    @NotNull(message = "自定义简历描述标题不能为空")
     @Length(min = 1, max = 1000, message = "自定义简历描述标题过长")
     @ApiModelProperty(notes = "自定义简历描述标题", example = "增加公司逼格经历", required = true)
     private String title;
