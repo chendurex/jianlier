@@ -112,6 +112,7 @@ public interface ResumeService {
      * @return
      */
     ResResult submitEduBackground(EduBackgroundInsertParam param);
+
     /**
      * 修改教育背景
      * @param param

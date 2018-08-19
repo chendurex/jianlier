@@ -160,7 +160,7 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.NOT_MODIFIED)
+    @ResponseStatus(HttpStatus.OK)
     public ResResult handle(EmptyResultDataAccessException exception) {
         log.warn("删除的数据不存在,", exception);
         return ResUtils.fail("数据不存在或者已经删除");

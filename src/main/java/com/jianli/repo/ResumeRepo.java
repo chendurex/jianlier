@@ -17,19 +17,19 @@ import java.util.List;
 public interface ResumeRepo extends CrudRepository<Resume, Integer> {
 
     @Modifying
-    @Query(value = "update resume set exp_title=?1, exp_sort=?2 WHERE id = ?3", nativeQuery = true)
+    @Query(value = "update resume set exp_title=?1, exp_sort=?2, exp_delete=0 WHERE id = ?3", nativeQuery = true)
     void updateExpTitle(@Param("title") String title,@Param("sort")int sort, @Param("id") int id);
 
     @Modifying
-    @Query(value = "update resume set edu_title=?1,edu_sort=?2 WHERE id = ?3", nativeQuery = true)
+    @Query(value = "update resume set edu_title=?1,edu_sort=?2, edu_delete=0 WHERE id = ?3", nativeQuery = true)
     void updateEduTitle(@Param("title") String title,@Param("sort")int sort, @Param("id") int id);
 
     @Modifying
-    @Query(value = "update resume set skill_title=?1, skill_sort=?2 WHERE id = ?3", nativeQuery = true)
+    @Query(value = "update resume set skill_title=?1, skill_sort=?2, skill_delete=0 WHERE id = ?3", nativeQuery = true)
     void updateSkillTitle(@Param("title") String title,@Param("sort")int sort, @Param("id") int id);
 
     @Modifying
-    @Query(value = "update resume set summary_title=?1, summary_sort=?2 WHERE id = ?3", nativeQuery = true)
+    @Query(value = "update resume set summary_title=?1, summary_sort=?2, summary_delete=0 WHERE id = ?3", nativeQuery = true)
     void updateSummaryTitle(@Param("title") String title,@Param("sort")int sort, @Param("id") int id);
 
     @Modifying
