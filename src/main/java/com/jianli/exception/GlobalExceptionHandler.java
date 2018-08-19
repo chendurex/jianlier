@@ -4,6 +4,7 @@ import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeException;
@@ -156,6 +157,14 @@ public class GlobalExceptionHandler {
         return error(exception.getMessage());
     }
 
+
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_MODIFIED)
+    public ResResult handle(EmptyResultDataAccessException exception) {
+        log.warn("删除的数据不存在,", exception);
+        return ResUtils.fail("数据不存在或者已经删除");
+    }
 
     /**
      * 所有的异常控制
