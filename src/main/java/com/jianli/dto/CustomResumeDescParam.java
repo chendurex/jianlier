@@ -38,7 +38,7 @@ public class CustomResumeDescParam {
     private String txt;
 
     @NotNull(message = "自定义简历描述标题不能为空")
-    @Length(min = 1, max = 1000, message = "自定义简历描述标题过长")
+    @Length(max = 1000, message = "自定义简历描述标题过长")
     @ApiModelProperty(notes = "自定义简历描述标题", example = "增加公司逼格经历", required = true)
     private String title;
 

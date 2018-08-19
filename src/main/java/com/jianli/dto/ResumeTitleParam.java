@@ -21,7 +21,7 @@ public class ResumeTitleParam {
     private Integer resumeId;
 
     @ApiModelProperty(notes = "标题", example = "哈哈哈")
-    @Length(min = 1, max = 1000, message = "标题不能为空或者过长")
+    @Length(max = 1000, message = "标题不能为空或者过长")
     private String title;
 
     @ApiModelProperty(notes = "排序值", example = "1")

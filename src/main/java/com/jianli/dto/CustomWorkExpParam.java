@@ -27,7 +27,7 @@ public class CustomWorkExpParam {
     @NotNull(message = "用户ID不能为空")
     private Integer uid;
     @NotNull(message = "自定义标题不能为空")
-    @Length(min = 1, max = 1000, message = "自定义标题过长")
+    @Length(max = 1000, message = "自定义标题过长")
     @ApiModelProperty(notes = "自定义标题", example = "自定义标题", required = true)
     private String title;
     @Min(value = 0, message = "排序值不能为空")
