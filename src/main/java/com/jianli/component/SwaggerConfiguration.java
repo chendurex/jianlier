@@ -26,7 +26,7 @@ import java.util.List;
 @ConditionalOnProperty(prefix = "com.jianlier.boot", name = "pro", havingValue = "false", matchIfMissing = true)
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig {
+public class SwaggerConfiguration {
     @Value("${spring.swagger.host}")
     private String host;
     @Bean

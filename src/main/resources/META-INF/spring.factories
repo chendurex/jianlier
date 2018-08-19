@@ -1,5 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.jianli.component.SwaggerConfig,\
-com.jianli.advice.CustomInterceptorConfiguration
+com.jianli.component.SwaggerConfiguration,\
+com.jianli.advice.CustomInterceptorConfiguration,\
+com.jianli.component.TransactionConfiguration
 
 

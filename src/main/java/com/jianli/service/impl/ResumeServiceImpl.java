@@ -1,6 +1,5 @@
 package com.jianli.service.impl;
 
-import com.google.common.collect.ImmutableMap;
 import com.jianli.commons.BeanUtils;
 import com.jianli.domain.*;
 import com.jianli.dto.*;
@@ -9,7 +8,6 @@ import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
 import com.jianli.service.ResumeService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -138,7 +136,7 @@ public class ResumeServiceImpl implements ResumeService {
         return ResUtils.data(copys);
     }
 
-    @Transactional
+    
     @Override
     public ResResult submitResumeSummary(int resumeId, String summary, Integer sort) {
         if (sort == null) {
@@ -150,21 +148,21 @@ public class ResumeServiceImpl implements ResumeService {
         return ResUtils.suc();
     }
 
-    @Transactional
+    
     @Override
     public ResResult modifyResumeSummary(int id, String summary) {
         resumeRepo.updateSummaryContent(id, summary);
         return ResUtils.suc();
     }
 
-    @Transactional
+    
     @Override
     public ResResult removeResumeSummary(int id) {
         resumeRepo.removeSummary(id);
         return ResUtils.suc();
     }
 
-    @Transactional
+    
     @Override
     public ResResult modifyResumeSummaryTitle(int resumeId, int sort, String title) {
         resumeRepo.updateSummaryTitle(title, sort, resumeId);
@@ -195,7 +193,7 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
 
-    @Transactional
+    
     @Override
     public ResResult modifyWorkExpTitle(int resumeId, int sort, String title) {
         resumeRepo.updateExpTitle(title, sort, resumeId);
@@ -208,7 +206,7 @@ public class ResumeServiceImpl implements ResumeService {
         return ResUtils.suc();
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    
     @Override
     public ResResult removeExpModule(int resumeId) {
         resumeRepo.removeExp(resumeId);
@@ -244,7 +242,7 @@ public class ResumeServiceImpl implements ResumeService {
         return ResUtils.data(modified.getId());
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    
     @Override
     public ResResult modifyEduBackgroundTitle(int resumeId, int sort, String title) {
         resumeRepo.updateEduTitle(title, sort, resumeId);
@@ -259,7 +257,7 @@ public class ResumeServiceImpl implements ResumeService {
         return ResUtils.suc();
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    
     @Override
     public ResResult removeEduModule(int resumeId) {
         resumeRepo.removeEdu(resumeId);
@@ -297,7 +295,7 @@ public class ResumeServiceImpl implements ResumeService {
         return ResUtils.data(modified.getId());
     }
 
-    @Transactional
+    
     @Override
     public ResResult modifySkillMaturityTitle(int resumeId,int sort, String title) {
         resumeRepo.updateSkillTitle(title, sort, resumeId);
@@ -310,7 +308,7 @@ public class ResumeServiceImpl implements ResumeService {
         return ResUtils.suc();
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    
     @Override
     public ResResult removeSkillModule(int resumeId) {
         resumeRepo.removeSkill(resumeId);
