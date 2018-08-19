@@ -14,7 +14,7 @@ public interface ResumeService {
      * @param uid
      * @return
      */
-    Integer submitResumeUserInfo1(Integer uid);
+    Integer getResumeIdByUid(Integer uid);
 
     /**
      * 新增简历信息

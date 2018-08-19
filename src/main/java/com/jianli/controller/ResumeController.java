@@ -31,7 +31,7 @@ public class ResumeController {
     @PostMapping(value = "/submit", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult submitResume(@RequestBody @Validated ResumeUserInsertParam param) {
         //return resumeService.submitResumeUserInfo(param);
-        resumeService.submitResumeUserInfo1(9999);
+        resumeService.getResumeIdByUid(9999);
         return ResUtils.suc();
     }*/
 

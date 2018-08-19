@@ -39,7 +39,7 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Transactional
     @Override
-    public Integer submitResumeUserInfo1(Integer uid) {
+    public Integer getResumeIdByUid(Integer uid) {
         Integer resumeId = resumeRepo.getResumeIdByUid(uid);
         if (resumeId == null) {
             Resume resume = Resume.builder().address("").mobile("").email("")

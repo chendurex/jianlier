@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     public ResResult getInfoByOpenid(String openid) {
         User origin = userRepo.get(openid);
         UserVO vo = BeanUtils.copy(origin, UserVO.class);
-        vo.setResumeId(resumeService.submitResumeUserInfo1(origin.getId()));
+        vo.setResumeId(resumeService.getResumeIdByUid(origin.getId()));
         // todo 验证下，如果超过一定的时间则重新获取用户信息
         return ResUtils.data(vo);
     }
