@@ -34,7 +34,7 @@ public interface ResumeService {
      * @param
      * @return
      */
-    ResResult submitResumeSummary(int resumeId, String summary);
+    ResResult submitResumeSummary(int resumeId, String summary, Integer sort);
     /**
      * 修改简历介绍
      * @return

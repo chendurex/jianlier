@@ -49,7 +49,7 @@ public class ResumeController {
     @ApiOperation(value = "新增简历自我介绍", response = ResResult.class)
     @PostMapping(value = "/summary/submit", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult submitResumeSummary(@RequestBody @Validated ResumeSummaryInsertParam param) {
-        return resumeService.submitResumeSummary(param.getResumeId(), param.getSummary());
+        return resumeService.submitResumeSummary(param.getResumeId(), param.getSummary(), param.getSort());
     }
 
     @ApiOperation(value = "修改简历自我介绍", response = ResResult.class)

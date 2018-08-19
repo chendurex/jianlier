@@ -140,15 +140,20 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Transactional
     @Override
-    public ResResult submitResumeSummary(int resumeId, String summary) {
-        resumeRepo.updateSummaryContent(summary, resumeId);
+    public ResResult submitResumeSummary(int resumeId, String summary, Integer sort) {
+        if (sort == null) {
+            resumeRepo.updateSummaryContent(resumeId, summary);
+        } else {
+            resumeRepo.updateSummaryContentAndSort(resumeId, summary, sort);
+        }
+
         return ResUtils.suc();
     }
 
     @Transactional
     @Override
     public ResResult modifyResumeSummary(int id, String summary) {
-        resumeRepo.updateSummaryContent(summary, id);
+        resumeRepo.updateSummaryContent(id, summary);
         return ResUtils.suc();
     }
 

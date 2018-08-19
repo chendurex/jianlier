@@ -22,4 +22,7 @@ public class ResumeSummaryInsertParam extends ResumeSummaryParam {
     @NotNull(message = "用户ID不能为空")
     private Integer uid;
 
+    @ApiModelProperty(notes = "排序值", example = "1")
+    private Integer sort;
+
 }
