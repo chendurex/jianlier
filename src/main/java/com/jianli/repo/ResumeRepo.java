@@ -41,6 +41,18 @@ public interface ResumeRepo extends CrudRepository<Resume, Integer> {
     void updateSummaryContentAndSort(@Param("id") int id, @Param("summary") String summary, @Param("sort") int sort);
 
     @Modifying
-    @Query(value = "update resume set summary_delete=1 WHERE id = ?1", nativeQuery = true)
+    @Query(value = "update resume set summary_delete=1, summary='', summary_sort=0, summary_title='' WHERE id = ?1", nativeQuery = true)
     void removeSummary(@Param("id") int id);
+
+    @Modifying
+    @Query(value = "update resume set exp_delete=1, exp_sort=0, exp_title='' WHERE id = ?1", nativeQuery = true)
+    void removeExp(@Param("id") int id);
+
+    @Modifying
+    @Query(value = "update resume set skill_delete=1, skill_title='', skill_sort=0 WHERE id = ?1", nativeQuery = true)
+    void removeSkill(@Param("id") int id);
+
+    @Modifying
+    @Query(value = "update resume set edu_delete=1, edu_title='', edu_sort=0 WHERE id = ?1", nativeQuery = true)
+    void removeEdu(@Param("id") int id);
 }

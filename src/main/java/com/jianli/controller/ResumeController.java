@@ -38,12 +38,12 @@ public class ResumeController {
         return resumeService.modifyResumeUserInfo(param);
     }
 
-    @ApiOperation(value = "删除简历", response = ResResult.class)
+    /*@ApiOperation(value = "删除简历", response = ResResult.class)
     @GetMapping(value = "/remove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult removeResume(@ApiParam(name = "id", value = "简历ID", example = "1")
                                   @RequestParam("id") Integer id) {
         return resumeService.removeResume(id);
-    }
+    }*/
 
 
     @ApiOperation(value = "新增简历自我介绍", response = ResResult.class)
@@ -58,10 +58,10 @@ public class ResumeController {
         return resumeService.modifyResumeSummary(param.getResumeId(), param.getSummary());
     }
 
-    @ApiOperation(value = "删除简历自我介绍", response = ResResult.class)
-    @GetMapping(value = "/summary/remove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "删除自我介绍模块", response = ResResult.class)
+    @GetMapping(value = "/summary/remove/module", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult removeResumeSummary(@ApiParam(name = "id", value = "简历ID", example = "1")
-                                  @RequestParam("id") Integer id) {
+                                         @RequestParam("id") Integer id) {
         return resumeService.removeResumeSummary(id);
     }
 
@@ -104,6 +104,13 @@ public class ResumeController {
         return resumeService.removeWorkExp(id);
     }
 
+    @ApiOperation(value = "删除工作经历模块", response = ResResult.class)
+    @GetMapping(value = "/workExp/remove/module", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult removeWorkExpModule(@ApiParam(name = "id", value = "简历ID", example = "1")
+                                   @RequestParam("id") Integer id) {
+        return resumeService.removeExpModule(id);
+    }
+
     @ApiOperation(value = "查询个人工作经历", response = ResResult.class)
     @GetMapping(value = "/workExp/query", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult queryWorkExp(@ApiParam(name = "id", value = "工作经历ID", example = "1")
@@ -136,6 +143,13 @@ public class ResumeController {
         return resumeService.removeEduBackground(id);
     }
 
+    @ApiOperation(value = "删除教育背景模块", response = ResResult.class)
+    @GetMapping(value = "/eduBackground/remove/module", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult removeEduBackgroundModule(@ApiParam(name = "id", value = "简历ID", example = "1")
+                                         @RequestParam("id") Integer id) {
+        return resumeService.removeEduModule(id);
+    }
+
     @ApiOperation(value = "查询个人教育背景", response = ResResult.class)
     @GetMapping(value = "/eduBackground/query", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult queryEduBackground(@ApiParam(name = "id", value = "教育背景ID", example = "1")
@@ -166,6 +180,13 @@ public class ResumeController {
     public ResResult removeSkillMaturity(@ApiParam(name = "id", value = "技能熟练度ID", example = "1")
                                              @RequestParam("id") Integer id) {
         return resumeService.removeSkillMaturity(id);
+    }
+
+    @ApiOperation(value = "删除技能熟悉度模块", response = ResResult.class)
+    @GetMapping(value = "/skillMaturity/remove/module", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult removeSkillMaturityModule(@ApiParam(name = "id", value = "简历ID", example = "1")
+                                         @RequestParam("id") Integer id) {
+        return resumeService.removeSkillModule(id);
     }
 
     @ApiOperation(value = "查询个人技能熟练度", response = ResResult.class)

@@ -210,7 +210,9 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public ResResult removeExpModule(int resumeId) {
-        return null;
+        resumeRepo.removeExp(resumeId);
+        workRepo.removeExpByResumeId(resumeId);
+        return ResUtils.suc();
     }
 
     @Override
@@ -258,7 +260,9 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public ResResult removeEduModule(int resumeId) {
-        return null;
+        resumeRepo.removeEdu(resumeId);
+        eduBackgroundRepo.removeEduByResumeId(resumeId);
+        return ResUtils.suc();
     }
 
     @Override
@@ -306,7 +310,9 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public ResResult removeSkillModule(int resumeId) {
-        return null;
+        resumeRepo.removeSkill(resumeId);
+        skilledRepo.removeSkillByResumeId(resumeId);
+        return ResUtils.suc();
     }
 
     @Override
