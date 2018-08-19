@@ -5,8 +5,10 @@ import com.jianli.domain.EduBackground;
 import com.jianli.domain.Resume;
 import com.jianli.domain.SkillMaturity;
 import com.jianli.domain.WorkExp;
-import io.swagger.annotations.ApiModel;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -14,8 +16,6 @@ import java.util.List;
  * @author chendurex
  * @date 2018-06-18 11:52
  */
-@ApiModel(value = "显示简历信息")
-@Getter
 public class ResumeVo {
 
     public static UserInfoVO createUserInfoVO(Resume resume) {

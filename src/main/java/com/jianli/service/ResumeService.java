@@ -92,6 +92,12 @@ public interface ResumeService {
      */
     ResResult removeWorkExp(int id);
 
+    /**
+     * 删除工作经历模块
+     * @param resumeId
+     * @return
+     */
+    ResResult removeExpModule(int resumeId);
 
     /**
      * 显示单个工作经历
@@ -128,6 +134,12 @@ public interface ResumeService {
      */
     ResResult removeEduBackground(int id);
 
+    /**
+     * 删除教育背景模块
+     * @param resumeId
+     * @return
+     */
+    ResResult removeEduModule(int resumeId);
 
     /**
      * 显示单个教育背景
@@ -163,6 +175,13 @@ public interface ResumeService {
      * @return
      */
     ResResult removeSkillMaturity(int id);
+
+    /**
+     * 删除技能熟练度模块
+     * @param resumeId
+     * @return
+     */
+    ResResult removeSkillModule(int resumeId);
 
 
     /**

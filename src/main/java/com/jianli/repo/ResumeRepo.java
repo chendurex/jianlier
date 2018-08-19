@@ -33,7 +33,7 @@ public interface ResumeRepo extends CrudRepository<Resume, Integer> {
     void updateSummaryTitle(@Param("title") String title,@Param("sort")int sort, @Param("id") int id);
 
     @Modifying
-    @Query(value = "update resume set summary=?1 WHERE id = ?2", nativeQuery = true)
+    @Query(value = "update resume set summary=?1, summary_delete=0 WHERE id = ?2", nativeQuery = true)
     void updateSummaryContent(@Param("summary") String summary, @Param("id") int id);
 
     @Modifying

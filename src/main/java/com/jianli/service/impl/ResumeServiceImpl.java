@@ -204,6 +204,11 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
+    public ResResult removeExpModule(int resumeId) {
+        return null;
+    }
+
+    @Override
     public ResResult queryWorkExp(int id) {
         return ResUtils.data(workRepo.findById(id));
     }
@@ -231,7 +236,7 @@ public class ResumeServiceImpl implements ResumeService {
         return ResUtils.data(modified.getId());
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ResResult modifyEduBackgroundTitle(int resumeId, int sort, String title) {
         resumeRepo.updateEduTitle(title, sort, resumeId);
@@ -246,6 +251,10 @@ public class ResumeServiceImpl implements ResumeService {
         return ResUtils.suc();
     }
 
+    @Override
+    public ResResult removeEduModule(int resumeId) {
+        return null;
+    }
 
     @Override
     public ResResult queryEduBackground(int id) {
@@ -290,6 +299,10 @@ public class ResumeServiceImpl implements ResumeService {
         return ResUtils.suc();
     }
 
+    @Override
+    public ResResult removeSkillModule(int resumeId) {
+        return null;
+    }
 
     @Override
     public ResResult querySkillMaturity(int id) {
