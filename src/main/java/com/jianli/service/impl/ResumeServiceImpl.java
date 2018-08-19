@@ -242,6 +242,7 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public ResResult removeEduBackground(int id) {
         eduBackgroundRepo.deleteById(id);
+
         return ResUtils.suc();
     }
 

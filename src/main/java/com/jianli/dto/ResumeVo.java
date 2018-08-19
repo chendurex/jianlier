@@ -1,7 +1,6 @@
 package com.jianli.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jianli.commons.PrimitiveUtils;
 import com.jianli.domain.EduBackground;
 import com.jianli.domain.Resume;
 import com.jianli.domain.SkillMaturity;
@@ -27,22 +26,26 @@ public class ResumeVo {
 
     public static SummaryVO createSummaryVO(Resume resume) {
         return SummaryVO.builder().sort(resume.getSummarySort()).text(resume.getSummary())
-                .title(resume.getSummaryTitle()).exist(PrimitiveUtils.intToBool(resume.getSummaryDelete())).build();
+                .title(resume.getSummaryTitle()).exist(exist(resume.getSummaryDelete())).build();
     }
 
     public static EduBackgroundVO createEduBackground(Resume resume, List<EduBackground> eduBackgrounds) {
         return EduBackgroundVO.builder().sort(resume.getEduSort()).title(resume.getEduTitle())
-                .exist(PrimitiveUtils.intToBool(resume.getEduDelete())).eduBackgrounds(eduBackgrounds).build();
+                .exist(exist(resume.getEduDelete())).eduBackgrounds(eduBackgrounds).build();
     }
 
     public static SkillMaturityVO createSkillMaturity(Resume resume, List<SkillMaturity> skillMaturities) {
         return SkillMaturityVO.builder().sort(resume.getSkillSort()).title(resume.getSkillTitle())
-                .exist(PrimitiveUtils.intToBool(resume.getSkillDelete())).skillMaturities(skillMaturities).build();
+                .exist(exist(resume.getSkillDelete())).skillMaturities(skillMaturities).build();
     }
 
     public static WorkExpVO createWorkExp(Resume resume, List<WorkExp> workExps) {
         return WorkExpVO.builder().sort(resume.getExpSort()).title(resume.getExpTitle())
-                .exist(PrimitiveUtils.intToBool(resume.getExpDelete())).workExps(workExps).build();
+                .exist(exist(resume.getExpDelete())).workExps(workExps).build();
+    }
+
+    private static boolean exist(Integer integer) {
+        return integer != null && integer == 0;
     }
 
 
