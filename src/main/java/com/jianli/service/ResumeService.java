@@ -10,6 +10,13 @@ import com.jianli.response.ResResult;
 public interface ResumeService {
 
     /**
+     * 根据用户ID获取默认的简历ID，如果存存在则创建一条默认的
+     * @param uid
+     * @return
+     */
+    Integer submitResumeUserInfo1(Integer uid);
+
+    /**
      * 新增简历信息
      * @param param
      * @return

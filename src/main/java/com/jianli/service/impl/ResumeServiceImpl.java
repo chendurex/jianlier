@@ -8,6 +8,7 @@ import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
 import com.jianli.service.ResumeService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -36,6 +37,19 @@ public class ResumeServiceImpl implements ResumeService {
         this.customWorkSubRepo = customWorkSubRepo;
     }
 
+    @Transactional
+    @Override
+    public Integer submitResumeUserInfo1(Integer uid) {
+        Integer resumeId = resumeRepo.getResumeIdByUid(uid);
+        if (resumeId == null) {
+            Resume resume = Resume.builder().address("").mobile("").email("")
+                    .name("").wechat("").objectiveTitle("").build();
+            resume.submit(uid);
+            Resume saved = resumeRepo.save(resume);
+            resumeId = saved.getId();
+        }
+        return resumeId;
+    }
 
     @Override
     public ResResult submitResumeUserInfo(ResumeUserInsertParam param) {

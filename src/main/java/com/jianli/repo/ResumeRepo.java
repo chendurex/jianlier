@@ -16,6 +16,9 @@ import java.util.List;
  */
 public interface ResumeRepo extends CrudRepository<Resume, Integer> {
 
+    @Query(value = "select id from resume WHERE uid = ?1", nativeQuery = true)
+    Integer getResumeIdByUid(@Param("uid") int uid);
+
     @Modifying
     @Query(value = "update resume set exp_title=?1, exp_sort=?2, exp_delete=0 WHERE id = ?3", nativeQuery = true)
     void updateExpTitle(@Param("title") String title,@Param("sort")int sort, @Param("id") int id);

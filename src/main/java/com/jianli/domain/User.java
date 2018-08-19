@@ -42,7 +42,6 @@ public class User {
     private Timestamp createTime;
     private Timestamp modifyTime;
 
-
     public void submit() {
         this.createTime = Timestamp.from(Instant.now());
         this.modifyTime = createTime;

@@ -2,7 +2,10 @@ package com.jianli.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +20,9 @@ import static javax.persistence.GenerationType.IDENTITY;
  * @author chendurex
  * @date 2018-06-18 11:52
  */
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Data
 @Entity(name = "resume")
 @JsonIgnoreProperties(value = {"modifyUid", "createUid", "createTime", "modifyTime", "summaryDelete", "expDelete", "eduDelete"})

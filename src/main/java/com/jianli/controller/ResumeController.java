@@ -2,6 +2,7 @@ package com.jianli.controller;
 
 import com.jianli.dto.*;
 import com.jianli.response.ResResult;
+import com.jianli.response.ResUtils;
 import com.jianli.service.ResumeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,11 +27,13 @@ public class ResumeController {
         this.resumeService = resumeService;
     }
 
-    @ApiOperation(value = "新增简历基本信息", response = ResResult.class)
+    /*@ApiOperation(value = "新增简历基本信息", response = ResResult.class)
     @PostMapping(value = "/submit", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult submitResume(@RequestBody @Validated ResumeUserInsertParam param) {
-        return resumeService.submitResumeUserInfo(param);
-    }
+        //return resumeService.submitResumeUserInfo(param);
+        resumeService.submitResumeUserInfo1(9999);
+        return ResUtils.suc();
+    }*/
 
     @ApiOperation(value = "修改简历基本信息", response = ResResult.class)
     @PostMapping(value = "/modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)

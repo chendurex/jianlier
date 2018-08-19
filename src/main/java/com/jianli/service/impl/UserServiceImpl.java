@@ -1,14 +1,18 @@
 package com.jianli.service.impl;
 
+import com.jianli.commons.BeanUtils;
 import com.jianli.domain.User;
 import com.jianli.dto.UserParam;
+import com.jianli.dto.UserVO;
 import com.jianli.repo.UserRepo;
 import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
+import com.jianli.service.ResumeService;
 import com.jianli.service.UserService;
 import com.jianli.wechat.AuthInvoker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author chendurex
@@ -19,16 +23,21 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
     private final AuthInvoker authInvoker;
-    public UserServiceImpl(UserRepo userRepo, AuthInvoker authInvoker) {
+    private final ResumeService resumeService;
+    public UserServiceImpl(UserRepo userRepo, AuthInvoker authInvoker, ResumeService resumeService) {
         this.userRepo = userRepo;
         this.authInvoker = authInvoker;
+        this.resumeService = resumeService;
     }
 
+    @Transactional
     @Override
     public ResResult getInfoByOpenid(String openid) {
         User origin = userRepo.get(openid);
+        UserVO vo = BeanUtils.copy(origin, UserVO.class);
+        vo.setResumeId(resumeService.submitResumeUserInfo1(origin.getId()));
         // todo 验证下，如果超过一定的时间则重新获取用户信息
-        return ResUtils.data(origin);
+        return ResUtils.data(vo);
     }
 
     @Override
