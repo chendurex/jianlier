@@ -1,5 +1,7 @@
 package com.jianli.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jianli.commons.PrimitiveUtils;
 import com.jianli.domain.EduBackground;
 import com.jianli.domain.Resume;
 import com.jianli.domain.SkillMaturity;
@@ -16,44 +18,39 @@ import java.util.List;
 @ApiModel(value = "显示简历信息")
 @Getter
 public class ResumeVo {
-    private Integer id;
-    private UserInfoVO userInfoVO;
-    private SummaryVO summaryVO;
-    private EduBackgroundVO eduBackground;
-    private SkillMaturityVO skillMaturity;
-    private WorkExpVO workExp;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setUserInfoVO(Resume resume) {
-        userInfoVO = UserInfoVO.builder().address(resume.getAddress()).email(resume.getEmail()).mobile(resume.getMobile())
+    public static UserInfoVO createUserInfoVO(Resume resume) {
+        return ResumeVo.UserInfoVO.builder().address(resume.getAddress())
+                .email(resume.getEmail()).mobile(resume.getMobile())
                 .wechat(resume.getWechat()).name(resume.getName()).objectiveTitle(resume.getObjectiveTitle()).build();
     }
 
-    public void setSummary(String title, String text) {
-        this.summaryVO = new SummaryVO(title, text);
+    public static SummaryVO createSummaryVO(Resume resume) {
+        return SummaryVO.builder().sort(resume.getSummarySort()).text(resume.getSummary())
+                .title(resume.getSummaryTitle()).exist(PrimitiveUtils.intToBool(resume.getSummaryDelete())).build();
     }
 
-    public void setEduBackground(String title, List<EduBackground> eduBackgrounds) {
-        eduBackground = new EduBackgroundVO(title, eduBackgrounds);
+    public static EduBackgroundVO createEduBackground(Resume resume, List<EduBackground> eduBackgrounds) {
+        return EduBackgroundVO.builder().sort(resume.getEduSort()).title(resume.getEduTitle())
+                .exist(PrimitiveUtils.intToBool(resume.getEduDelete())).eduBackgrounds(eduBackgrounds).build();
     }
 
-    public void setSkillMaturity(String title, List<SkillMaturity> skillMaturities) {
-        skillMaturity = new SkillMaturityVO(title, skillMaturities);
+    public static SkillMaturityVO createSkillMaturity(Resume resume, List<SkillMaturity> skillMaturities) {
+        return SkillMaturityVO.builder().sort(resume.getSkillSort()).title(resume.getSkillTitle())
+                .exist(PrimitiveUtils.intToBool(resume.getSkillDelete())).skillMaturities(skillMaturities).build();
     }
 
-    public void setWorkExp(String title, List<WorkExp> workExps) {
-        workExp = new WorkExpVO(title, workExps);
+    public static WorkExpVO createWorkExp(Resume resume, List<WorkExp> workExps) {
+        return WorkExpVO.builder().sort(resume.getExpSort()).title(resume.getExpTitle())
+                .exist(PrimitiveUtils.intToBool(resume.getExpDelete())).workExps(workExps).build();
     }
 
 
     @AllArgsConstructor
-    @Data
+    @Getter
     @NoArgsConstructor
     @Builder
-    public static class UserInfoVO {
+    private static class UserInfoVO {
         private String mobile;
         private String address;
         private String wechat;
@@ -64,29 +61,53 @@ public class ResumeVo {
 
     @AllArgsConstructor
     @Getter
+    @NoArgsConstructor
+    @Builder
     public static class SummaryVO {
         private String title;
         private String text;
+        @JsonIgnore
+        private Integer sort;
+        @JsonIgnore
+        private Boolean exist;
     }
 
+    @NoArgsConstructor
     @AllArgsConstructor
     @Getter
+    @Builder
     public static class EduBackgroundVO {
+        @JsonIgnore
+        private Integer sort;
+        @JsonIgnore
+        private Boolean exist;
         private String title;
         private List<EduBackground> eduBackgrounds;
 
     }
 
+    @NoArgsConstructor
     @AllArgsConstructor
     @Getter
+    @Builder
     public static class SkillMaturityVO {
+        @JsonIgnore
+        private Integer sort;
+        @JsonIgnore
+        private Boolean exist;
         private String title;
         private List<SkillMaturity> skillMaturities;
     }
 
-    @Getter
+    @NoArgsConstructor
     @AllArgsConstructor
+    @Getter
+    @Builder
     public static class WorkExpVO {
+        @JsonIgnore
+        private Integer sort;
+        @JsonIgnore
+        private Boolean exist;
         private String title;
         private List<WorkExp> workExps;
     }

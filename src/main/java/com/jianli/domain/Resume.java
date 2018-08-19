@@ -1,5 +1,6 @@
 package com.jianli.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
@@ -18,7 +19,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Data
 @Entity(name = "resume")
-@JsonIgnoreProperties(value = {"modifyUid", "createUid", "createTime", "modifyTime"})
+@JsonIgnoreProperties(value = {"modifyUid", "createUid", "createTime", "modifyTime", "summaryDelete", "expDelete", "eduDelete"})
 public class Resume {
 
     @Id
@@ -43,19 +44,28 @@ public class Resume {
     @Column(insertable = false, updatable = false)
     private String summaryTitle;
     @Column(insertable = false, updatable = false)
+    private Integer summarySort;
+    @Column(insertable = false, updatable = false)
+    private Integer summaryDelete;
+    @Column(insertable = false, updatable = false)
     private String expTitle;
     @Column(insertable = false, updatable = false)
     private Integer expSort;
+    @Column(insertable = false, updatable = false)
+    private Integer expDelete;
     @Column(insertable = false, updatable = false)
     private String eduTitle;
     @Column(insertable = false, updatable = false)
     private Integer eduSort;
     @Column(insertable = false, updatable = false)
+    private Integer eduDelete;
+    @Column(insertable = false, updatable = false)
     private String skillTitle;
     @Column(insertable = false, updatable = false)
     private Integer skillSort;
+    @JsonIgnore
     @Column(insertable = false, updatable = false)
-    private Integer summarySort;
+    private Integer skillDelete;
 
     public void submit(int uid) {
         this.createTime = Timestamp.from(Instant.now());

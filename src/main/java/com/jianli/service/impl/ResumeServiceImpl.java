@@ -76,36 +76,43 @@ public class ResumeServiceImpl implements ResumeService {
             return ResUtils.fail("查询的数据不存在");
         }
         Resume resume = opt.get();
-        ResumeVo.SummaryVO summaryVO = new ResumeVo.SummaryVO(resume.getSummaryTitle(), resume.getSummary());
-
-        ResumeVo.UserInfoVO  userInfoVO = ResumeVo.UserInfoVO.builder().address(resume.getAddress()).email(resume.getEmail()).mobile(resume.getMobile())
-                .wechat(resume.getWechat()).name(resume.getName()).objectiveTitle(resume.getObjectiveTitle()).build();
-
-        ResumeVo.EduBackgroundVO eduBackgroundVO = new ResumeVo.EduBackgroundVO(resume.getEduTitle(),
-                eduBackgroundRepo.listByResumeId(id));
-
-
-        ResumeVo.WorkExpVO expVO = new ResumeVo.WorkExpVO(resume.getExpTitle(), workRepo.listByResumeId(id));
-
-        ResumeVo.SkillMaturityVO skillMaturityVO = new ResumeVo.SkillMaturityVO(resume.getSkillTitle(),
-                skilledRepo.listByResumeId(id));
 
         Map<String, Integer> sorted = new TreeMap<>();
+        Map<String, Object> maps = new HashMap<>(16);
+        maps.put("id", resume.getId());
+        maps.put("sorted", sorted);
+        maps.put("userInfo", ResumeVo.createUserInfoVO(resume));
+
         sorted.put("userInfo", -1);
-        sorted.put("summary", resume.getSummarySort());
-        sorted.put("eduBackground", resume.getEduSort());
-        sorted.put("skillMaturity", resume.getSkillSort());
-        sorted.put("workExp", resume.getExpSort());
+
+        ResumeVo.SummaryVO summaryVO = ResumeVo.createSummaryVO(resume);
+        if (summaryVO.getExist()) {
+            sorted.put("summary", summaryVO.getSort());
+            maps.put("summary", summaryVO);
+        }
+
+        ResumeVo.EduBackgroundVO eduBackgroundVO = ResumeVo.createEduBackground(resume,
+                eduBackgroundRepo.listByResumeId(id));
+        if (eduBackgroundVO.getExist()) {
+            sorted.put("eduBackground", eduBackgroundVO.getSort());
+            maps.put("eduBackground", eduBackgroundVO);
+
+        }
+
+        ResumeVo.WorkExpVO expVO = ResumeVo.createWorkExp(resume, workRepo.listByResumeId(id));
+        if (expVO.getExist()) {
+            sorted.put("workExp", expVO.getSort());
+            maps.put("workExp", expVO);
+        }
 
 
-        Map<String, Object> maps = ImmutableMap.<String, Object>builder()
-                .put("id", resume.getId())
-                .put("sorted", sorted)
-                .put("userInfo", userInfoVO)
-                .put("summary", summaryVO)
-                .put("eduBackground", eduBackgroundVO)
-                .put("skillMaturity", skillMaturityVO)
-                .put("workExp", expVO).build();
+        ResumeVo.SkillMaturityVO skillMaturityVO = ResumeVo.createSkillMaturity(resume, skilledRepo.listByResumeId(id));
+        if (skillMaturityVO.getExist()) {
+            sorted.put("skillMaturity", skillMaturityVO.getSort());
+            maps.put("skillMaturity", skillMaturityVO);
+        }
+
+
         Map<String, Object> copys = new HashMap<>(maps);
 
         List<CustomResumeDesc> customResumeDesc = customResumeDescRepo.listByResumeId(resume.getId());
