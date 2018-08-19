@@ -208,6 +208,7 @@ public class ResumeServiceImpl implements ResumeService {
         return ResUtils.suc();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ResResult removeExpModule(int resumeId) {
         resumeRepo.removeExp(resumeId);
@@ -258,6 +259,7 @@ public class ResumeServiceImpl implements ResumeService {
         return ResUtils.suc();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ResResult removeEduModule(int resumeId) {
         resumeRepo.removeEdu(resumeId);
@@ -308,6 +310,7 @@ public class ResumeServiceImpl implements ResumeService {
         return ResUtils.suc();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ResResult removeSkillModule(int resumeId) {
         resumeRepo.removeSkill(resumeId);
