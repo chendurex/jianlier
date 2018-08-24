@@ -50,7 +50,10 @@ public class EduBackgroundParam {
     @Length(max = 1000, message = "教育结束时间过长")
     @ApiModelProperty(notes = "结束时间", example = "2018-09-01", required = true)
     private String endTime;
-
+    @Min(value = 1, message = "排序值必须大于1")
+    @NotNull(message = "排序值不能为空")
+    @ApiModelProperty(notes = "排序值", example = "1", required = true)
+    private Integer sort;
 
     public EduBackground toEduBackground() {
         return BeanUtils.copy(this, EduBackground.class);

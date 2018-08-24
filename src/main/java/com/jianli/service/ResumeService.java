@@ -3,6 +3,8 @@ package com.jianli.service;
 import com.jianli.dto.*;
 import com.jianli.response.ResResult;
 
+import java.util.List;
+
 /**
  * @author chendurex
  * @date 2018-06-18 13:56
@@ -63,6 +65,13 @@ public interface ResumeService {
      * @return
      */
     ResResult modifyResumeSummaryTitle(int resumeId, int sort, String title);
+
+    /**
+     * 更新简历内部排序值
+     * @param resumeSortDTOS
+     * @return
+     */
+    ResResult modifyResumeInnerSort(List<ResumeSortDTO> resumeSortDTOS);
 
     /**
      * 显示简历信息
@@ -134,6 +143,7 @@ public interface ResumeService {
      * @return
      */
     ResResult modifyEduBackgroundTitle(int resumeId,int sort,  String title);
+
 
     /**
      * 删除教育背景

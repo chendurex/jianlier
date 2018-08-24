@@ -82,6 +82,22 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
+    public ResResult modifyResumeInnerSort(List<ResumeSortDTO> resumeSortDTOS) {
+        for (ResumeSortDTO dto : resumeSortDTOS) {
+            if (dto.isEdu()) {
+                eduBackgroundRepo.modifyEduSortById(dto.getSort(), dto.getId());
+            } else if (dto.isExp()) {
+                workRepo.modifyExpSortById(dto.getSort(), dto.getId());
+            } else if (dto.isSkill()) {
+                skilledRepo.modifySkillSortById(dto.getSort(), dto.getId());
+            } else if (dto.isCusExp()) {
+                customWorkSubRepo.modifyCusExpSubSortById(dto.getSort(), dto.getId());
+            }
+        }
+        return ResUtils.suc();
+    }
+
+    @Override
     public ResResult queryResume(int id) {
         Optional<Resume> opt = resumeRepo.findById(id);
         if (!opt.isPresent()) {
@@ -145,12 +161,9 @@ public class ResumeServiceImpl implements ResumeService {
             vo.setCustomWorkExpSubs(customWorkSubRepo.listBypid(vo.getId()));
             copys.put(key, vo);
         }
-
-
         return ResUtils.data(copys);
     }
 
-    
     @Override
     public ResResult submitResumeSummary(int resumeId, String summary, Integer sort) {
         if (sort == null) {

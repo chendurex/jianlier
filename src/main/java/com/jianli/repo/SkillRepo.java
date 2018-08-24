@@ -20,4 +20,8 @@ public interface SkillRepo extends CrudRepository<SkillMaturity, Integer> {
     @Modifying
     @Query(value = "delete from skill_maturity WHERE resume_id = ?1", nativeQuery = true)
     void removeSkillByResumeId(@Param("resumeId") int id);
+
+    @Modifying
+    @Query(value = "update from skill_maturity set sort=?1 WHERE id = ?2", nativeQuery = true)
+    void modifySkillSortById(@Param("sort")int sort, @Param("id")int id);
 }

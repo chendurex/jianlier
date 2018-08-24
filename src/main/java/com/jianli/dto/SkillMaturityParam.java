@@ -36,6 +36,10 @@ public class SkillMaturityParam {
     @NotNull(message = "熟练度不能为空")
     @ApiModelProperty(notes = "熟练度", example = "10", required = true)
     private Integer maturity;
+    @Min(value = 1, message = "排序值必须大于1")
+    @NotNull(message = "排序值不能为空")
+    @ApiModelProperty(notes = "排序值", example = "1", required = true)
+    private Integer sort;
 
     public SkillMaturity toSkillMaturity() {
         return BeanUtils.copy(this, SkillMaturity.class);

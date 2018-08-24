@@ -32,6 +32,7 @@ public class EduBackground {
     private String startTime;
     private String endTime;
     private String summary;
+    private Integer sort;
 
     public void submit(int uid) {
         this.createTime = Timestamp.from(Instant.now());

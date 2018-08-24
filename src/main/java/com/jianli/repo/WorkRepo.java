@@ -19,4 +19,8 @@ public interface WorkRepo extends CrudRepository<WorkExp, Integer> {
     @Modifying
     @Query(value = "delete from work_exp WHERE resume_id = ?1", nativeQuery = true)
     void removeExpByResumeId(@Param("resumeId") int id);
+
+    @Modifying
+    @Query(value = "update from work_exp set sort=?1 WHERE id = ?2", nativeQuery = true)
+    void modifyExpSortById(@Param("sort")int sort, @Param("id")int id);
 }

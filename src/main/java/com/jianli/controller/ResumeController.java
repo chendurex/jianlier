@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author chendurex
  * @date 2018-06-18 13:25
@@ -39,6 +41,12 @@ public class ResumeController {
     @PostMapping(value = "/modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResResult modifyResume(@RequestBody @Validated ResumeUserUpdateParam param) {
         return resumeService.modifyResumeUserInfo(param);
+    }
+
+    @ApiOperation(value = "修改简历内部排序值", response = ResResult.class)
+    @PostMapping(value = "/sort/modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResResult modifyResumeInnerSort(@RequestBody @Validated List<ResumeSortDTO> resumeSortDTO) {
+        return resumeService.modifyResumeInnerSort(resumeSortDTO);
     }
 
     /*@ApiOperation(value = "删除简历", response = ResResult.class)

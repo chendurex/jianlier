@@ -19,4 +19,8 @@ public interface EduBackgroundRepo extends CrudRepository<EduBackground, Integer
     @Modifying
     @Query(value = "delete from edu_background WHERE resume_id = ?1", nativeQuery = true)
     void removeEduByResumeId(@Param("resumeId") int id);
+
+    @Modifying
+    @Query(value = "update from edu_background set sort=?1 WHERE id = ?2", nativeQuery = true)
+    void modifyEduSortById(@Param("sort")int sort, @Param("id")int id);
 }

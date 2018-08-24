@@ -45,6 +45,10 @@ public class WorkExpParam {
     @Length(max = 1000, message = "工作结束时间过长")
     @ApiModelProperty(notes = "工作结束时间", example = "2019-12-03", required = true)
     private String endTime;
+    @Min(value = 1, message = "排序值必须大于1")
+    @NotNull(message = "排序值不能为空")
+    @ApiModelProperty(notes = "排序值", example = "1", required = true)
+    private Integer sort;
 
     public WorkExp toWorkExp() {
         return BeanUtils.copy(this, WorkExp.class);
