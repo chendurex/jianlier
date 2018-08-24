@@ -68,10 +68,11 @@ public interface ResumeService {
 
     /**
      * 更新简历内部排序值
-     * @param resumeSortDTOS
+     * @param resumeInnerSortDTOS
      * @return
      */
-    ResResult modifyResumeInnerSort(List<ResumeSortDTO> resumeSortDTOS);
+    ResResult modifyResumeInnerSort(List<ResumeInnerSortDTO> resumeInnerSortDTOS);
+
 
     /**
      * 显示简历信息

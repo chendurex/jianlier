@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
  */
 @ApiModel(value = "更新简历内部排序")
 @Data
-public class ResumeSortDTO {
+public class ResumeInnerSortDTO {
     @Min(value = 1, message = "排序值")
     @NotNull(message = "排序值不能为空")
     @ApiModelProperty(notes = "排序值", example = "1", required = true)

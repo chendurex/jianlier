@@ -82,8 +82,8 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
-    public ResResult modifyResumeInnerSort(List<ResumeSortDTO> resumeSortDTOS) {
-        for (ResumeSortDTO dto : resumeSortDTOS) {
+    public ResResult modifyResumeInnerSort(List<ResumeInnerSortDTO> resumeSortDTOS) {
+        for (ResumeInnerSortDTO dto : resumeSortDTOS) {
             if (dto.isEdu()) {
                 eduBackgroundRepo.modifyEduSortById(dto.getSort(), dto.getId());
             } else if (dto.isExp()) {

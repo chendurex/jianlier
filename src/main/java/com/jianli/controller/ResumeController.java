@@ -2,7 +2,6 @@ package com.jianli.controller;
 
 import com.jianli.dto.*;
 import com.jianli.response.ResResult;
-import com.jianli.response.ResUtils;
 import com.jianli.service.ResumeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -45,7 +44,7 @@ public class ResumeController {
 
     @ApiOperation(value = "修改简历内部排序值", response = ResResult.class)
     @PostMapping(value = "/sort/modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult modifyResumeInnerSort(@RequestBody @Validated List<ResumeSortDTO> resumeSortDTO) {
+    public ResResult modifyResumeInnerSort(@RequestBody @Validated List<ResumeInnerSortDTO> resumeSortDTO) {
         return resumeService.modifyResumeInnerSort(resumeSortDTO);
     }
 
