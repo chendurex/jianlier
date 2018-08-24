@@ -1,5 +1,6 @@
 package com.jianli.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -27,18 +28,22 @@ public class ResumeSortDTO {
     @ApiModelProperty(notes = "排序类型，1教育背景、2工作经历、3技能熟练度、4自定义工作经历", example = "1", required = true)
     private Integer type;
 
+    @JsonIgnore
     public boolean isEdu() {
         return type == 1;
     }
 
+    @JsonIgnore
     public boolean isExp() {
         return type == 2;
     }
 
+    @JsonIgnore
     public boolean isSkill() {
         return type == 3;
     }
 
+    @JsonIgnore
     public boolean isCusExp() {
         return type == 4;
     }

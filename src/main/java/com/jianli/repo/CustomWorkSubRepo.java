@@ -17,6 +17,6 @@ public interface CustomWorkSubRepo extends CrudRepository<CustomWorkExpSub, Inte
     List<CustomWorkExpSub> listBypid(@Param("pid") int pid);
 
     @Modifying
-    @Query(value = "update from custom_work_exp_sub set sort=?1 WHERE id = ?2", nativeQuery = true)
+    @Query(value = "update custom_work_exp_sub set sort=?1 WHERE id = ?2", nativeQuery = true)
     void modifyCusExpSubSortById(@Param("sort")int sort, @Param("id")int id);
 }
