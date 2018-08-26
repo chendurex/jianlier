@@ -1,16 +1,25 @@
 package com.jianli.controller;
 
+import com.jianli.commons.UniqueSerials;
 import com.jianli.dto.*;
 import com.jianli.response.ResResult;
+import com.jianli.response.ResUtils;
 import com.jianli.service.ResumeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -26,6 +35,31 @@ public class ResumeController {
     private final ResumeService resumeService;
     public ResumeController(ResumeService resumeService) {
         this.resumeService = resumeService;
+    }
+
+    @Value("${upload.image.filepath}")
+    private String imageFilepath;
+
+    @PostMapping(value = "/uploadHeadImg")
+    public ResResult uploadImage(@RequestParam("file") MultipartFile file, @RequestParam("uid") String userId, @RequestParam("resumeId")Integer resumeId) {
+        if (StringUtils.isEmpty(userId)) {
+            return ResUtils.fail("请先登录账号再上传");
+        }
+        if (file.isEmpty()) {
+            return ResUtils.fail("请选择上传的文件");
+        }
+        try {
+            final String originName = file.getOriginalFilename();
+            final String suffix = originName.substring(originName.lastIndexOf(".", originName.length()));
+            String uploadPath = imageFilepath + UniqueSerials.uniqueSerials(userId) + suffix;
+            Path path = Paths.get(uploadPath);
+            Files.write(path, file.getBytes());
+            resumeService.uploadHeadImg(uploadPath, resumeId);
+            return ResUtils.suc(uploadPath);
+        } catch (IOException ex) {
+            log.error("upload file fail", ex);
+            return ResUtils.fail("图片上传失败，请稍后再试");
+        }
     }
 
     /*@ApiOperation(value = "新增简历基本信息", response = ResResult.class)

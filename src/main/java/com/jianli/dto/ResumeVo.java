@@ -21,7 +21,8 @@ public class ResumeVo {
     public static UserInfoVO createUserInfoVO(Resume resume) {
         return ResumeVo.UserInfoVO.builder().address(resume.getAddress())
                 .email(resume.getEmail()).mobile(resume.getMobile())
-                .wechat(resume.getWechat()).name(resume.getName()).objectiveTitle(resume.getObjectiveTitle()).build();
+                .wechat(resume.getWechat()).name(resume.getName())
+                .objectiveTitle(resume.getObjectiveTitle()).headImg(resume.getHeadImg()).build();
     }
 
     public static SummaryVO createSummaryVO(Resume resume) {
@@ -59,6 +60,7 @@ public class ResumeVo {
         private String wechat;
         private String email;
         private String name;
+        private String headImg;
         private String objectiveTitle;
     }
 

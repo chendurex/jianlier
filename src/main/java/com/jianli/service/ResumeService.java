@@ -12,6 +12,12 @@ import java.util.List;
 public interface ResumeService {
 
     /**
+     * 上传图片
+     * @param path
+     */
+    void uploadHeadImg(String path, int resumeId);
+
+    /**
      * 根据用户ID获取默认的简历ID，如果存存在则创建一条默认的
      * @param uid
      * @return

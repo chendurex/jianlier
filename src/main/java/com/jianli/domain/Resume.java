@@ -46,6 +46,8 @@ public class Resume {
     private String objectiveTitle;
 
     @Column(insertable = false, updatable = false)
+    private String headImg;
+    @Column(insertable = false, updatable = false)
     private String summary;
     @Column(insertable = false, updatable = false)
     private String summaryTitle;

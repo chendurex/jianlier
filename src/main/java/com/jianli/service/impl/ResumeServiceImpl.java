@@ -37,6 +37,11 @@ public class ResumeServiceImpl implements ResumeService {
         this.customWorkSubRepo = customWorkSubRepo;
     }
 
+    @Override
+    public void uploadHeadImg(String path, int resumeId) {
+        resumeRepo.updateHeadImg(path, resumeId);
+    }
+
     @Transactional
     @Override
     public Integer getResumeIdByUid(Integer uid) {
