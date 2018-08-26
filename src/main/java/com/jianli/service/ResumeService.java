@@ -18,6 +18,19 @@ public interface ResumeService {
     void uploadHeadImg(String path, int resumeId);
 
     /**
+     * 上传HTML文档
+     * @param txt
+     * @param resumeId
+     */
+    void uploadHtml(String txt, int resumeId);
+
+    /**
+     * 发送pdf文件给用户
+     * @param resumeId
+     */
+    ResResult sendPdf(int resumeId);
+
+    /**
      * 根据用户ID获取默认的简历ID，如果存存在则创建一条默认的
      * @param uid
      * @return

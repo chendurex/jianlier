@@ -2,10 +2,12 @@ package com.jianli.exception;
 
 import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
+import com.sun.mail.smtp.SMTPAddressFailedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.MailSendException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
@@ -22,6 +24,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor;
 import org.springframework.web.method.annotation.RequestParamMethodArgumentResolver;
 
+import javax.mail.SendFailedException;
 import java.util.stream.Collectors;
 
 /**
@@ -164,6 +167,13 @@ public class GlobalExceptionHandler {
     public ResResult handle(EmptyResultDataAccessException exception) {
         log.warn("删除的数据不存在,", exception);
         return ResUtils.fail("数据不存在或者已经删除");
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResResult handle(MailSendException exception) {
+        log.warn("邮箱格式有误,", exception);
+        return ResUtils.fail("邮箱格式有误，请检查邮箱是否填写正确");
     }
 
     /**

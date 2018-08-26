@@ -40,8 +40,9 @@ public class ResumeController {
     @Value("${upload.image.filepath}")
     private String imageFilepath;
 
+    @ApiOperation(value = "上传简历头像", response = ResResult.class)
     @PostMapping(value = "/uploadHeadImg")
-    public ResResult uploadImage(@RequestParam("file") MultipartFile file, @RequestParam("uid") String userId, @RequestParam("resumeId")Integer resumeId) {
+    public ResResult uploadImage(@RequestParam("file") MultipartFile file, @RequestParam("uid") Integer userId, @RequestParam("resumeId")Integer resumeId) {
         if (StringUtils.isEmpty(userId)) {
             return ResUtils.fail("请先登录账号再上传");
         }
@@ -51,7 +52,7 @@ public class ResumeController {
         try {
             final String originName = file.getOriginalFilename();
             final String suffix = originName.substring(originName.lastIndexOf(".", originName.length()));
-            String uploadPath = imageFilepath + UniqueSerials.uniqueSerials(userId) + suffix;
+            String uploadPath = imageFilepath + UniqueSerials.uniqueSerials(String.valueOf(userId)) + suffix;
             Path path = Paths.get(uploadPath);
             Files.write(path, file.getBytes());
             resumeService.uploadHeadImg(uploadPath, resumeId);
@@ -60,6 +61,19 @@ public class ResumeController {
             log.error("upload file fail", ex);
             return ResUtils.fail("图片上传失败，请稍后再试");
         }
+    }
+
+    @ApiOperation(value = "上传简历HTML文档", response = ResResult.class)
+    @PostMapping(value = "/uploadHTML")
+    public ResResult uploadHtml(@RequestParam("html") String html, @RequestParam("resumeId") Integer resumeId) {
+        resumeService.uploadHtml(html, resumeId);
+        return ResUtils.suc();
+    }
+
+    @ApiOperation(value = "发送HTML文档给用户", response = ResResult.class)
+    @PostMapping(value = "/sendHTML")
+    public ResResult sendPdf(@RequestParam("resumeId") Integer resumeId) {
+        return resumeService.sendPdf(resumeId);
     }
 
     /*@ApiOperation(value = "新增简历基本信息", response = ResResult.class)
