@@ -1,16 +1,16 @@
 package com.jianli.service.impl;
 
 import com.jianli.commons.BeanUtils;
-import com.jianli.commons.Html2PdfUtils;
-import com.jianli.commons.UniqueSerials;
 import com.jianli.component.MailSender;
-import com.jianli.domain.*;
+import com.jianli.domain.CustomResumeDesc;
+import com.jianli.domain.CustomWorkExp;
+import com.jianli.domain.Resume;
+import com.jianli.domain.ResumeHtml;
 import com.jianli.dto.*;
 import com.jianli.repo.*;
 import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
 import com.jianli.service.ResumeService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -214,189 +214,5 @@ public class ResumeServiceImpl implements ResumeService {
             copys.put(key, vo);
         }
         return ResUtils.data(copys);
-    }
-
-    @Override
-    public ResResult submitResumeSummary(int resumeId, String summary, Integer sort) {
-        if (sort == null) {
-            resumeRepo.updateSummaryContent(resumeId, summary);
-        } else {
-            resumeRepo.updateSummaryContentAndSort(resumeId, summary, sort);
-        }
-
-        return ResUtils.suc();
-    }
-
-    
-    @Override
-    public ResResult modifyResumeSummary(int id, String summary) {
-        resumeRepo.updateSummaryContent(id, summary);
-        return ResUtils.suc();
-    }
-
-    
-    @Override
-    public ResResult removeResumeSummary(int id) {
-        resumeRepo.removeSummary(id);
-        return ResUtils.suc();
-    }
-
-    
-    @Override
-    public ResResult modifyResumeSummaryTitle(int resumeId, int sort, String title) {
-        resumeRepo.updateSummaryTitle(title, sort, resumeId);
-        return ResUtils.suc();
-    }
-
-    @Override
-    public ResResult submitWorkExp(WorkExpInsertParam param) {
-        WorkExp exp = param.toWorkExp();
-        exp.submit(param.getUid());
-        WorkExp saved = workRepo.save(exp);
-        if (saved.getId() == null) {
-            return ResUtils.fail("保存数据失败");
-        }
-        return ResUtils.data(saved.getId());
-    }
-
-    @Override
-    public ResResult modifyWorkExp(WorkExpUpdateParam param) {
-        WorkExp exp = param.toWorkExp();
-        exp.modify(param.getUid());
-        WorkExp modified = workRepo.save(exp);
-
-        if (modified.getId() == null) {
-            return ResUtils.fail("保存数据失败");
-        }
-        return ResUtils.data(modified.getId());
-    }
-
-
-    
-    @Override
-    public ResResult modifyWorkExpTitle(int resumeId, int sort, String title) {
-        resumeRepo.updateExpTitle(title, sort, resumeId);
-        return ResUtils.suc();
-    }
-
-    @Override
-    public ResResult removeWorkExp(int id) {
-        workRepo.deleteById(id);
-        return ResUtils.suc();
-    }
-
-    
-    @Override
-    public ResResult removeExpModule(int resumeId) {
-        resumeRepo.removeExp(resumeId);
-        workRepo.removeExpByResumeId(resumeId);
-        return ResUtils.suc();
-    }
-
-    @Override
-    public ResResult queryWorkExp(int id) {
-        return ResUtils.data(workRepo.findById(id));
-    }
-
-    @Override
-    public ResResult submitEduBackground(EduBackgroundInsertParam param) {
-        EduBackground edu = param.toEduBackground();
-        edu.submit(param.getUid());
-        EduBackground saved = eduBackgroundRepo.save(edu);
-        if (saved.getId() == null) {
-            return ResUtils.fail("保存数据失败");
-        }
-        return ResUtils.data(saved.getId());
-    }
-
-    @Override
-    public ResResult modifyEduBackground(EduBackgroundUpdateParam param) {
-        EduBackground edu = param.toEduBackground();
-        edu.modify(param.getUid());
-        EduBackground modified = eduBackgroundRepo.save(edu);
-
-        if (modified.getId() == null) {
-            return ResUtils.fail("保存数据失败");
-        }
-        return ResUtils.data(modified.getId());
-    }
-
-    
-    @Override
-    public ResResult modifyEduBackgroundTitle(int resumeId, int sort, String title) {
-        resumeRepo.updateEduTitle(title, sort, resumeId);
-        return ResUtils.suc();
-    }
-
-
-    @Override
-    public ResResult removeEduBackground(int id) {
-        eduBackgroundRepo.deleteById(id);
-
-        return ResUtils.suc();
-    }
-
-    
-    @Override
-    public ResResult removeEduModule(int resumeId) {
-        resumeRepo.removeEdu(resumeId);
-        eduBackgroundRepo.removeEduByResumeId(resumeId);
-        return ResUtils.suc();
-    }
-
-    @Override
-    public ResResult queryEduBackground(int id) {
-        return ResUtils.data(eduBackgroundRepo.findById(id));
-    }
-
-
-
-    @Override
-    public ResResult submitSkillMaturity(SkillMaturityInsertParam param) {
-        SkillMaturity skill = param.toSkillMaturity();
-        skill.submit(param.getUid());
-        SkillMaturity saved = skilledRepo.save(skill);
-        if (saved.getId() == null) {
-            return ResUtils.fail("保存数据失败");
-        }
-        return ResUtils.data(saved.getId());
-    }
-
-    @Override
-    public ResResult modifySkillMaturity(SkillMaturityUpdateParam param) {
-        SkillMaturity skill = param.toSkillMaturity();
-        skill.modify(param.getUid());
-        SkillMaturity modified = skilledRepo.save(skill);
-
-        if (modified.getId() == null) {
-            return ResUtils.fail("保存数据失败");
-        }
-        return ResUtils.data(modified.getId());
-    }
-
-    
-    @Override
-    public ResResult modifySkillMaturityTitle(int resumeId,int sort, String title) {
-        resumeRepo.updateSkillTitle(title, sort, resumeId);
-        return ResUtils.suc();
-    }
-
-    @Override
-    public ResResult removeSkillMaturity(int id) {
-        skilledRepo.deleteById(id);
-        return ResUtils.suc();
-    }
-
-    
-    @Override
-    public ResResult removeSkillModule(int resumeId) {
-        resumeRepo.removeSkill(resumeId);
-        skilledRepo.removeSkillByResumeId(resumeId);
-        return ResUtils.suc();
-    }
-
-    @Override
-    public ResResult querySkillMaturity(int id) {
-        return ResUtils.data(skilledRepo.findById(id));
     }
 }
