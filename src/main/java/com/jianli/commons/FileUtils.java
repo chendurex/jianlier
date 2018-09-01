@@ -19,11 +19,16 @@ public class FileUtils {
         return new File(path).exists();
     }
 
-    public static void writeTo(String message, String path) {
+    public static void createIfNotExist(String path) {
         File file = new File(path);
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
+    }
+
+    public static void writeTo(String message, String path) {
+        File file = new File(path);
+        createIfNotExist(path);
         try (FileWriter fr = new FileWriter(file, true);
              BufferedWriter br = new BufferedWriter(fr);
              PrintWriter pr = new PrintWriter(br)){

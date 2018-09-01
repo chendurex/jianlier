@@ -21,6 +21,8 @@ public class Html2PdfUtils {
     private static final String SIM_SUN_FONT = "/usr/share/fonts/SimSun.ttf";
 
     public static void writeTo(String origin, String dest) {
+        FileUtils.createIfNotExist(origin);
+        FileUtils.createIfNotExist(dest);
         try(OutputStream os = new FileOutputStream(dest);
             FileInputStream fis = new FileInputStream(origin)) {
             Document document = new Document();
