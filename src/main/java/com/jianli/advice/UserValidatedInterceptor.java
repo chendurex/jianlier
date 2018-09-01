@@ -37,11 +37,11 @@ public class UserValidatedInterceptor extends HandlerInterceptorAdapter implemen
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        GlobalVariable.set(request.getHeader(UID), request.getHeader(TICKET), request.getHeader(BACKUP));
         log.info("Request Start And uid: {}, ticket:{}", GlobalVariable.uid(), GlobalVariable.ticket());
         if (!request.getRequestURI().startsWith("/resume")) {
             return true;
         }
+        GlobalVariable.set(request.getHeader(UID), request.getHeader(TICKET), request.getHeader(BACKUP));
         if (isBackup()) {
             return true;
         }
@@ -56,8 +56,6 @@ public class UserValidatedInterceptor extends HandlerInterceptorAdapter implemen
     public boolean supports(MethodParameter returnType, Class converterType) {
         return true;
     }
-
-
 
 
     @Override

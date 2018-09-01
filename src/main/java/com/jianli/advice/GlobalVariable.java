@@ -61,7 +61,4 @@ public class GlobalVariable {
             return backup;
         }
     }
-
-
-
 }
