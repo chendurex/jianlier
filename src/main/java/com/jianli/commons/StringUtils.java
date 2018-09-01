@@ -12,4 +12,8 @@ public class StringUtils {
     public static boolean isNotEmpty(Object o) {
         return !isEmpty(o);
     }
+
+    public static int toInt(String integer) {
+        return integer == null ? 0 : Integer.valueOf(integer);
+    }
 }
