@@ -1,8 +1,8 @@
 package com.jianli.advice;
 
 import com.jianli.commons.StringUtils;
+import com.jianli.exception.AuthenticException;
 
-import java.util.Objects;
 
 /**
  * @author chendurex
@@ -12,7 +12,10 @@ public class GlobalVariable {
     private final static ThreadLocal<NameValuable> THREAD_LOCAL = new ThreadLocal<>();
 
     public static void set(String uid, String ticket, String backup) {
-        THREAD_LOCAL.set(new NameValuable(StringUtils.toInt(uid), ticket, backup));
+        if (StringUtils.isEmpty(uid)) {
+            throw new AuthenticException("请传入用户ID和凭证");
+        }
+        THREAD_LOCAL.set(new NameValuable(Integer.valueOf(uid), ticket, backup));
     }
 
     public static void remove() {
