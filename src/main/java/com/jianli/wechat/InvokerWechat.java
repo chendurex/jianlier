@@ -2,6 +2,7 @@ package com.jianli.wechat;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.jianli.commons.BeanUtils;
 import com.jianli.commons.StringUtils;
 import com.jianli.dto.UserParam;
 import com.jianli.dto.WechatLoginParamVO;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -56,10 +58,10 @@ public class InvokerWechat implements AuthInvoker {
 
     @Override
     public UserParam getAccessToken(String code, String state) {
-      /*  if (StringUtils.isEmpty(CODE_CACHE.getIfPresent(state))) {
+        if (StringUtils.isEmpty(CODE_CACHE.getIfPresent(state))) {
             log.warn("state已经失效");
             throw new WechatException("请求已经过期，请重新登录");
-        }*/
+        }
         String url = Constant.assembleAccessTokenUrl(appId, secret, code);
         ClientResponse response = null;
         try {
@@ -69,9 +71,8 @@ public class InvokerWechat implements AuthInvoker {
             log.info("请求wechat,status:{}", response.getStatus());
 
             if (response.getStatus() == Response.Status.OK.getStatusCode() && response.hasEntity()) {
-                // 微信返回的content-type是text/plain，但是实际的内容是json格式的，所以重新转换下格式为json
-                response.getHeaders().put("Content-Type", Collections.singletonList(MediaType.APPLICATION_JSON));
-                AccessTokenDTO at = response.getEntity(AccessTokenDTO.class);
+                // 微信返回的content-type是text/plain，而且设置了头部，还是无效，直接用原始方法
+                AccessTokenDTO at = BeanUtils.toJavaObject(response.getEntityInputStream(), AccessTokenDTO.class);
                 if (StringUtils.isNotEmpty(at.getErrcode())) {
                     log.warn("获取微信code失败, errorCode:{}, msg:{}", at.getErrcode(), at.getErrmsg());
                     throw new WechatException("微信登录失败，msg"+at.getErrmsg());
