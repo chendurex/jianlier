@@ -1,5 +1,6 @@
 package com.jianli.service.impl;
 
+import com.jianli.advice.GlobalVariable;
 import com.jianli.commons.BeanUtils;
 import com.jianli.commons.FileUtils;
 import com.jianli.commons.Html2PdfUtils;
@@ -104,7 +105,7 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public ResResult submitResumeUserInfo(ResumeUserInsertParam param) {
         Resume resume = param.toResume();
-        resume.submit(param.getUid());
+        resume.submit(GlobalVariable.uid());
         Resume saved = resumeRepo.save(resume);
         if (saved.getId() == null) {
             return ResUtils.fail("保存数据失败");
@@ -115,7 +116,7 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public ResResult modifyResumeUserInfo(ResumeUserUpdateParam param) {
         Resume resume = param.toResume();
-        resume.modify(param.getUid());
+        resume.modify(GlobalVariable.uid());
         Resume modified = resumeRepo.save(resume);
 
         if (modified.getId() == null) {

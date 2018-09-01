@@ -1,5 +1,6 @@
 package com.jianli.service.impl;
 
+import com.jianli.advice.GlobalVariable;
 import com.jianli.domain.WorkExp;
 import com.jianli.dto.WorkExpInsertParam;
 import com.jianli.dto.WorkExpUpdateParam;
@@ -27,7 +28,7 @@ public class WorkExpServiceImpl implements WorkExpService {
     @Override
     public ResResult submitWorkExp(WorkExpInsertParam param) {
         WorkExp exp = param.toWorkExp();
-        exp.submit(param.getUid());
+        exp.submit(GlobalVariable.uid());
         WorkExp saved = workRepo.save(exp);
         if (saved.getId() == null) {
             return ResUtils.fail("保存数据失败");
@@ -38,7 +39,7 @@ public class WorkExpServiceImpl implements WorkExpService {
     @Override
     public ResResult modifyWorkExp(WorkExpUpdateParam param) {
         WorkExp exp = param.toWorkExp();
-        exp.modify(param.getUid());
+        exp.modify(GlobalVariable.uid());
         WorkExp modified = workRepo.save(exp);
 
         if (modified.getId() == null) {

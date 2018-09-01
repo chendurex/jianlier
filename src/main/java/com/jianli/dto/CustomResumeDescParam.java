@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -22,11 +21,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomResumeDescParam {
-
-    @Min(value = 1, message = "用户ID必须大于1")
-    @ApiModelProperty(notes = "用户ID", example = "1", required = true)
-    @NotNull(message = "用户ID不能为空")
-    private Integer uid;
 
     @Min(value = 0, message = "排序值不能为空")
     @ApiModelProperty(notes = "排序值", example = "1", required = true)

@@ -20,9 +20,7 @@ public class JsonTest {
 
     @Test
     public void eduBackgroundToJson() {
-        EduBackgroundParam edu = EduBackgroundParam.builder().college("1").diploma("2").startTime("2017-01-01").endTime("2018-12-12")
-                .professional("4").uid(7).build();
-        System.out.println(BeanUtils.deepPrint(edu));
+
     }
 
 }

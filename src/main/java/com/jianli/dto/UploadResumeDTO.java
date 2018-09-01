@@ -14,10 +14,6 @@ import javax.validation.constraints.NotNull;
 @ApiModel(value = "上传HTML内容")
 @Data
 public class UploadResumeDTO {
-    @Min(value = 1, message = "用户ID必须大于1")
-    @NotNull(message = "用户ID不能为空")
-    @ApiModelProperty(notes = "用户ID", example = "1", required = true)
-    private Integer uid;
     @Min(value = 1, message = "简历ID大于1")
     @NotNull(message = "简历ID不能为空")
     @ApiModelProperty(notes = "简历ID", example = "1", required = true)

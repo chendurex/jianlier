@@ -22,10 +22,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomWorkExpParam {
-    @Min(value = 1, message = "用户ID必须大于1")
-    @ApiModelProperty(notes = "用户ID", example = "1", required = true)
-    @NotNull(message = "用户ID不能为空")
-    private Integer uid;
     @NotNull(message = "自定义标题不能为空")
     @Length(max = 1000, message = "自定义标题过长")
     @ApiModelProperty(notes = "自定义标题", example = "自定义标题", required = true)

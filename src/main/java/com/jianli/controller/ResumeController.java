@@ -1,5 +1,6 @@
 package com.jianli.controller;
 
+import com.jianli.advice.GlobalVariable;
 import com.jianli.commons.UniqueSerials;
 import com.jianli.dto.ResumeInnerSortDTO;
 import com.jianli.dto.ResumeUserUpdateParam;
@@ -68,7 +69,7 @@ public class ResumeController {
     @ApiOperation(value = "上传简历HTML文档", response = ResResult.class)
     @PostMapping(value = "/uploadHTML")
     public ResResult uploadHtml(@RequestBody @Validated UploadResumeDTO uploadResumeDTO) {
-        resumeService.uploadHtml(uploadResumeDTO.getHtml(), uploadResumeDTO.getResumeId(), uploadResumeDTO.getUid());
+        resumeService.uploadHtml(uploadResumeDTO.getHtml(), uploadResumeDTO.getResumeId(), GlobalVariable.uid());
         return ResUtils.suc();
     }
 
