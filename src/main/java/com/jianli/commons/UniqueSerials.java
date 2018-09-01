@@ -17,4 +17,19 @@ public final class UniqueSerials {
         Objects.requireNonNull(prefix);
         return (prefix.isEmpty() ? "" : prefix+"-")+UUID.randomUUID().toString();
     }
+
+    public static String assembleHtmlPath(String path, Integer uid, Integer resumeId) {
+        return assemblePath(path, uid, resumeId, "html");
+    }
+
+    public static String assemblePdfPath(String path, Integer uid, Integer resumeId) {
+        return assemblePath(path, uid, resumeId, "pdf");
+    }
+
+    private static String assemblePath(String path, Integer uid, Integer resumeId, String suffix) {
+        Objects.requireNonNull(path);
+        Objects.requireNonNull(uid);
+        Objects.requireNonNull(resumeId);
+        return path + "/" + uid + "-" + resumeId + "." + suffix;
+    }
 }

@@ -12,8 +12,15 @@ import java.io.PrintWriter;
  */
 public class FileUtils {
 
+    public static boolean exist(String path) {
+        return new File(path).exists();
+    }
+
     public static void writeTo(String message, String path) {
         File file = new File(path);
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
         try (FileWriter fr = new FileWriter(file, true);
              BufferedWriter br = new BufferedWriter(fr);
              PrintWriter pr = new PrintWriter(br)){

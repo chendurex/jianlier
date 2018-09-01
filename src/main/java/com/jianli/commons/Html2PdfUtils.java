@@ -1,32 +1,39 @@
 package com.jianli.commons;
 
-import com.docraptor.ApiClient;
-import com.docraptor.Doc;
-import com.docraptor.DocApi;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.tool.xml.XMLWorkerHelper;
+import com.jianli.exception.PdfException;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
 
 /**
  * @author chendurex
  * @date 2018-08-26 15:01
  */
 public class Html2PdfUtils {
-    public static void html2Pdf(String html, String fileName) {
-        DocApi docraptor = new DocApi();
-        ApiClient client = docraptor.getApiClient();
-        client.setApiKey("basicAuth");
 
-        client.setUsername("app key");
-        Doc doc = new Doc();
-        doc.test(true);
-        doc.setDocumentContent(html);
-        doc.setDocumentType(Doc.DocumentTypeEnum.PDF);
-        doc.setName(fileName.substring(fileName.lastIndexOf(".", fileName.length())));
-        try {
-            Files.write(Paths.get(fileName), docraptor.createDoc(doc));
+    public static void writeTo(String origin, String dest) {
+        try(OutputStream os = new FileOutputStream(dest);
+            FileInputStream fis = new FileInputStream(origin)) {
+            Document document = new Document();
+            PdfWriter writer = PdfWriter.getInstance(document, os);
+            document.open();
+            BaseFont chinese = BaseFont.createFont("STSongStd-Light", "UniGB-UCS2-H", BaseFont.NOT_EMBEDDED);
+            Font f=new Font(chinese);
+            Paragraph p=new Paragraph("chinese",f);
+            document.add(p);
+            XMLWorkerHelper.getInstance().parseXHtml(writer, document, fis, Charset.forName("UTF-8"));
+            document.close();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new PdfException("生成PDF文件失败，", e);
         }
     }
 }

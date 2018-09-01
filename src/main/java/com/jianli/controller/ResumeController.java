@@ -3,6 +3,7 @@ package com.jianli.controller;
 import com.jianli.commons.UniqueSerials;
 import com.jianli.dto.ResumeInnerSortDTO;
 import com.jianli.dto.ResumeUserUpdateParam;
+import com.jianli.dto.UploadResumeDTO;
 import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
 import com.jianli.service.ResumeService;
@@ -66,15 +67,15 @@ public class ResumeController {
 
     @ApiOperation(value = "上传简历HTML文档", response = ResResult.class)
     @PostMapping(value = "/uploadHTML")
-    public ResResult uploadHtml(@RequestParam("html") String html, @RequestParam("resumeId") Integer resumeId) {
-        resumeService.uploadHtml(html, resumeId);
+    public ResResult uploadHtml(@RequestBody @Validated UploadResumeDTO uploadResumeDTO) {
+        resumeService.uploadHtml(uploadResumeDTO.getHtml(), uploadResumeDTO.getResumeId(), uploadResumeDTO.getUid());
         return ResUtils.suc();
     }
 
     @ApiOperation(value = "发送HTML文档给用户", response = ResResult.class)
-    @PostMapping(value = "/sendHTML")
-    public ResResult sendPdf(@RequestParam("resumeId") Integer resumeId) {
-        return resumeService.sendPdf(resumeId);
+    @GetMapping(value = "/sendHTML")
+    public ResResult sendPdf(@RequestParam("resumeId") Integer resumeId, @RequestParam("uid")Integer uid) {
+        return resumeService.sendPdf(resumeId, uid);
     }
 
 

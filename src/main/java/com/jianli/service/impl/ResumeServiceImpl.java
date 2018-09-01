@@ -1,16 +1,19 @@
 package com.jianli.service.impl;
 
 import com.jianli.commons.BeanUtils;
+import com.jianli.commons.FileUtils;
+import com.jianli.commons.Html2PdfUtils;
+import com.jianli.commons.UniqueSerials;
 import com.jianli.component.MailSender;
 import com.jianli.domain.CustomResumeDesc;
 import com.jianli.domain.CustomWorkExp;
 import com.jianli.domain.Resume;
-import com.jianli.domain.ResumeHtml;
 import com.jianli.dto.*;
 import com.jianli.repo.*;
 import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
 import com.jianli.service.ResumeService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,14 +32,15 @@ public class ResumeServiceImpl implements ResumeService {
     private final CustomResumeDescRepo customResumeDescRepo;
     private final CustomWorkRepo customWorkRepo;
     private final CustomWorkSubRepo customWorkSubRepo;
-    private final ResumeHtmlRepo resumeHtmlRepo;
     private final MailSender mailSender;
-   // @Value("${upload.pdf.filepath}")
-   // private String pdfFilepath;
+    @Value("${upload.pdf.filepath}")
+    private String pdfFilepath;
+    @Value("${upload.html.filepath}")
+    private String htmlFilepath;
     public ResumeServiceImpl(WorkRepo workRepo, EduBackgroundRepo eduBackgroundRepo, SkillRepo skilledRepo,
                              ResumeRepo resumeRepo, CustomResumeDescRepo customResumeDescRepo,
                              CustomWorkRepo customWorkRepo, CustomWorkSubRepo customWorkSubRepo,
-                             ResumeHtmlRepo resumeHtmlRepo, MailSender mailSender) {
+                             MailSender mailSender) {
         this.workRepo = workRepo;
         this.eduBackgroundRepo = eduBackgroundRepo;
         this.skilledRepo = skilledRepo;
@@ -44,7 +48,6 @@ public class ResumeServiceImpl implements ResumeService {
         this.customWorkRepo = customWorkRepo;
         this.customResumeDescRepo = customResumeDescRepo;
         this.customWorkSubRepo = customWorkSubRepo;
-        this.resumeHtmlRepo = resumeHtmlRepo;
         this.mailSender = mailSender;
     }
 
@@ -53,17 +56,15 @@ public class ResumeServiceImpl implements ResumeService {
         resumeRepo.updateHeadImg(path, resumeId);
     }
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
-    public void uploadHtml(String txt, int resumeId) {
-        Integer id = resumeHtmlRepo.getResumeHtmlBy(resumeId);
-        resumeHtmlRepo.save(ResumeHtml.builder().resumeId(resumeId).html(txt).id(id).build());
+    public void uploadHtml(String txt, int resumeId, int uid) {
+        FileUtils.writeTo(txt, UniqueSerials.assembleHtmlPath(htmlFilepath, uid, resumeId));
     }
 
     @Override
-    public ResResult sendPdf(int resumeId) {
-        Integer id = resumeHtmlRepo.getResumeHtmlBy(resumeId);
-        if (id == null) {
+    public ResResult sendPdf(int resumeId, int uid) {
+        String htmlPath = UniqueSerials.assembleHtmlPath(htmlFilepath, uid, resumeId);
+        if (!FileUtils.exist(htmlPath)) {
             return ResUtils.fail("不存在HTML文档，请先生成HTML文档");
         }
         Optional<Resume> resume = resumeRepo.findById(resumeId);
@@ -80,12 +81,9 @@ public class ResumeServiceImpl implements ResumeService {
         if (mail.isEmpty()) {
             return ResUtils.fail("未填写邮箱，无法发送简历到指定的邮箱");
         }
-        Optional<ResumeHtml> htmlVO = resumeHtmlRepo.findById(id);
-        String html = htmlVO.get().getHtml();
-       /* String uploadPath = pdfFilepath + UniqueSerials.uniqueSerials(String.valueOf(resumeId)) + ".pdf";
-        Html2PdfUtils.html2Pdf(html, uploadPath);
-        mailSender.sendMessage(mail, uploadPath);*/
-        mailSender.sendMessage(mail, html);
+        String fileName = UniqueSerials.assemblePdfPath(pdfFilepath, uid, resumeId);
+        Html2PdfUtils.writeTo(htmlPath, fileName);
+        mailSender.send(mail, fileName);
         return ResUtils.suc();
     }
 
