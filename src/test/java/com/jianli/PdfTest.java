@@ -17,10 +17,10 @@ public class PdfTest {
 
 
     @Test
-    public void testCreatePdf() {
+    public void testCreatePdf() throws Exception {
         String path = "/usr/local/tools/test.xhtml";
         String dest = "/usr/local/tools/test.pdf";
-        Html2PdfUtils.writeTo(path, dest);
+        Html2PdfUtils.writeTo2(path, dest);
     }
 
     @Test

@@ -18,6 +18,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
+import java.util.List;
 
 /**
  * 验证当前操作是否属于当前登录用户，如果不是则直接提示错误
@@ -37,6 +39,11 @@ public class UserValidatedInterceptor extends HandlerInterceptorAdapter implemen
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        Enumeration<String> e = request.getHeaderNames();
+         while(e.hasMoreElements()) {
+             String v = e.nextElement();
+            log.info("--------{}------{}", v, request.getHeader(v));
+        }
         log.info("Request Start And uid: {}, ticket:{}", GlobalVariable.uid(), GlobalVariable.ticket());
         if (!request.getRequestURI().startsWith("/resume")) {
             return true;
