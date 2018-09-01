@@ -50,7 +50,6 @@ dependencies {
     compile 'com.itextpdf:itextpdf:5.4.2'
 	compile 'com.itextpdf.tool:xmlworker:5.4.1'
     compile group: 'net.sf.jtidy', name: 'jtidy', version: 'r938'
-    compile group: 'com.itextpdf', name: 'itext-asian', version: '5.2.0'
 
     compile 'com.sun.jersey:jersey-servlet:1.19.1'
     compile 'com.sun.jersey:jersey-core:1.19.1'

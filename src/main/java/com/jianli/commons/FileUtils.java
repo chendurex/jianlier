@@ -1,5 +1,7 @@
 package com.jianli.commons;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -10,6 +12,7 @@ import java.io.PrintWriter;
  * @description
  * @date 2018-04-21 17:18
  */
+@Slf4j
 public class FileUtils {
 
     public static boolean exist(String path) {
@@ -26,7 +29,7 @@ public class FileUtils {
              PrintWriter pr = new PrintWriter(br)){
              pr.println(message);
         } catch(Exception e) {
-            e.printStackTrace();
+            log.error("写文件失败,", e);
         }
     }
 }

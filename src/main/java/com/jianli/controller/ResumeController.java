@@ -58,7 +58,7 @@ public class ResumeController {
             Path path = Paths.get(uploadPath);
             Files.write(path, file.getBytes());
             resumeService.uploadHeadImg(uploadPath, resumeId);
-            return ResUtils.suc(uploadPath);
+            return ResUtils.data(uploadPath);
         } catch (IOException ex) {
             log.error("upload file fail", ex);
             return ResUtils.fail("图片上传失败，请稍后再试");

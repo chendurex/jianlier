@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
         return error(exception.getBindingResult().getFieldErrors()
                 .stream()
                 .map(FieldError::getDefaultMessage)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList()).toString());
     }
 
     /**
@@ -196,7 +196,7 @@ public class GlobalExceptionHandler {
         return error(exception.getMessage());
     }
 
-    private ResResult error(Object message) {
+    private ResResult error(String message) {
         return ResUtils.fail(message);
     }
 }

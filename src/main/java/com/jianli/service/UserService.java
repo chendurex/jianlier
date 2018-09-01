@@ -20,4 +20,12 @@ public interface UserService {
      * @return
      */
     ResResult getInfoByOpenid(String openid);
+
+    /**
+     * 返回当前id是否属于当前用户id
+     * @param id
+     * @param openid
+     * @return
+     */
+    boolean isOwner(int id, String openid);
 }

@@ -18,8 +18,8 @@ public class PdfTest {
 
     @Test
     public void testCreatePdf() {
-        String path = "/usr/local/tools/index.xhtml";
-        String dest = "/usr/local/tools/index.pdf";
+        String path = "/usr/local/tools/test.xhtml";
+        String dest = "/usr/local/tools/test.pdf";
         Html2PdfUtils.writeTo(path, dest);
     }
 

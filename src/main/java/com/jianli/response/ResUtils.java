@@ -7,28 +7,23 @@ package com.jianli.response;
  */
 public final class ResUtils {
     private static final String SUC_DESC = Boolean.TRUE.toString();
-    private static final String FAIL_DESC = Boolean.FALSE.toString();
-    public static ResResult suc(String data) {
-        return result(ResStat.SUC, SUC_DESC, data);
+    public static <T>ResResult data(T data) {
+        return data(data, null);
     }
 
-    public static <T>ResResult data(T data) {
-        return result(ResStat.SUC, SUC_DESC, data);
+    public static <T>ResResult data(T data, Integer uid) {
+        return new DataResult<>(ResStat.SUC, SUC_DESC, data, uid);
     }
 
     public static ResResult suc() {
-        return result(ResStat.SUC, SUC_DESC, null);
+        return result(ResStat.SUC, SUC_DESC);
     }
 
     public static ResResult fail(String desc) {
-        return result(ResStat.FAIL, FAIL_DESC, desc);
+        return result(ResStat.FAIL, desc);
     }
 
-    public static ResResult fail(Object desc) {
-        return result(ResStat.FAIL, FAIL_DESC, desc);
-    }
-
-    private static <T> ResResult result(int code, String desc, T data) {
-        return new ResResult<>(code, desc, data);
+    private static ResResult result(int code, String desc) {
+        return new ResResult(code, desc);
     }
 }

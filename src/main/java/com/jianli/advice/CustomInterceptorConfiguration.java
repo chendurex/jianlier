@@ -19,9 +19,15 @@ public class CustomInterceptorConfiguration implements WebMvcConfigurer {
         return new CustomSysLogInterceptor();
     }
 
+    @Bean
+    public HandlerInterceptor userValidatedInterceptor() {
+        return new UserValidatedInterceptor();
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(customSysLogInterceptor());
+       // registry.addInterceptor(userValidatedInterceptor());
     }
 
 }

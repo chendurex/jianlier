@@ -33,7 +33,7 @@ public class CustomSysLogInterceptor extends HandlerInterceptorAdapter {
     @SuppressWarnings("rawtypes")
     @Override
     public void afterCompletion(HttpServletRequest request,
-                                HttpServletResponse response, Object handler, Exception ex) throws Exception {
+                                HttpServletResponse response, Object handler, Exception ex) {
         Map<String, String[]> params = request.getParameterMap();
         long consumeTime = getConsumeTime();
         if (LOGGER.isInfoEnabled()) {

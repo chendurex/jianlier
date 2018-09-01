@@ -65,7 +65,7 @@ public class InvokerWechat implements AuthInvoker {
         try {
             WebResource webResource = Client.create().resource(url);
             WebResource.Builder requestBuilder = webResource.getRequestBuilder();
-            response = requestBuilder.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON_TYPE).get(ClientResponse.class);
+            response = requestBuilder.get(ClientResponse.class);
             log.info("请求wechat,status:{}", response.getStatus());
 
             if (response.getStatus() == Response.Status.OK.getStatusCode() && response.hasEntity()) {

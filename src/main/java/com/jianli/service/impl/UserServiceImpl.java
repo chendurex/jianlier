@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 /**
  * @author chendurex
  * @date 2018-07-22 09:37
@@ -65,5 +67,11 @@ public class UserServiceImpl implements UserService {
         }
 
         return real;
+    }
+
+    @Override
+    public boolean isOwner(int id, String openid) {
+        Optional<User> user = userRepo.findById(id);
+        return user.filter(u -> openid.equals(u.getOpenid())).isPresent();
     }
 }
