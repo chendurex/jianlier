@@ -99,7 +99,7 @@ public class InvokerWechat implements AuthInvoker {
             log.info("请求wechat,status:{}", response.getStatus());
             if (response.getStatus() == Response.Status.OK.getStatusCode() && response.hasEntity()) {
                 response.getHeaders().put("Content-Type", Collections.singletonList(MediaType.APPLICATION_JSON));
-                UserInfoDTO user = response.getEntity(UserInfoDTO.class);
+                UserInfoDTO user = BeanUtils.toJavaObject(response.getEntityInputStream(), UserInfoDTO.class);
                 if (StringUtils.isNotEmpty(user.getErrcode())) {
                     log.warn("获取微信用户信息失败, errorCode:{}, msg:{}", user.getErrcode(), user.getErrmsg());
                     throw new WechatException("获取微信信息失败，msg"+user.getErrmsg());
