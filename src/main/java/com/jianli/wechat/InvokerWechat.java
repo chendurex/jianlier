@@ -56,10 +56,10 @@ public class InvokerWechat implements AuthInvoker {
 
     @Override
     public UserParam getAccessToken(String code, String state) {
-        if (StringUtils.isEmpty(CODE_CACHE.getIfPresent(state))) {
+      /*  if (StringUtils.isEmpty(CODE_CACHE.getIfPresent(state))) {
             log.warn("state已经失效");
             throw new WechatException("请求已经过期，请重新登录");
-        }
+        }*/
         String url = Constant.assembleAccessTokenUrl(appId, secret, code);
         ClientResponse response = null;
         try {

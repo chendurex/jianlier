@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User submit(String code, String state) {
         log.info("获取到用户code：{}， state：{}", code, state);
-        UserParam param = authInvoker.getAccessToken(code, state);
+        /*UserParam param = authInvoker.getAccessToken(code, state);
         log.info("获取到用户登录信息，param:{}", param);
         UserParam info = authInvoker.getUserInfo(param.getAccessToken(), param.getOpenid());
         log.info("获取到用户信息，info:{}", info);
@@ -64,9 +64,9 @@ public class UserServiceImpl implements UserService {
             user.modify();
             user.setId(origin.getId());
             real = userRepo.save(user);
-        }
+        }*/
 
-        return real;
+        return null;
     }
 
     @Override
