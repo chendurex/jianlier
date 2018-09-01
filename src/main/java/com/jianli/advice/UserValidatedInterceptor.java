@@ -18,8 +18,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Enumeration;
-import java.util.List;
 
 /**
  * 验证当前操作是否属于当前登录用户，如果不是则直接提示错误
@@ -36,19 +34,15 @@ public class UserValidatedInterceptor extends HandlerInterceptorAdapter implemen
     private static final String BACKUP = "backup";
     private static final String UID = "uid";
     private static final String TICKET = "ticket";
+    private static final String OPTIONS = "OPTIONS";
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        Enumeration<String> e = request.getHeaderNames();
-         while(e.hasMoreElements()) {
-             String v = e.nextElement();
-            log.info("--------{}------{}", v, request.getHeader(v));
-        }
-        log.info("Request Start And uid: {}, ticket:{}", GlobalVariable.uid(), GlobalVariable.ticket());
-        if ("OPTIONS".equals(request.getMethod()) || !request.getRequestURI().startsWith("/resume")) {
+        if (OPTIONS.equals(request.getMethod()) || !request.getRequestURI().startsWith("/resume")) {
             return true;
         }
         GlobalVariable.set(request.getHeader(UID), request.getHeader(TICKET), request.getHeader(BACKUP));
+        log.info("Request Start And uid: {}, ticket:{}", GlobalVariable.uid(), GlobalVariable.ticket());
         if (isBackup()) {
             return true;
         }

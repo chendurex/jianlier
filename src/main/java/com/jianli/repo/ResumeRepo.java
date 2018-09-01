@@ -17,7 +17,7 @@ public interface ResumeRepo extends CrudRepository<Resume, Integer> {
     @Query(value = "update resume set head_img=?1 WHERE id = ?2", nativeQuery = true)
     void updateHeadImg(@Param("headImg")String headImg, @Param("id")int id);
 
-    @Query(value = "select id from resume WHERE uid = ?1", nativeQuery = true)
+    @Query(value = "select id from resume WHERE create_uid = ?1", nativeQuery = true)
     Integer getResumeIdByUid(@Param("uid") int uid);
 
     @Modifying
