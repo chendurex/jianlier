@@ -45,7 +45,7 @@ public class UserValidatedInterceptor extends HandlerInterceptorAdapter implemen
             log.info("--------{}------{}", v, request.getHeader(v));
         }
         log.info("Request Start And uid: {}, ticket:{}", GlobalVariable.uid(), GlobalVariable.ticket());
-        if (!request.getRequestURI().startsWith("/resume")) {
+        if ("OPTIONS".equals(request.getMethod()) || !request.getRequestURI().startsWith("/resume")) {
             return true;
         }
         GlobalVariable.set(request.getHeader(UID), request.getHeader(TICKET), request.getHeader(BACKUP));

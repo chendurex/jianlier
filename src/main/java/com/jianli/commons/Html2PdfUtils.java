@@ -40,7 +40,7 @@ public class Html2PdfUtils {
         BaseFont bf = BaseFont.createFont(SIM_SUN_FONT, BaseFont.IDENTITY_H,BaseFont.NOT_EMBEDDED);
         Font fontChinese = new Font(bf, 12);
         Document document = new Document(PageSize.A4);
-        PdfWriter pdfWriter = PdfWriter.getInstance(document, outputStream);
+        PdfWriter.getInstance(document, outputStream);
         document.open();
         Paragraph context = new Paragraph();
         ElementList elementList = MyXMLWorkerHelper.parseToElementList(new FileInputStream(origin), null);
@@ -54,6 +54,5 @@ public class Html2PdfUtils {
                 "亲笔签名/公司公章： _______________________________", fontChinese));
         document.add(new Paragraph("日期： ", fontChinese));
         document.close();
-        pdfWriter.flush();
     }
 }

@@ -33,7 +33,7 @@ public class MyXMLWorkerHelper {
 
         @Override
         public Font getFont(final String fontname, String encoding, float size, final int style) {
-            size=9.0f;//可以指定字体大小，不设置默认为12pt
+            size=12;
             String fntname = fontname;
             if (fntname == null) {
                 fntname = "宋体";
