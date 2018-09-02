@@ -20,10 +20,17 @@ public class PdfTest {
 
     @Test
     public void testCreatePdf() throws Exception {
-        String path = "/usr/local/tools/test.html";
-        String dest = "/usr/local/tools/test.pdf";
+        String path = "/usr/local/tools/index.html";
+        String dest = "/usr/local/tools/index.pdf";
         FileReader reader = new FileReader(path);
         Html2PdfUtils.writeTo(IOUtils.toString(reader), path, dest);
+    }
+
+    @Test
+    public void test2() {
+        String path = "/usr/local/tools/index.xhtml.back";
+        String dest = "/usr/local/tools/index.pdf";
+        Html2PdfUtils.writeTo(path, dest);
     }
 
     @Test

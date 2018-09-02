@@ -52,6 +52,7 @@ public class ResumeServiceImpl implements ResumeService {
         this.mailSender = mailSender;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void uploadHeadImg(String path, int resumeId) {
         resumeRepo.updateHeadImg(path, resumeId);

@@ -46,7 +46,7 @@ public class Html2PdfUtils {
 
     }
 
-    private static void writeTo(String origin, String dest) {
+    public static void writeTo(String origin, String dest) {
         try(OutputStream os = new FileOutputStream(dest);
             FileInputStream fis = new FileInputStream(origin)) {
             Document document = new Document();
