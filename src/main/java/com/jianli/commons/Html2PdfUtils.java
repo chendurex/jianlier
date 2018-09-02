@@ -22,7 +22,7 @@ public class Html2PdfUtils {
     public static void writeTo(String text, String origin, String dest) {
         FileUtils.createIfNotExist(origin);
         FileUtils.createIfNotExist(dest);
-        String xhtml = origin.replace("html", "xhtml");
+        String xhtml = origin.replace(".html", ".xhtml");
         try (StringReader reader = new StringReader(text);
              FileOutputStream fos = new FileOutputStream(xhtml);
              FileWriter writer = new FileWriter(origin)){
