@@ -29,12 +29,13 @@ public class Html2PdfUtils {
             // 写入原始html
             writer.write(text);
             Tidy tidy = new Tidy();
-            tidy.setShowWarnings(false);
+            tidy.setShowWarnings(true);
             tidy.setXmlTags(false);
             tidy.setInputEncoding("UTF-8");
             tidy.setOutputEncoding("UTF-8");
             tidy.setXHTML(true);
             tidy.setMakeClean(true);
+            tidy.setIndentCdata(true);
             org.w3c.dom.Document xmlDoc = tidy.parseDOM(reader, null);
             // 写入到转化后的xhtml
             tidy.pprint(xmlDoc, fos);

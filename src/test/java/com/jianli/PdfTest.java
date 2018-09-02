@@ -28,7 +28,7 @@ public class PdfTest {
 
     @Test
     public void test2() {
-        String path = "/usr/local/tools/index.xhtml.back";
+        String path = "/usr/local/tools/index.xhtml";
         String dest = "/usr/local/tools/index.pdf";
         Html2PdfUtils.writeTo(path, dest);
     }
