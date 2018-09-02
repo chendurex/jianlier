@@ -69,8 +69,8 @@ public class ResumeController {
     @ApiOperation(value = "上传简历HTML文档", response = ResResult.class)
     @PostMapping(value = "/uploadHTML")
     public ResResult uploadHtml(@RequestBody @Validated UploadResumeDTO uploadResumeDTO) {
-        resumeService.uploadHtml(uploadResumeDTO.getHtml(), uploadResumeDTO.getResumeId(), GlobalVariable.uid());
-        return ResUtils.suc();
+        return resumeService.uploadHtml(uploadResumeDTO.getHtml(),
+                uploadResumeDTO.getResumeId(), GlobalVariable.uid());
     }
 
     @ApiOperation(value = "发送HTML文档给用户", response = ResResult.class)

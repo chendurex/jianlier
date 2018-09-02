@@ -7,10 +7,9 @@ import com.itextpdf.tool.xml.ElementList;
 import com.itextpdf.tool.xml.XMLWorkerFontProvider;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 import com.jianli.exception.PdfException;
+import org.w3c.tidy.Tidy;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.charset.Charset;
 
 /**
@@ -20,9 +19,34 @@ import java.nio.charset.Charset;
 public class Html2PdfUtils {
     private static final String SIM_SUN_FONT = "/usr/share/fonts/SimSun.ttf";
 
-    public static void writeTo(String origin, String dest) {
+    public static void writeTo(String text, String origin, String dest) {
         FileUtils.createIfNotExist(origin);
         FileUtils.createIfNotExist(dest);
+        String xhtml = origin.replace("html", "xhtml");
+        try (StringReader reader = new StringReader(text);
+             FileOutputStream fos = new FileOutputStream(xhtml);
+             FileWriter writer = new FileWriter(origin)){
+            // 写入原始html
+            writer.write(text);
+            Tidy tidy = new Tidy();
+            tidy.setShowWarnings(false);
+            tidy.setXmlTags(false);
+            tidy.setInputEncoding("UTF-8");
+            tidy.setOutputEncoding("UTF-8");
+            tidy.setXHTML(true);
+            tidy.setMakeClean(true);
+            org.w3c.dom.Document xmlDoc = tidy.parseDOM(reader, null);
+            // 写入到转化后的xhtml
+            tidy.pprint(xmlDoc, fos);
+            // 渲染成pdf
+            writeTo(xhtml, dest);
+        } catch (Exception e) {
+            throw new PdfException("生成PDF文件失败，", e);
+        }
+
+    }
+
+    private static void writeTo(String origin, String dest) {
         try(OutputStream os = new FileOutputStream(dest);
             FileInputStream fis = new FileInputStream(origin)) {
             Document document = new Document();

@@ -1,12 +1,14 @@
 package com.jianli;
 
 import com.jianli.commons.Html2PdfUtils;
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.tidy.Tidy;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 
 /**
  * @author chendurex
@@ -18,9 +20,10 @@ public class PdfTest {
 
     @Test
     public void testCreatePdf() throws Exception {
-        String path = "/usr/local/tools/test.xhtml";
+        String path = "/usr/local/tools/test.html";
         String dest = "/usr/local/tools/test.pdf";
-        Html2PdfUtils.writeTo2(path, dest);
+        FileReader reader = new FileReader(path);
+        Html2PdfUtils.writeTo(IOUtils.toString(reader), path, dest);
     }
 
     @Test

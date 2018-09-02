@@ -24,7 +24,7 @@ public interface ResumeService {
      * @param txt
      * @param resumeId
      */
-    void uploadHtml(String txt, int resumeId, int uid);
+    ResResult uploadHtml(String txt, int resumeId, int uid);
 
     /**
      * 发送pdf文件给用户

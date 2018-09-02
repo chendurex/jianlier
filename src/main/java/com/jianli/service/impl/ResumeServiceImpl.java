@@ -58,15 +58,18 @@ public class ResumeServiceImpl implements ResumeService {
     }
 
     @Override
-    public void uploadHtml(String txt, int resumeId, int uid) {
-        FileUtils.writeTo(txt, UniqueSerials.assembleHtmlPath(htmlFilepath, uid, resumeId));
+    public ResResult uploadHtml(String txt, int resumeId, int uid) {
+        String htmlPath = UniqueSerials.assembleHtmlPath(htmlFilepath, uid, resumeId);
+        String pdfPath = UniqueSerials.assemblePdfPath(pdfFilepath, uid, resumeId);
+        Html2PdfUtils.writeTo(txt, htmlPath, pdfPath);
+        return ResUtils.data(pdfPath);
     }
 
     @Override
     public ResResult sendPdf(int resumeId, int uid) {
-        String htmlPath = UniqueSerials.assembleHtmlPath(htmlFilepath, uid, resumeId);
-        if (!FileUtils.exist(htmlPath)) {
-            return ResUtils.fail("不存在HTML文档，请先生成HTML文档");
+        String pdfPath = UniqueSerials.assemblePdfPath(pdfFilepath, uid, resumeId);
+        if (!FileUtils.exist(pdfPath)) {
+            return ResUtils.fail("未检查到有pdf文档，请先生成pdf文档");
         }
         Optional<Resume> resume = resumeRepo.findById(resumeId);
         if (!resume.isPresent()) {
@@ -82,9 +85,7 @@ public class ResumeServiceImpl implements ResumeService {
         if (mail.isEmpty()) {
             return ResUtils.fail("未填写邮箱，无法发送简历到指定的邮箱");
         }
-        String fileName = UniqueSerials.assemblePdfPath(pdfFilepath, uid, resumeId);
-        Html2PdfUtils.writeTo(htmlPath, fileName);
-        mailSender.send(mail, fileName);
+        mailSender.send(mail, pdfPath);
         return ResUtils.suc();
     }
 
