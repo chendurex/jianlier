@@ -26,6 +26,18 @@ public class FileUtils {
         }
     }
 
+    public static void writeToWithoutAppend(String message, String path) {
+        File file = new File(path);
+        createIfNotExist(path);
+        try (FileWriter fr = new FileWriter(file);
+             BufferedWriter br = new BufferedWriter(fr);
+             PrintWriter pr = new PrintWriter(br)){
+            pr.println(message);
+        } catch(Exception e) {
+            throw new RuntimeException("写入文件失败", e);
+        }
+    }
+
     public static void writeTo(String message, String path) {
         File file = new File(path);
         createIfNotExist(path);

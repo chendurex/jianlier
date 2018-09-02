@@ -3,8 +3,8 @@ package com.jianli.service.impl;
 import com.jianli.advice.GlobalVariable;
 import com.jianli.commons.BeanUtils;
 import com.jianli.commons.FileUtils;
-import com.jianli.commons.Html2PdfUtils;
 import com.jianli.commons.UniqueSerials;
+import com.jianli.component.Html2Pdf;
 import com.jianli.component.MailSender;
 import com.jianli.domain.CustomResumeDesc;
 import com.jianli.domain.CustomWorkExp;
@@ -40,10 +40,11 @@ public class ResumeServiceImpl implements ResumeService {
     private String htmlFilepath;
     @Value("${upload.base.filepath}")
     private String baseFilepath;
+    private Html2Pdf html2Pdf;
     public ResumeServiceImpl(WorkRepo workRepo, EduBackgroundRepo eduBackgroundRepo, SkillRepo skilledRepo,
                              ResumeRepo resumeRepo, CustomResumeDescRepo customResumeDescRepo,
                              CustomWorkRepo customWorkRepo, CustomWorkSubRepo customWorkSubRepo,
-                             MailSender mailSender) {
+                             MailSender mailSender, Html2Pdf html2Pdf) {
         this.workRepo = workRepo;
         this.eduBackgroundRepo = eduBackgroundRepo;
         this.skilledRepo = skilledRepo;
@@ -52,6 +53,7 @@ public class ResumeServiceImpl implements ResumeService {
         this.customResumeDescRepo = customResumeDescRepo;
         this.customWorkSubRepo = customWorkSubRepo;
         this.mailSender = mailSender;
+        this.html2Pdf = html2Pdf;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -64,7 +66,7 @@ public class ResumeServiceImpl implements ResumeService {
     public ResResult uploadHtml(String txt, int resumeId, int uid) {
         String htmlPath = UniqueSerials.assembleHtmlPath(htmlFilepath, uid, resumeId);
         String pdfPath = UniqueSerials.assemblePdfPath(pdfFilepath, uid, resumeId);
-        Html2PdfUtils.writeTo(txt, htmlPath, pdfPath);
+        html2Pdf.writeTO(txt, htmlPath, pdfPath);
         return ResUtils.data(pdfPath.replace(baseFilepath, "/"));
     }
 
