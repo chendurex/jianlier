@@ -60,7 +60,7 @@ public class ResumeController {
             String uploadPath = imageFilepath + UniqueSerials.uniqueSerials(String.valueOf(userId)) + suffix;
             Path path = Paths.get(uploadPath);
             Files.write(path, file.getBytes());
-            String realPath = uploadPath.replace(baseFilepath, "/");
+            String realPath = uploadPath.replace(baseFilepath, "");
             resumeService.uploadHeadImg(realPath, resumeId);
             return ResUtils.data(realPath);
         } catch (IOException ex) {

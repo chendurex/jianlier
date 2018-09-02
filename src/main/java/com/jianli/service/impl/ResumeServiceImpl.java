@@ -67,7 +67,7 @@ public class ResumeServiceImpl implements ResumeService {
         String htmlPath = UniqueSerials.assembleHtmlPath(htmlFilepath, uid, resumeId);
         String pdfPath = UniqueSerials.assemblePdfPath(pdfFilepath, uid, resumeId);
         html2Pdf.writeTO(txt, htmlPath, pdfPath);
-        return ResUtils.data(pdfPath.replace(baseFilepath, "/"));
+        return ResUtils.data(pdfPath.replace(baseFilepath, ""));
     }
 
     @Override
