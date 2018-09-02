@@ -38,6 +38,8 @@ public class ResumeServiceImpl implements ResumeService {
     private String pdfFilepath;
     @Value("${upload.html.filepath}")
     private String htmlFilepath;
+    @Value("${upload.base.filepath}")
+    private String baseFilepath;
     public ResumeServiceImpl(WorkRepo workRepo, EduBackgroundRepo eduBackgroundRepo, SkillRepo skilledRepo,
                              ResumeRepo resumeRepo, CustomResumeDescRepo customResumeDescRepo,
                              CustomWorkRepo customWorkRepo, CustomWorkSubRepo customWorkSubRepo,
@@ -63,7 +65,7 @@ public class ResumeServiceImpl implements ResumeService {
         String htmlPath = UniqueSerials.assembleHtmlPath(htmlFilepath, uid, resumeId);
         String pdfPath = UniqueSerials.assemblePdfPath(pdfFilepath, uid, resumeId);
         Html2PdfUtils.writeTo(txt, htmlPath, pdfPath);
-        return ResUtils.data(pdfPath);
+        return ResUtils.data(pdfPath.replace(baseFilepath, "/"));
     }
 
     @Override

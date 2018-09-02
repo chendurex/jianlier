@@ -42,6 +42,8 @@ public class ResumeController {
 
     @Value("${upload.image.filepath}")
     private String imageFilepath;
+    @Value("${upload.base.filepath}")
+    private String baseFilepath;
 
     @ApiOperation(value = "上传简历头像", response = ResResult.class)
     @PostMapping(value = "/uploadHeadImg")
@@ -59,7 +61,7 @@ public class ResumeController {
             Path path = Paths.get(uploadPath);
             Files.write(path, file.getBytes());
             resumeService.uploadHeadImg(uploadPath, resumeId);
-            return ResUtils.data(uploadPath);
+            return ResUtils.data(uploadPath.replace(baseFilepath, "/"));
         } catch (IOException ex) {
             log.error("upload file fail", ex);
             return ResUtils.fail("图片上传失败，请稍后再试");
