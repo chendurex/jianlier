@@ -18,18 +18,18 @@ public final class UniqueSerials {
         return (prefix.isEmpty() ? "" : prefix+"-")+UUID.randomUUID().toString();
     }
 
-    public static String assembleHtmlPath(String path, Integer uid, Integer resumeId) {
-        return assemblePath(path, uid, resumeId, "html");
+    public static String assembleHtmlPath(String path, Integer uid, Integer resumeId, String hashcode) {
+        return assemblePath(path, uid, resumeId, hashcode, "html");
     }
 
     public static String assemblePdfPath(String path, Integer uid, Integer resumeId) {
-        return assemblePath(path, uid, resumeId, "pdf");
+        return assemblePath(path, uid, resumeId, null,"pdf");
     }
 
-    private static String assemblePath(String path, Integer uid, Integer resumeId, String suffix) {
+    private static String assemblePath(String path, Integer uid, Integer resumeId, String hashcode, String suffix) {
         Objects.requireNonNull(path);
         Objects.requireNonNull(uid);
         Objects.requireNonNull(resumeId);
-        return path + "/" + uid + "-" + resumeId + "." + suffix;
+        return path + "/" + uid + "-" + resumeId + (hashcode == null ? "" : "-" + hashcode)+ "." + suffix;
     }
 }
