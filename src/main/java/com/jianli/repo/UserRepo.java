@@ -15,6 +15,6 @@ public interface UserRepo extends CrudRepository<User, Integer> {
     User get(@Param("openid") String openid);
 
     @Modifying
-    @Query(value = "update user set access_token=?1, expires_time=?2 WHERE id = ?1", nativeQuery = true)
+    @Query(value = "update user set access_token=?1, expires_time=?2 WHERE id = ?3", nativeQuery = true)
     void refreshToken(@Param("accessToken")String accessToken, @Param("expiresTime")Integer expiresTime, @Param("id") int id);
 }
