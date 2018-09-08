@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
  */
 public interface UserRepo extends CrudRepository<User, Integer> {
     @Query(value = "SELECT * FROM user w WHERE w.access_token = ?1", nativeQuery = true)
-    User get(@Param("ticket") String openid);
+    User get(@Param("ticket") String ticket);
 
     @Modifying
     @Query(value = "update user set access_token=?1, expires_time=?2 WHERE id = ?3", nativeQuery = true)

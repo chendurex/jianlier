@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> user = userRepo.findById(id);
         return user
                 .filter(u -> ticket.equals(u.getAccessToken()))
-                .filter(u ->u.getExpiresTime() < (System.currentTimeMillis()/1000))
+                .filter(u ->u.getExpiresTime() > (System.currentTimeMillis()/1000))
                 .isPresent();
     }
 }
