@@ -36,8 +36,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public ResResult getInfoByOpenid(String openid) {
-        User origin = userRepo.get(openid);
+    public ResResult getInfoByTicket(String ticket) {
+        User origin = userRepo.get(ticket);
         if (origin == null) {
             return ResUtils.fail("您的凭证已过期，请重新登录");
         }
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
                 .expiresTime((int)(System.currentTimeMillis()/1000) + param.getExpiresIn())
                 .build();
 
-        User origin = userRepo.get(user.getOpenid());
+        User origin = userRepo.get(user.getAccessToken());
         User real;
         if (origin == null) {
             user.submit();

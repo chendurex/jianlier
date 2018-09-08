@@ -58,9 +58,9 @@ public class WechatController {
 
     @ApiOperation(value = "根据openid获取用户信息", response = ResResult.class)
     @GetMapping(value = "/getInfo")
-    public ResResult genInfo(@RequestParam(value = "openid")
-                           @ApiParam(name = "openid", value = "微信openid", example = "of0EF1tJkDVdHOTTlp4xI9iun9bE")String openid) {
-        return userService.getInfoByOpenid(openid);
+    public ResResult genInfo(@RequestParam(value = "ticket")
+                           @ApiParam(name = "ticket", value = "ticket", example = "of0EF1tJkDVdHOTTlp4xI9iun9bE")String ticket) {
+        return userService.getInfoByTicket(ticket);
     }
 
     @ApiOperation(value = "微信登录后的回调", hidden = true)
@@ -74,7 +74,7 @@ public class WechatController {
             log.error("用户数据回调失败");
             return ;
         }
-        String url = mainUrl + "?openid=" + user.getOpenid();
+        String url = mainUrl + "?ticket=" + user.getAccessToken();
         try {
             response.sendRedirect(url);
         } catch (IOException e) {

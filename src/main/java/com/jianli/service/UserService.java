@@ -19,7 +19,7 @@ public interface UserService {
      * @param openid
      * @return
      */
-    ResResult getInfoByOpenid(String openid);
+    ResResult getInfoByTicket(String openid);
 
     /**
      * 返回当前id是否属于当前用户id
