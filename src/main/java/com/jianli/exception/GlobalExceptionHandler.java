@@ -176,6 +176,13 @@ public class GlobalExceptionHandler {
         return ResUtils.fail("邮箱格式有误，请检查邮箱是否填写正确");
     }
 
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResResult handle(AuthenticException exception) {
+        log.warn("验证失败,", exception);
+        return ResUtils.fail(exception.getMessage());
+    }
+
     /**
      * 所有的异常控制
      * 保证请求一定能返回规定的数据，而不是404或者500这种错误
