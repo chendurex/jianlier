@@ -1,6 +1,5 @@
 package com.jianli.service.impl;
 
-import com.jianli.advice.GlobalVariable;
 import com.jianli.domain.EduBackground;
 import com.jianli.dto.EduBackgroundInsertParam;
 import com.jianli.dto.EduBackgroundUpdateParam;
@@ -28,7 +27,7 @@ public class EduBackgroundServiceImpl implements EduBackgroundService {
     @Override
     public ResResult submitEduBackground(EduBackgroundInsertParam param) {
         EduBackground edu = param.toEduBackground();
-        edu.submit(GlobalVariable.uid());
+        edu.submit(param.getUid());
         EduBackground saved = eduBackgroundRepo.save(edu);
         if (saved.getId() == null) {
             return ResUtils.fail("保存数据失败");
@@ -39,7 +38,7 @@ public class EduBackgroundServiceImpl implements EduBackgroundService {
     @Override
     public ResResult modifyEduBackground(EduBackgroundUpdateParam param) {
         EduBackground edu = param.toEduBackground();
-        edu.modify(GlobalVariable.uid());
+        edu.modify(param.getUid());
         EduBackground modified = eduBackgroundRepo.save(edu);
 
         if (modified.getId() == null) {

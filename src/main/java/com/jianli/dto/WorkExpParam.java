@@ -21,6 +21,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkExpParam {
+    @ApiModelProperty(notes = "用户ID", example = "1", required = true, hidden = true)
+    private Integer uid;
     @NotNull(message = "公司名称不能为空")
     @Length(max = 1000, message = "公司名称过长")
     @ApiModelProperty(notes = "公司名称", example = "吹牛公司", required = true)

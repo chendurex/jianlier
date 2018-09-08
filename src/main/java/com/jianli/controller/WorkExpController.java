@@ -32,13 +32,15 @@ public class WorkExpController {
 
     @ApiOperation(value = "新增个人工作经历", response = ResResult.class)
     @PostMapping(value = "submit", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult submitWorkExp(@RequestBody @Validated WorkExpInsertParam param) {
+    public ResResult submitWorkExp(@RequestBody @Validated WorkExpInsertParam param, @RequestHeader(value = "uid")Integer uid) {
+        param.setUid(uid);
         return workExpService.submitWorkExp(param);
     }
 
     @ApiOperation(value = "修改个人工作经历", response = ResResult.class)
     @PostMapping(value = "modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult modifyWorkExp(@RequestBody @Validated WorkExpUpdateParam param) {
+    public ResResult modifyWorkExp(@RequestBody @Validated WorkExpUpdateParam param, @RequestHeader("uid") Integer uid) {
+        param.setUid(uid);
         return workExpService.modifyWorkExp(param);
     }
 

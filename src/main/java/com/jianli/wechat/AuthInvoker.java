@@ -28,6 +28,11 @@ public interface AuthInvoker {
     UserParam getAccessToken(String code, String state);
 
     /**
+     * 刷新accessToken并且更新用户数据
+     * @return
+     */
+    UserParam refreshAccessToken(String refreshToken);
+    /**
      * 获取用户信息
      * @param accessToken
      * @param openid

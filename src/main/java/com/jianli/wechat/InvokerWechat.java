@@ -63,6 +63,10 @@ public class InvokerWechat implements AuthInvoker {
             throw new WechatException("请求已经过期，请重新登录");
         }
         String url = Constant.assembleAccessTokenUrl(appId, secret, code);
+        return getAccessToken(url);
+    }
+
+    private UserParam getAccessToken(String url) {
         ClientResponse response = null;
         try {
             WebResource webResource = Client.create().resource(url);
@@ -86,6 +90,12 @@ public class InvokerWechat implements AuthInvoker {
             }
         }
         throw new WechatException("登录微信失败，请重新登录");
+    }
+
+    @Override
+    public UserParam refreshAccessToken(String refreshToken) {
+        String url = Constant.assembleRefreshTokenUrl(appId, refreshToken);
+        return getAccessToken(url);
     }
 
     @Override

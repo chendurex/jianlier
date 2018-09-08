@@ -21,6 +21,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomWorkExpSubParam {
+    @ApiModelProperty(notes = "用户ID", example = "1", required = true, hidden = true)
+    private Integer uid;
     @NotNull(message = "自定义工作经历名称不能为空")
     @Length(max = 1000, message = "自定义项目名称过长")
     @ApiModelProperty(notes = "自定义工作经历名称", example = "在公司吹牛经历", required = true)

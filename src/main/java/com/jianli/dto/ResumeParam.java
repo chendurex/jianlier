@@ -19,7 +19,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResumeParam {
-
+    @ApiModelProperty(notes = "用户ID", example = "1", required = true, hidden = true)
+    private Integer uid;
     //@Pattern(regexp = "^1([34578])\\d{9}$",message = "手机号码格式错误")
     @NotNull(message = "手机号码不能为空")
     @ApiModelProperty(notes = "手机号码", example = "13838381438", required = true)

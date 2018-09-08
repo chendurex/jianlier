@@ -1,6 +1,5 @@
 package com.jianli.service.impl;
 
-import com.jianli.advice.GlobalVariable;
 import com.jianli.domain.SkillMaturity;
 import com.jianli.dto.SkillMaturityInsertParam;
 import com.jianli.dto.SkillMaturityUpdateParam;
@@ -28,7 +27,7 @@ public class SkillMaturityServiceImpl implements SkillMaturityService {
     @Override
     public ResResult submitSkillMaturity(SkillMaturityInsertParam param) {
         SkillMaturity skill = param.toSkillMaturity();
-        skill.submit(GlobalVariable.uid());
+        skill.submit(param.getUid());
         SkillMaturity saved = skilledRepo.save(skill);
         if (saved.getId() == null) {
             return ResUtils.fail("保存数据失败");
@@ -39,7 +38,7 @@ public class SkillMaturityServiceImpl implements SkillMaturityService {
     @Override
     public ResResult modifySkillMaturity(SkillMaturityUpdateParam param) {
         SkillMaturity skill = param.toSkillMaturity();
-        skill.modify(GlobalVariable.uid());
+        skill.modify(param.getUid());
         SkillMaturity modified = skilledRepo.save(skill);
 
         if (modified.getId() == null) {

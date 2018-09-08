@@ -31,13 +31,15 @@ public class SkillMaturityController {
 
     @ApiOperation(value = "新增个人技能熟练度", response = ResResult.class)
     @PostMapping(value = "submit", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult submitSkillMaturity(@RequestBody @Validated SkillMaturityInsertParam skill) {
+    public ResResult submitSkillMaturity(@RequestBody @Validated SkillMaturityInsertParam skill, @RequestHeader("uid") Integer uid) {
+        skill.setUid(uid);
         return skillMaturityService.submitSkillMaturity(skill);
     }
 
     @ApiOperation(value = "修改个人技能熟练度", response = ResResult.class)
     @PostMapping(value = "modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult modifySkillMaturity(@RequestBody @Validated SkillMaturityUpdateParam skill) {
+    public ResResult modifySkillMaturity(@RequestBody @Validated SkillMaturityUpdateParam skill, @RequestHeader("uid") Integer uid) {
+        skill.setUid(uid);
         return skillMaturityService.modifySkillMaturity(skill);
     }
 

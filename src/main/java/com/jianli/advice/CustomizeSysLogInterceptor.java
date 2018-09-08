@@ -14,7 +14,7 @@ import java.util.Map;
  * @author chen
  * date 2018/8/2 20:39
  */
-public class CustomSysLogInterceptor extends HandlerInterceptorAdapter {
+public class CustomizeSysLogInterceptor extends HandlerInterceptorAdapter {
     private static final int SLOW_TIME = 3000;
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
@@ -30,7 +30,6 @@ public class CustomSysLogInterceptor extends HandlerInterceptorAdapter {
         return true;
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public void afterCompletion(HttpServletRequest request,
                                 HttpServletResponse response, Object handler, Exception ex) {

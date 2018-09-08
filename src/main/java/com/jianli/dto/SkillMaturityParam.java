@@ -22,7 +22,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Builder
 public class SkillMaturityParam {
-
+    @ApiModelProperty(notes = "用户ID", example = "1", required = true, hidden = true)
+    private Integer uid;
     @NotNull(message = "技能名称不能为空")
     @Length(max = 1000, message = "技能名称太长")
     @ApiModelProperty(notes = "技能名称", example = "吹牛", required = true)

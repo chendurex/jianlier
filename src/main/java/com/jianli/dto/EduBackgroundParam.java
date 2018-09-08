@@ -21,6 +21,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EduBackgroundParam {
+    @ApiModelProperty(notes = "用户ID", example = "1", required = true, hidden = true)
+    private Integer uid;
     @NotNull(message = "学院名称不能为空")
     @Length(max = 1000, message = "学院名称过长")
     @ApiModelProperty(notes = "学院", example = "吹牛学院", required = true)

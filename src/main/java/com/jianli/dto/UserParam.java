@@ -30,6 +30,7 @@ public class UserParam {
     private String country;
     private String headImgUrl;
     private String unionId;
+    private Integer expiresTime;
     public User toUser() {
         return BeanUtils.copy(this, User.class);
     }

@@ -22,6 +22,9 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class CustomResumeDescParam {
 
+    @ApiModelProperty(notes = "用户ID", example = "1", required = true, hidden = true)
+    private Integer uid;
+
     @Min(value = 0, message = "排序值不能为空")
     @ApiModelProperty(notes = "排序值", example = "1", required = true)
     @NotNull(message = "排序值不能为空")

@@ -12,11 +12,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @date 2018/8/04 9:37
  */
 @Configuration
-public class CustomInterceptorConfiguration implements WebMvcConfigurer {
+public class CustomizeInterceptorConfiguration implements WebMvcConfigurer {
 
     @Bean
     public HandlerInterceptor customSysLogInterceptor() {
-        return new CustomSysLogInterceptor();
+        return new CustomizeSysLogInterceptor();
     }
 
     @Bean
@@ -27,7 +27,7 @@ public class CustomInterceptorConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(customSysLogInterceptor());
-        registry.addInterceptor(userValidatedInterceptor());
+        registry.addInterceptor(userValidatedInterceptor()).addPathPatterns("/resume/**");
     }
 
 }

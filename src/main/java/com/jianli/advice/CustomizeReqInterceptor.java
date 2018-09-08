@@ -17,7 +17,7 @@ import java.lang.reflect.Type;
  * @date 2018/08/2 20:39
  */
 @ControllerAdvice
-public class CustomReqInterceptor implements RequestBodyAdvice {
+public class CustomizeReqInterceptor implements RequestBodyAdvice {
 
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 

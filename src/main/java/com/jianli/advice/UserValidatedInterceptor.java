@@ -1,20 +1,12 @@
 package com.jianli.advice;
 
-import com.jianli.commons.BeanUtils;
+import com.jianli.commons.StringUtils;
 import com.jianli.exception.AuthenticException;
-import com.jianli.response.DataResult;
-import com.jianli.response.ResUtils;
 import com.jianli.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.MethodParameter;
-import org.springframework.http.MediaType;
-import org.springframework.http.server.ServerHttpRequest;
-import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,52 +18,27 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Slf4j
 @ControllerAdvice
-public class UserValidatedInterceptor extends HandlerInterceptorAdapter implements ResponseBodyAdvice {
-    @Autowired
-    private UserService userService;
-    @Value("${spring.user.backup}")
-    private String backup;
-    private static final String BACKUP = "backup";
+public class UserValidatedInterceptor extends HandlerInterceptorAdapter {
     private static final String UID = "uid";
     private static final String TICKET = "ticket";
     private static final String OPTIONS = "OPTIONS";
-
+    @Autowired
+    private UserService userService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        if (OPTIONS.equals(request.getMethod()) || !request.getRequestURI().startsWith("/resume")) {
+        if (OPTIONS.equals(request.getMethod())) {
             return true;
         }
-        GlobalVariable.set(request.getHeader(UID), request.getHeader(TICKET), request.getHeader(BACKUP));
-        log.info("Request Start And uid: {}, ticket:{}", GlobalVariable.uid(), GlobalVariable.ticket());
-        if (isBackup()) {
-            return true;
+        String uid = request.getHeader(UID);
+        String ticket = request.getHeader(TICKET);
+        log.info("Request Start And uid: {}, ticket:{}", uid, ticket);
+        if (StringUtils.isEmpty(uid) || StringUtils.isEmpty(ticket)) {
+            throw new AuthenticException("您的凭证已过期，请重新登录");
         }
-        boolean suc = userService.isOwner(GlobalVariable.uid(), GlobalVariable.ticket());
+        boolean suc = userService.isOwner(StringUtils.toInt(request.getHeader(UID)), request.getHeader(TICKET));
         if (suc) {
             return true;
         }
-        throw new AuthenticException("请传入用户ID和凭证");
-    }
-
-    @Override
-    public boolean supports(MethodParameter returnType, Class converterType) {
-        return true;
-    }
-
-
-    @Override
-    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType,
-                                  ServerHttpRequest request, ServerHttpResponse response) {
-        log.info("Response Body Params: {}", BeanUtils.deepPrint(body));
-        if (!isBackup() && (body instanceof DataResult)) {
-            if (((DataResult)body).getUid() != null && !((DataResult)body).getUid().equals(GlobalVariable.uid())) {
-                return ResUtils.fail("不允许操作非本人数据");
-            }
-        }
-        return body;
-    }
-
-    private boolean isBackup() {
-        return this.backup.equals(GlobalVariable.backup());
+        throw new AuthenticException("您的凭证已过期，请重新登录");
     }
 }

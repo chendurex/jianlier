@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Optional;
 
 /**
@@ -36,9 +38,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResResult getInfoByOpenid(String openid) {
         User origin = userRepo.get(openid);
+        if (origin == null) {
+            return ResUtils.fail("您的凭证已过期，请重新登录");
+        }
+        if (!isOwner(origin.getId(), origin.getAccessToken())) {
+            UserParam info = authInvoker.refreshAccessToken(origin.getRefreshToken());
+            userRepo.refreshToken(info.getAccessToken(), (int)(System.currentTimeMillis()/1000) + info.getExpiresIn(), origin.getId());
+            origin.setAccessToken(info.getAccessToken());
+        }
         UserVO vo = BeanUtils.copy(origin, UserVO.class);
         vo.setResumeId(resumeService.getResumeIdByUid(origin.getId()));
-        // todo 验证下，如果超过一定的时间则重新获取用户信息
         return ResUtils.data(vo);
     }
 
@@ -53,6 +62,7 @@ public class UserServiceImpl implements UserService {
                 .province(info.getProvince()).city(info.getCity()).sex(info.getSex()).unionId(info.getUnionId())
                 .accessToken(param.getAccessToken()).expiresIn(param.getExpiresIn())
                 .openid(param.getOpenid()).refreshToken(param.getRefreshToken()).scope(param.getScope())
+                .expiresTime((int)(System.currentTimeMillis()/1000) + param.getExpiresIn())
                 .build();
 
         User origin = userRepo.get(user.getOpenid());
@@ -65,13 +75,15 @@ public class UserServiceImpl implements UserService {
             user.setId(origin.getId());
             real = userRepo.save(user);
         }
-
         return real;
     }
 
     @Override
-    public boolean isOwner(int id, String openid) {
+    public boolean isOwner(int id, String ticket) {
         Optional<User> user = userRepo.findById(id);
-        return user.filter(u -> openid.equals(u.getOpenid())).isPresent();
+        return user
+                .filter(u -> ticket.equals(u.getAccessToken()))
+                .filter(u ->u.getExpiresTime() < (System.currentTimeMillis()/1000))
+                .isPresent();
     }
 }

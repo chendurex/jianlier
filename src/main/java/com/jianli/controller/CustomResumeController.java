@@ -31,13 +31,15 @@ public class CustomResumeController {
 
     @ApiOperation(value = "新增自定义简历描述", response = ResResult.class)
     @PostMapping(value = "/desc/submit", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult submitResumeDesc(@RequestBody @Validated CustomResumeDescInsertParam param) {
+    public ResResult submitResumeDesc(@RequestBody @Validated CustomResumeDescInsertParam param, @RequestHeader("uid") Integer uid) {
+        param.setUid(uid);
         return customResumeService.submitCustomResumeDesc(param);
     }
 
     @ApiOperation(value = "修改自定义简历描述", response = ResResult.class)
     @PostMapping(value = "/desc/modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult modifyResumeDesc(@RequestBody @Validated CustomResumeDescUpdateParam param) {
+    public ResResult modifyResumeDec(@RequestBody @Validated CustomResumeDescUpdateParam param, @RequestHeader("uid") Integer uid) {
+        param.setUid(uid);
         return customResumeService.modifyCustomResumeDesc(param);
     }
 
@@ -50,13 +52,15 @@ public class CustomResumeController {
 
     @ApiOperation(value = "新增工作经历", response = ResResult.class)
     @PostMapping(value = "/workExp/submit", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult submitCustomWorkExp(@RequestBody @Validated CustomWorkExpInsertParam param) {
+    public ResResult submitCustomWorkExp(@RequestBody @Validated CustomWorkExpInsertParam param, @RequestHeader("uid") Integer uid) {
+        param.setUid(uid);
         return customResumeService.submitCustomWorkExp(param);
     }
 
     @ApiOperation(value = "修改工作经历", response = ResResult.class)
     @PostMapping(value = "/workExp/modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult modifyCustomWorkExp(@RequestBody @Validated CustomWorkExpUpdateParam param) {
+    public ResResult modifyCustomWorkExp(@RequestBody @Validated CustomWorkExpUpdateParam param, @RequestHeader("uid") Integer uid) {
+        param.setUid(uid);
         return customResumeService.modifyCustomWorkExp(param);
     }
 
@@ -69,13 +73,15 @@ public class CustomResumeController {
 
     @ApiOperation(value = "新增工作经历列表", response = ResResult.class)
     @PostMapping(value = "/workExp/sub/submit", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult submitCustomWorkExpSub(@RequestBody @Validated CustomWorkExpSubInsertParam param) {
+    public ResResult submitCustomWorkExpSub(@RequestBody @Validated CustomWorkExpSubInsertParam param, @RequestHeader("uid") Integer uid) {
+        param.setUid(uid);
         return customResumeService.submitCustomWorkExpSub(param);
     }
 
     @ApiOperation(value = "修改工作经历列表", response = ResResult.class)
     @PostMapping(value = "/workExp/sub/modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult modifyCustomWorkExpSub(@RequestBody @Validated CustomWorkExpSubUpdateParam param) {
+    public ResResult modifyCustomWorkExpSub(@RequestBody @Validated CustomWorkExpSubUpdateParam param, @RequestHeader("uid") Integer uid) {
+        param.setUid(uid);
         return customResumeService.modifyCustomWorkExpSub(param);
     }
 

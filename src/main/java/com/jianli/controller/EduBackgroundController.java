@@ -31,13 +31,15 @@ public class EduBackgroundController {
 
     @ApiOperation(value = "新增个人教育背景", response = ResResult.class)
     @PostMapping(value = "submit", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult submitEduBackground(@RequestBody @Validated EduBackgroundInsertParam param) {
+    public ResResult submitEduBackground(@RequestBody @Validated EduBackgroundInsertParam param, @RequestHeader("uid") Integer uid) {
+        param.setUid(uid);
         return eduBackgroundService.submitEduBackground(param);
     }
 
     @ApiOperation(value = "修改个人教育背景", response = ResResult.class)
     @PostMapping(value = "modify", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResResult modifyEduBackground(@RequestBody @Validated EduBackgroundUpdateParam param) {
+    public ResResult modifyEduBackground(@RequestBody @Validated EduBackgroundUpdateParam param, @RequestHeader("uid") Integer uid) {
+        param.setUid(uid);
         return eduBackgroundService.modifyEduBackground(param);
     }
 

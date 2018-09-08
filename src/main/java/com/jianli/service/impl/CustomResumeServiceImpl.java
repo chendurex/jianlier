@@ -1,6 +1,5 @@
 package com.jianli.service.impl;
 
-import com.jianli.advice.GlobalVariable;
 import com.jianli.domain.CustomResumeDesc;
 import com.jianli.domain.CustomWorkExp;
 import com.jianli.domain.CustomWorkExpSub;
@@ -32,7 +31,7 @@ public class CustomResumeServiceImpl implements CustomResumeService {
     @Override
     public ResResult submitCustomResumeDesc(CustomResumeDescInsertParam param) {
         CustomResumeDesc customResumeDesc = param.toCustomResumeDesc();
-        customResumeDesc.submit(GlobalVariable.uid());
+        customResumeDesc.submit(param.getUid());
         CustomResumeDesc saved = customResumeDescRepo.save(customResumeDesc);
         if (saved.getId() == null) {
             return ResUtils.fail("保存数据失败");
@@ -43,7 +42,7 @@ public class CustomResumeServiceImpl implements CustomResumeService {
     @Override
     public ResResult modifyCustomResumeDesc(CustomResumeDescUpdateParam param) {
         CustomResumeDesc customResumeDesc = param.toCustomResumeDesc();
-        customResumeDesc.modify(GlobalVariable.uid());
+        customResumeDesc.modify(param.getUid());
         CustomResumeDesc modified = customResumeDescRepo.save(customResumeDesc);
         if (modified.getId() == null) {
             return ResUtils.fail("保存数据失败");
@@ -60,7 +59,7 @@ public class CustomResumeServiceImpl implements CustomResumeService {
     @Override
     public ResResult submitCustomWorkExpSub(CustomWorkExpSubInsertParam param) {
         CustomWorkExpSub customWorkExpSub = param.toCustomWorkExpSub();
-        customWorkExpSub.submit(GlobalVariable.uid());
+        customWorkExpSub.submit(param.getUid());
         CustomWorkExpSub saved = customWorkSubRepo.save(customWorkExpSub);
         if (saved.getId() == null) {
             return ResUtils.fail("保存数据失败");
@@ -71,7 +70,7 @@ public class CustomResumeServiceImpl implements CustomResumeService {
     @Override
     public ResResult modifyCustomWorkExpSub(CustomWorkExpSubUpdateParam param) {
         CustomWorkExpSub customWorkExpSub = param.toCustomWorkExpSub();
-        customWorkExpSub.modify(GlobalVariable.uid());
+        customWorkExpSub.modify(param.getUid());
         CustomWorkExpSub modified = customWorkSubRepo.save(customWorkExpSub);
         if (modified.getId() == null) {
             return ResUtils.fail("保存数据失败");
@@ -88,7 +87,7 @@ public class CustomResumeServiceImpl implements CustomResumeService {
     @Override
     public ResResult submitCustomWorkExp(CustomWorkExpInsertParam param) {
         CustomWorkExp customWorkExp = param.toCustomWorkExp();
-        customWorkExp.submit(GlobalVariable.uid());
+        customWorkExp.submit(param.getUid());
         CustomWorkExp saved = customWorkRepo.save(customWorkExp);
         if (saved.getId() == null) {
             return ResUtils.fail("保存数据失败");
@@ -99,7 +98,7 @@ public class CustomResumeServiceImpl implements CustomResumeService {
     @Override
     public ResResult modifyCustomWorkExp(CustomWorkExpUpdateParam param) {
         CustomWorkExp customWorkExp = param.toCustomWorkExp();
-        customWorkExp.modify(GlobalVariable.uid());
+        customWorkExp.modify(param.getUid());
         CustomWorkExp modified = customWorkRepo.save(customWorkExp);
         if (modified.getId() == null) {
             return ResUtils.fail("保存数据失败");
