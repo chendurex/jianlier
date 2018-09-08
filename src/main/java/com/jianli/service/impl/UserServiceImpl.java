@@ -14,8 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.Optional;
 
 /**
@@ -37,7 +35,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public ResResult getInfoByTicket(String ticket) {
-        User origin = userRepo.get(ticket);
+        User origin = userRepo.getByAccessToken(ticket);
         if (origin == null) {
             return ResUtils.fail("您的凭证已过期，请重新登录");
         }
@@ -65,7 +63,7 @@ public class UserServiceImpl implements UserService {
                 .expiresTime((int)(System.currentTimeMillis()/1000) + param.getExpiresIn())
                 .build();
 
-        User origin = userRepo.get(user.getAccessToken());
+        User origin = userRepo.getByOpenid(user.getOpenid());
         User real;
         if (origin == null) {
             user.submit();

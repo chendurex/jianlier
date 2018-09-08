@@ -41,7 +41,7 @@ public class TransactionConfiguration {
         defaultTransactionAttr.setProperty("select*", "PROPAGATION_NOT_SUPPORTED, readOnly");
         defaultTransactionAttr.setProperty("query*", "PROPAGATION_NOT_SUPPORTED, readOnly");
         defaultTransactionAttr.setProperty("find*", "PROPAGATION_NOT_SUPPORTED, readOnly");
-        defaultTransactionAttr.setProperty("get*", "PROPAGATION_NOT_SUPPORTED, readOnly");
+        defaultTransactionAttr.setProperty("getByAccessToken*", "PROPAGATION_NOT_SUPPORTED, readOnly");
         defaultTransactionAttr.setProperty("list*", "PROPAGATION_NOT_SUPPORTED, readOnly");
         defaultTransactionAttr.setProperty("submit*", "PROPAGATION_REQUIRED, -Exception");
         defaultTransactionAttr.setProperty("modify*", "PROPAGATION_REQUIRED, -Exception");
