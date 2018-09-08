@@ -74,7 +74,7 @@ public class WechatController {
             log.error("用户数据回调失败");
             return ;
         }
-        String url = mainUrl + "?ticket=" + user.getAccessToken();
+        String url = mainUrl + "?type=1&ticket=" + user.getAccessToken();
         try {
             response.sendRedirect(url);
         } catch (IOException e) {
