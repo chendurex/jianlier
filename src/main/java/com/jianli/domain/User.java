@@ -41,7 +41,6 @@ public class User {
     @Column(updatable = false)
     private Timestamp createTime;
     private Timestamp modifyTime;
-    @Column(updatable = false)
     private Integer expiresTime;
     public void submit() {
         this.createTime = Timestamp.from(Instant.now());
