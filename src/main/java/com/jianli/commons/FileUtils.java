@@ -1,11 +1,9 @@
 package com.jianli.commons;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileExistsException;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.*;
 
 /**
  * @author chendurex
@@ -23,6 +21,14 @@ public class FileUtils {
         File file = new File(path);
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
+        }
+    }
+
+    public static byte[] fileToByte(String path) {
+        try {
+            return org.apache.commons.io.FileUtils.readFileToByteArray(new File(path));
+        } catch (IOException e) {
+            throw new RuntimeException("文件不存在",e);
         }
     }
 

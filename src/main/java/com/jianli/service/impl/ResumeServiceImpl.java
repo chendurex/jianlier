@@ -63,10 +63,15 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public ResResult uploadHtml(String txt, int resumeId, int uid) {
+        return ResUtils.data(downloadPdf(txt, resumeId, uid));
+    }
+
+    @Override
+    public String downloadPdf(String txt,int resumeId, int uid) {
         String htmlPath = UniqueSerials.assembleHtmlPath(htmlFilepath, uid, resumeId, String.valueOf(txt.hashCode()));
         String pdfPath = UniqueSerials.assemblePdfPath(pdfFilepath, uid, resumeId);
         html2Pdf.writeTO(txt, htmlPath, pdfPath);
-        return ResUtils.data(pdfPath.replace(baseFilepath, ""));
+        return pdfPath.replace(baseFilepath, "");
     }
 
     @Override

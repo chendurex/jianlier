@@ -1,9 +1,11 @@
 package com.jianli.controller;
 
+import com.jianli.commons.FileUtils;
 import com.jianli.commons.UniqueSerials;
 import com.jianli.dto.ResumeInnerSortDTO;
 import com.jianli.dto.ResumeUserUpdateParam;
 import com.jianli.dto.UploadResumeDTO;
+import com.jianli.exception.PdfException;
 import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
 import com.jianli.service.ResumeService;
@@ -18,7 +20,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -73,6 +77,31 @@ public class ResumeController {
     public ResResult uploadHtml(@RequestBody @Validated UploadResumeDTO uploadResumeDTO, @RequestHeader("uid") Integer uid) {
         return resumeService.uploadHtml(uploadResumeDTO.getHtml(),
                 uploadResumeDTO.getResumeId(), uid);
+    }
+
+    @ApiOperation(value = "下载PDF文档", response = ResResult.class)
+    @GetMapping(value = "/downloadPdf")
+    public void downloadPdf(@RequestBody @Validated UploadResumeDTO uploadResumeDTO, @RequestHeader("uid") Integer uid, HttpServletResponse response) {
+        String pdf = resumeService.downloadPdf(uploadResumeDTO.getHtml(), uploadResumeDTO.getResumeId(), uid);
+        setResponseHeader(response, pdf);
+        try {
+            OutputStream os = response.getOutputStream();
+            os.write(FileUtils.fileToByte(pdf));
+            os.flush();
+        } catch (IOException e) {
+            throw new PdfException("下载文件失败，pdf："+pdf, e);
+        }
+    }
+
+    private void setResponseHeader(HttpServletResponse response, String fileName) {
+        try {
+            response.reset();// 清空输出流
+            response.setContentType("application/octet-stream;charset=UTF-8");
+            response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+            response.addHeader("Cache-Control", "no-cache");
+        } catch (Exception ex) {
+            log.error("", ex);
+        }
     }
 
     @ApiOperation(value = "发送HTML文档给用户", response = ResResult.class)

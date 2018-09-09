@@ -27,6 +27,14 @@ public interface ResumeService {
     ResResult uploadHtml(String txt, int resumeId, int uid);
 
     /**
+     * 下载PDF
+     * @param resumeId
+     * @param uid
+     * @return
+     */
+    String downloadPdf(String txt, int resumeId, int uid);
+
+    /**
      * 发送pdf文件给用户
      * @param resumeId
      */
