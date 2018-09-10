@@ -83,7 +83,7 @@ public class ResumeController {
     @GetMapping(value = "/downloadPdf")
     public void downloadPdf(@RequestBody @Validated UploadResumeDTO uploadResumeDTO, @RequestHeader("uid") Integer uid, HttpServletResponse response) {
         String pdf = resumeService.downloadPdf(uploadResumeDTO.getHtml(), uploadResumeDTO.getResumeId(), uid);
-        setResponseHeader(response, pdf);
+        setResponseHeader(response, pdf.substring(pdf.lastIndexOf("/")+1));
         try {
             OutputStream os = response.getOutputStream();
             os.write(FileUtils.fileToByte(pdf));
