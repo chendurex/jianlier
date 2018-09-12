@@ -6,17 +6,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.builders.ResponseMessageBuilder;
+import springfox.documentation.builders.*;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Parameter;
 import springfox.documentation.service.ResponseMessage;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,6 +29,10 @@ import java.util.List;
 public class SwaggerConfiguration {
     @Value("${spring.swagger.host}")
     private String host;
+    @Value("${spring.swagger.default.uid}")
+    private String uid;
+    @Value("${spring.swagger.default.ticket}")
+    private String ticket;
     @Bean
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -38,6 +42,7 @@ public class SwaggerConfiguration {
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .build()
                 .host(host)
+                .globalOperationParameters(customizeHeader())
                 .globalResponseMessage(RequestMethod.GET, defaultResponseMessage())
                 .globalResponseMessage(RequestMethod.HEAD, defaultResponseMessage())
                 .globalResponseMessage(RequestMethod.OPTIONS, defaultResponseMessage())
@@ -45,8 +50,8 @@ public class SwaggerConfiguration {
                 .globalResponseMessage(RequestMethod.PUT, defaultResponseMessage())
                 .globalResponseMessage(RequestMethod.DELETE, defaultResponseMessage())
                 .globalResponseMessage(RequestMethod.POST, defaultResponseMessage());
-
     }
+
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder().title("项目文档描述").build();
@@ -58,5 +63,24 @@ public class SwaggerConfiguration {
                 , new ResponseMessageBuilder().code(403).message("没有权限访问当前地址").build()
                 , new ResponseMessageBuilder().code(404).message("请求路径不对，找不到资源").build()
                 , new ResponseMessageBuilder().code(500).message("服务器内部出错").build());
+    }
+
+
+    private List<Parameter> customizeHeader() {
+        Parameter uidParameter = new ParameterBuilder()
+                .name("uid")
+                .modelRef(new ModelRef("int"))
+                .parameterType("header")
+                .defaultValue(uid)
+                .required(true)
+                .build();
+        Parameter ticketParameter = new ParameterBuilder()
+                .name("ticket")
+                .modelRef(new ModelRef("String"))
+                .parameterType("header")
+                .defaultValue(ticket)
+                .required(true)
+                .build();
+        return Arrays.asList(uidParameter, ticketParameter);
     }
 }
