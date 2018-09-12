@@ -80,7 +80,7 @@ public class ResumeController {
     }
 
     @ApiOperation(value = "下载PDF文档", response = ResResult.class)
-    @GetMapping(value = "/downloadPdf")
+    @PostMapping(value = "/downloadPdf")
     public void downloadPdf(@RequestBody @Validated UploadResumeDTO uploadResumeDTO, @RequestHeader("uid") Integer uid, HttpServletResponse response) {
         String pdf = resumeService.downloadPdf(uploadResumeDTO.getHtml(), uploadResumeDTO.getResumeId(), uid);
         setResponseHeader(response, pdf.substring(pdf.lastIndexOf("/")+1));
