@@ -86,7 +86,7 @@ public class ResumeController {
         setResponseHeader(response, pdf.substring(pdf.lastIndexOf("/")+1));
         try {
             OutputStream os = response.getOutputStream();
-            os.write(FileUtils.fileToByte(pdf));
+            os.write(FileUtils.fileToByte(baseFilepath+pdf));
             os.flush();
         } catch (IOException e) {
             throw new PdfException("下载文件失败，pdf："+pdf, e);
