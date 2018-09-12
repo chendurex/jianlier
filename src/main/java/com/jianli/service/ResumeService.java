@@ -32,7 +32,7 @@ public interface ResumeService {
      * @param uid
      * @return
      */
-    String downloadPdf(String txt, int resumeId, int uid);
+    String downloadPdf(int resumeId, int uid);
 
     /**
      * 发送pdf文件给用户

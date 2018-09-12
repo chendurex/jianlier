@@ -50,8 +50,8 @@ public class ResumeController {
 
     @ApiOperation(value = "上传简历头像", response = ResResult.class)
     @PostMapping(value = "/uploadHeadImg")
-    public ResResult uploadImage(@RequestParam("file") MultipartFile file, @RequestParam("uid") Integer userId, @RequestParam("resumeId")Integer resumeId) {
-        if (StringUtils.isEmpty(userId)) {
+    public ResResult uploadImage(@RequestParam("file") MultipartFile file, @RequestHeader("uid") Integer uid, @RequestParam("resumeId")Integer resumeId) {
+        if (StringUtils.isEmpty(uid)) {
             return ResUtils.fail("请先登录账号再上传");
         }
         if (file.isEmpty()) {
@@ -60,7 +60,7 @@ public class ResumeController {
         try {
             final String originName = file.getOriginalFilename();
             final String suffix = originName.substring(originName.lastIndexOf(".", originName.length()));
-            String uploadPath = imageFilepath + UniqueSerials.uniqueSerials(String.valueOf(userId)) + suffix;
+            String uploadPath = imageFilepath + UniqueSerials.uniqueSerials(String.valueOf(uid)) + suffix;
             Path path = Paths.get(uploadPath);
             Files.write(path, file.getBytes());
             String realPath = uploadPath.replace(baseFilepath, "");
@@ -75,18 +75,17 @@ public class ResumeController {
     @ApiOperation(value = "上传简历HTML文档", response = ResResult.class)
     @PostMapping(value = "/uploadHTML")
     public ResResult uploadHtml(@RequestBody @Validated UploadResumeDTO uploadResumeDTO, @RequestHeader("uid") Integer uid) {
-        return resumeService.uploadHtml(uploadResumeDTO.getHtml(),
-                uploadResumeDTO.getResumeId(), uid);
+        return resumeService.uploadHtml(uploadResumeDTO.getHtml(), uploadResumeDTO.getResumeId(), uid);
     }
 
     @ApiOperation(value = "下载PDF文档", response = ResResult.class)
-    @PostMapping(value = "/downloadPdf")
-    public void downloadPdf(@RequestBody @Validated UploadResumeDTO uploadResumeDTO, @RequestHeader("uid") Integer uid, HttpServletResponse response) {
-        String pdf = resumeService.downloadPdf(uploadResumeDTO.getHtml(), uploadResumeDTO.getResumeId(), uid);
+    @GetMapping(value = "/downloadPdf")
+    public void downloadPdf(@RequestParam(value = "resumeId")Integer resumeId, @RequestHeader("uid") Integer uid, HttpServletResponse response) {
+        String pdf = resumeService.downloadPdf(resumeId, uid);
         setResponseHeader(response, pdf.substring(pdf.lastIndexOf("/")+1));
         try {
             OutputStream os = response.getOutputStream();
-            os.write(FileUtils.fileToByte(baseFilepath+pdf));
+            os.write(FileUtils.fileToByte(pdf));
             os.flush();
         } catch (IOException e) {
             throw new PdfException("下载文件失败，pdf："+pdf, e);

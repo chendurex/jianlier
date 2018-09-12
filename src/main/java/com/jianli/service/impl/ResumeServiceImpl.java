@@ -9,6 +9,7 @@ import com.jianli.domain.CustomResumeDesc;
 import com.jianli.domain.CustomWorkExp;
 import com.jianli.domain.Resume;
 import com.jianli.dto.*;
+import com.jianli.exception.PdfException;
 import com.jianli.repo.*;
 import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
@@ -63,15 +64,19 @@ public class ResumeServiceImpl implements ResumeService {
 
     @Override
     public ResResult uploadHtml(String txt, int resumeId, int uid) {
-        return ResUtils.data(downloadPdf(txt, resumeId, uid));
-    }
-
-    @Override
-    public String downloadPdf(String txt,int resumeId, int uid) {
         String htmlPath = UniqueSerials.assembleHtmlPath(htmlFilepath, uid, resumeId, String.valueOf(txt.hashCode()));
         String pdfPath = UniqueSerials.assemblePdfPath(pdfFilepath, uid, resumeId);
         html2Pdf.writeTO(txt, htmlPath, pdfPath);
-        return pdfPath.replace(baseFilepath, "");
+        return ResUtils.data(pdfPath.replace(baseFilepath, ""));
+    }
+
+    @Override
+    public String downloadPdf(int resumeId, int uid) {
+        String path = UniqueSerials.assemblePdfPath(pdfFilepath, uid, resumeId);
+        if (FileUtils.exist(path)) {
+            throw new PdfException("请先生成PDF文件再下载");
+        }
+        return path;
     }
 
     @Override

@@ -5,6 +5,9 @@ package com.jianli.exception;
  * @date 2018-09-01 13:35
  */
 public class PdfException extends RuntimeException {
+    public PdfException(String message) {
+        super(message);
+    }
     public PdfException(String message, Throwable cause) {
         super(message, cause);
     }
