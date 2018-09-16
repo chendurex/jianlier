@@ -7,4 +7,5 @@ package com.jianli.response;
 public interface ResStat {
     int SUC = 1;
     int FAIL = -1;
+    int AUTHENTIC_FAIL = -2;
 }

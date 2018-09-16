@@ -33,12 +33,12 @@ public class UserValidatedInterceptor extends HandlerInterceptorAdapter {
         String ticket = request.getHeader(TICKET);
         log.info("Request Start And uid: {}, ticket:{}", uid, ticket);
         if (StringUtils.isEmpty(uid) || StringUtils.isEmpty(ticket)) {
-            throw new AuthenticException("您的凭证已过期，请重新登录");
+            throw new AuthenticException();
         }
         boolean suc = userService.isOwner(StringUtils.toInt(request.getHeader(UID)), request.getHeader(TICKET));
         if (suc) {
             return true;
         }
-        throw new AuthenticException("您的凭证已过期，请重新登录");
+        throw new AuthenticException();
     }
 }

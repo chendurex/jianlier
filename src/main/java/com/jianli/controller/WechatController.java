@@ -2,6 +2,7 @@ package com.jianli.controller;
 
 import com.jianli.commons.StringUtils;
 import com.jianli.domain.User;
+import com.jianli.dto.UserParam;
 import com.jianli.response.ResResult;
 import com.jianli.response.ResUtils;
 import com.jianli.service.UserService;
@@ -59,8 +60,15 @@ public class WechatController {
     @ApiOperation(value = "根据openid获取用户信息", response = ResResult.class)
     @GetMapping(value = "/getInfo")
     public ResResult genInfo(@RequestParam(value = "ticket")
-                           @ApiParam(name = "ticket", value = "ticket", example = "of0EF1tJkDVdHOTTlp4xI9iun9bE")String ticket) {
+                           @ApiParam(name = "ticket", value = "ticket", example = "of0EF1tJkDVdHOTp4xI9iun9bE")String ticket) {
         return userService.getInfoByTicket(ticket);
+    }
+
+    @ApiOperation(value = "刷新ticket", response = ResResult.class)
+    @GetMapping(value = "/refresh/ticket")
+    public ResResult refreshTicket(@RequestParam(value = "ticket")
+                                   @ApiParam(name = "ticket", value = "ticket", example = "of0EF1tJkDVdHOTp4xI9iun9bE")String ticket) {
+        return userService.refreshTicket(ticket);
     }
 
     @ApiOperation(value = "微信登录后的回调", hidden = true)

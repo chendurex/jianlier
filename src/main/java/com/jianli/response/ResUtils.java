@@ -23,6 +23,10 @@ public final class ResUtils {
         return result(ResStat.FAIL, desc);
     }
 
+    public static ResResult fail(int code, String desc) {
+        return result(code, desc);
+    }
+
     private static ResResult result(int code, String desc) {
         return new ResResult(code, desc);
     }

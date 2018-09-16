@@ -32,21 +32,37 @@ public class UserServiceImpl implements UserService {
         this.resumeService = resumeService;
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ResResult getInfoByTicket(String ticket) {
         User origin = userRepo.getByAccessToken(ticket);
         if (origin == null) {
             return ResUtils.fail("您的凭证已过期，请重新登录");
         }
+        // todo 不需要主动刷新，让客户端调其它接口被动刷新
         if (!isOwner(origin.getId(), origin.getAccessToken())) {
             UserParam info = authInvoker.refreshAccessToken(origin.getRefreshToken());
             userRepo.refreshToken(info.getAccessToken(), (int)(System.currentTimeMillis()/1000) + info.getExpiresIn(), origin.getId());
             origin.setAccessToken(info.getAccessToken());
         }
+        /*if (isOwner(origin.getId(), origin.getAccessToken())) {
+            throw new AuthenticException();
+        }*/
         UserVO vo = BeanUtils.copy(origin, UserVO.class);
         vo.setResumeId(resumeService.getResumeIdByUid(origin.getId()));
         return ResUtils.data(vo);
+    }
+
+    @Override
+    public ResResult refreshTicket(String ticket) {
+        User origin = userRepo.getByAccessToken(ticket);
+        if (origin == null) {
+            return ResUtils.fail("您的凭证已过期，请重新登录");
+        }
+        //todo 判断下，如果没有过期，不用调微信接口刷新，直接返回原值
+        UserParam info = authInvoker.refreshAccessToken(origin.getRefreshToken());
+        userRepo.refreshToken(info.getAccessToken(), (int)(System.currentTimeMillis()/1000) + info.getExpiresIn(), origin.getId());
+        return ResUtils.data(info.getAccessToken());
     }
 
     @Override

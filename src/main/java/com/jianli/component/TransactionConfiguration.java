@@ -41,12 +41,11 @@ public class TransactionConfiguration {
         defaultTransactionAttr.setProperty("select*", "PROPAGATION_NOT_SUPPORTED, readOnly");
         defaultTransactionAttr.setProperty("query*", "PROPAGATION_NOT_SUPPORTED, readOnly");
         defaultTransactionAttr.setProperty("find*", "PROPAGATION_NOT_SUPPORTED, readOnly");
-        defaultTransactionAttr.setProperty("getByAccessToken*", "PROPAGATION_NOT_SUPPORTED, readOnly");
         defaultTransactionAttr.setProperty("list*", "PROPAGATION_NOT_SUPPORTED, readOnly");
         defaultTransactionAttr.setProperty("submit*", "PROPAGATION_REQUIRED, -Exception");
         defaultTransactionAttr.setProperty("modify*", "PROPAGATION_REQUIRED, -Exception");
         defaultTransactionAttr.setProperty("remove*", "PROPAGATION_REQUIRED, -Exception");
-        defaultTransactionAttr.setProperty("*", "PROPAGATION_NOT_SUPPORTED, readOnly");
+        defaultTransactionAttr.setProperty("*", "PROPAGATION_REQUIRED, -Exception");
         NameMatchTransactionAttributeSource tas = new NameMatchTransactionAttributeSource();
         tas.setProperties(defaultTransactionAttr);
         return new TransactionInterceptor(dataSourceTransactionManager,

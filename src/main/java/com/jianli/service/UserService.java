@@ -15,11 +15,18 @@ public interface UserService {
     User submit(String code, String state);
 
     /**
-     * 用户通过openid获取用户信息
-     * @param openid
+     * 用户通过ticket获取用户信息
+     * @param ticket
      * @return
      */
-    ResResult getInfoByTicket(String openid);
+    ResResult getInfoByTicket(String ticket);
+
+    /**
+     * 刷新ticket
+     * @param ticket
+     * @return
+     */
+    ResResult refreshTicket(String ticket);
 
     /**
      * 返回当前id是否属于当前用户id

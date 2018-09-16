@@ -1,8 +1,8 @@
 package com.jianli.exception;
 
 import com.jianli.response.ResResult;
+import com.jianli.response.ResStat;
 import com.jianli.response.ResUtils;
-import com.sun.mail.smtp.SMTPAddressFailedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -18,13 +18,12 @@ import org.springframework.web.bind.UnsatisfiedServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.method.annotation.RequestParamMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor;
-import org.springframework.web.method.annotation.RequestParamMethodArgumentResolver;
 
-import javax.mail.SendFailedException;
 import java.util.stream.Collectors;
 
 /**
@@ -176,10 +175,16 @@ public class GlobalExceptionHandler {
         return ResUtils.fail("邮箱格式有误，请检查邮箱是否填写正确");
     }
 
+    @ExceptionHandler(value = AuthenticException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResResult handle() {
+        return ResUtils.fail(ResStat.AUTHENTIC_FAIL, "凭证验证失败，请重新登录");
+    }
+
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResResult handle(AuthenticException exception) {
-        log.warn("验证失败,", exception);
+    public ResResult handle(WechatException exception) {
         return ResUtils.fail(exception.getMessage());
     }
 
