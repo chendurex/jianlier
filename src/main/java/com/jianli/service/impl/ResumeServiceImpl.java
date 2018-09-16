@@ -73,7 +73,7 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public String downloadPdf(int resumeId, int uid) {
         String path = UniqueSerials.assemblePdfPath(pdfFilepath, uid, resumeId);
-        if (FileUtils.exist(path)) {
+        if (!FileUtils.exist(path)) {
             throw new PdfException("请先生成PDF文件再下载");
         }
         return path;
