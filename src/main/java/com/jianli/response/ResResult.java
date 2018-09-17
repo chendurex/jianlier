@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 public class ResResult {
-    @ApiModelProperty(value = "返回状态(1成功，-1失败)", required = true)
+    @ApiModelProperty(value = "返回状态(1成功，-1失败,-2凭证失效,-3用户未登录过，直接跳登录界面)", required = true)
     private final int status;
     @ApiModelProperty(value = "返回说明，如果失败，则会有说明信息", required = true)
     private final String desc;
