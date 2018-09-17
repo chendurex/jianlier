@@ -8,4 +8,5 @@ public interface ResStat {
     int SUC = 1;
     int FAIL = -1;
     int AUTHENTIC_FAIL = -2;
+    int TICKET_NOT_EXISTS = -3;
 }

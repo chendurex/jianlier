@@ -76,7 +76,6 @@ public class WechatController {
     public void callback(HttpServletResponse response,
                               @RequestParam(value = "code") String code,
                               @RequestParam(value = "state") String state) {
-
         User user = userService.submit(code, state);
         if (user == null) {
             log.error("用户数据回调失败");
@@ -88,6 +87,5 @@ public class WechatController {
         } catch (IOException e) {
             log.error("回调给前段页面失败", e);
         }
-
     }
 }
