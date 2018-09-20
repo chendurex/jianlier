@@ -25,7 +25,6 @@ public class UserValidatedInterceptor extends HandlerInterceptorAdapter {
     private static final String UID = "uid";
     private static final String TICKET = "ticket";
     private static final String OPTIONS = "OPTIONS";
-    private static final Collection<String> SKIP = Collections.singletonList("downloadPdf");
     @Autowired
     private UserService userService;
     @Override
@@ -33,14 +32,9 @@ public class UserValidatedInterceptor extends HandlerInterceptorAdapter {
         if (OPTIONS.equals(request.getMethod())) {
             return true;
         }
-        for (String s : SKIP) {
-            if (getRealPath(request).contains(s)) {
-                return true;
-            }
-        }
 
-        String uid = request.getHeader(UID);
-        String ticket = request.getHeader(TICKET);
+        String uid = StringUtils.backup(request.getHeader(UID),request.getParameter(UID));
+        String ticket = StringUtils.backup(request.getHeader(TICKET), request.getParameter(TICKET));
         log.info("Request Start And uid: {}, ticket:{}", uid, ticket);
         if (StringUtils.isEmpty(uid) || StringUtils.isEmpty(ticket)) {
             throw new AuthenticException();
@@ -50,10 +44,5 @@ public class UserValidatedInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
         throw new AuthenticException();
-    }
-
-    private String getRealPath(HttpServletRequest request) {
-        String path = request.getServletPath();
-        return (path == null || path.trim().length() == 0) ? request.getRequestURI() : path;
     }
 }
