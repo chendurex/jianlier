@@ -33,6 +33,7 @@ public class Html2PdfImpl implements Html2Pdf {
             Pdfcrowd.HtmlToPdfClient client = new Pdfcrowd.HtmlToPdfClient(username, apiKey);
             client.convertStringToFile(text, dest);
         } catch(Exception e) {
+            FileUtils.removeFile(origin);
             throw new PdfException("生成PDF失败", e);
         }
     }

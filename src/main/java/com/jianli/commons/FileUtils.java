@@ -24,6 +24,13 @@ public class FileUtils {
         }
     }
 
+    public static void removeFile(String path) {
+        File file = new File(path);
+        if (file.exists()) {
+            file.delete();
+        }
+    }
+
     public static byte[] fileToByte(String path) {
         try {
             return org.apache.commons.io.FileUtils.readFileToByteArray(new File(path));
