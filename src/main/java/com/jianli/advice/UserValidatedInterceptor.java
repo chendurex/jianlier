@@ -10,6 +10,9 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * 验证当前操作是否属于当前登录用户，如果不是则直接提示错误
@@ -22,6 +25,7 @@ public class UserValidatedInterceptor extends HandlerInterceptorAdapter {
     private static final String UID = "uid";
     private static final String TICKET = "ticket";
     private static final String OPTIONS = "OPTIONS";
+    private static final Collection<String> SKIP = Collections.singletonList("downloadPdf");
     @Autowired
     private UserService userService;
     @Override
@@ -29,6 +33,12 @@ public class UserValidatedInterceptor extends HandlerInterceptorAdapter {
         if (OPTIONS.equals(request.getMethod())) {
             return true;
         }
+        for (String s : SKIP) {
+            if (getRealPath(request).contains(s)) {
+                return true;
+            }
+        }
+
         String uid = request.getHeader(UID);
         String ticket = request.getHeader(TICKET);
         log.info("Request Start And uid: {}, ticket:{}", uid, ticket);
@@ -40,5 +50,10 @@ public class UserValidatedInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
         throw new AuthenticException();
+    }
+
+    private String getRealPath(HttpServletRequest request) {
+        String path = request.getServletPath();
+        return (path == null || path.trim().length() == 0) ? request.getRequestURI() : path;
     }
 }
