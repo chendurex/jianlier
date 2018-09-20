@@ -21,7 +21,7 @@ import javax.validation.constraints.Min;
 @RequestMapping("/resume/custom")
 @Api(description = "自定义简历模块")
 @Slf4j
-//@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*")
 public class CustomResumeController {
     private final CustomResumeService customResumeService;
 
