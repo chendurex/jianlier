@@ -62,6 +62,7 @@ public class GlobalExceptionHandler {
      * 需要设置 {@link DispatcherServlet#setThrowExceptionIfNoHandlerFound(boolean)} true
      * 注意：boot默认开启了访问资源文件，在未找到对应的mapping映射时候会再次访问静态资源，如果再次找不到则会返回error错误，
      * 由{@link org.springframework.boot.web.servlet.error.ErrorController} 进行处理，所以要抛出此异常还得禁止静态资源访问
+     * @see PageNotFoundHandler
      * @param exception
      * @return
      */

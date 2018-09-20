@@ -36,7 +36,7 @@ import java.util.List;
 @RequestMapping("/resume")
 @Api(description = "个人简介操作")
 @Slf4j
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class ResumeController {
     private final ResumeService resumeService;
     public ResumeController(ResumeService resumeService) {

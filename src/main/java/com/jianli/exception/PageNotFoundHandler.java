@@ -31,6 +31,6 @@ public class PageNotFoundHandler extends AbstractErrorController {
     @RequestMapping
     public ResResult handler(HttpServletRequest request) {
         Map<String, Object> body = getErrorAttributes(request, true);
-        return ResUtils.fail(body.toString());
+        return ResUtils.fail("page not found at : " + body.get("path"));
     }
 }
