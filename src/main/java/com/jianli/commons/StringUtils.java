@@ -9,6 +9,10 @@ public class StringUtils {
         return org.springframework.util.StringUtils.isEmpty(o);
     }
 
+    public static String backup(String s1, String s2) {
+        return isEmpty(s1) ? s2 : s1;
+    }
+
     public static boolean isNotEmpty(Object o) {
         return !isEmpty(o);
     }

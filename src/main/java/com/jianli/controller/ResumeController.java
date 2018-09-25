@@ -36,7 +36,7 @@ import java.util.List;
 @RequestMapping("/resume")
 @Api(description = "个人简介操作")
 @Slf4j
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class ResumeController {
     private final ResumeService resumeService;
     public ResumeController(ResumeService resumeService) {
@@ -80,7 +80,7 @@ public class ResumeController {
 
     @ApiOperation(value = "下载PDF文档", response = ResResult.class)
     @GetMapping(value = "/downloadPdf")
-    public void downloadPdf(@RequestParam(value = "resumeId")Integer resumeId, @RequestHeader("uid") Integer uid, HttpServletResponse response) {
+    public void downloadPdf(@RequestParam(value = "resumeId")Integer resumeId, @RequestParam("uid") Integer uid, HttpServletResponse response) {
         String pdf = resumeService.downloadPdf(resumeId, uid);
         setResponseHeader(response, pdf.substring(pdf.lastIndexOf("/")+1));
         try {

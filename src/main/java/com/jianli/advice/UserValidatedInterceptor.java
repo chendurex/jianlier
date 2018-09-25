@@ -29,13 +29,14 @@ public class UserValidatedInterceptor extends HandlerInterceptorAdapter {
         if (OPTIONS.equals(request.getMethod())) {
             return true;
         }
-        String uid = request.getHeader(UID);
-        String ticket = request.getHeader(TICKET);
+
+        String uid = StringUtils.backup(request.getHeader(UID),request.getParameter(UID));
+        String ticket = StringUtils.backup(request.getHeader(TICKET), request.getParameter(TICKET));
         log.info("Request Start And uid: {}, ticket:{}", uid, ticket);
         if (StringUtils.isEmpty(uid) || StringUtils.isEmpty(ticket)) {
             throw new AuthenticException();
         }
-        boolean suc = userService.isOwner(StringUtils.toInt(request.getHeader(UID)), request.getHeader(TICKET));
+        boolean suc = userService.isOwner(StringUtils.toInt(uid), ticket);
         if (suc) {
             return true;
         }
