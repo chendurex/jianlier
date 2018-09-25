@@ -8,7 +8,7 @@ import org.springframework.context.annotation.PropertySource;
  * @author chendurex
  * @description 注入配置属性
  *     这里默认分为线上与开发两种配置，我通过{@link ConditionalOnProperty#havingValue()} 来匹配处理的
- *     启动项目的时候通过-Dcom.jianlier.boot.pro=true则表示生产，改为false则为开发
+ *     启动项目的时候通过-Dcom.jianli.boot.pro=true则表示生产，改为false则为开发
  *     注意，因为开发环境每次配置启动变量比较麻烦，所以我增加了一个matchIfMissing属性来控制默认匹配规则(matchIfMissing作为未匹配的备选方案，
  *     而不是与havingValue作为互斥条件，理解这点很重要，它是前置匹配失败后，然后再次判断这个key是否存在，如果true则表示key不存在则执行，否则不执行)
  *     而且，另外还增加了havingValue=false这个匹配条件，如果不加的话，havingValue默认值是""，而文档介绍""是可以匹配到除false意外的任何值，
@@ -20,13 +20,13 @@ import org.springframework.context.annotation.PropertySource;
 public class SpringResourcesInitializer {
 
     @Configuration
-    @ConditionalOnProperty(prefix = "com.jianlier.boot", name = "pro", havingValue = "true")
+    @ConditionalOnProperty(prefix = "com.jianli.boot", name = "pro", havingValue = "true")
     @PropertySource(value = "file:/usr/local/tools/config.properties", encoding="UTF-8")
     class ProductConfig {
     }
 
     @Configuration
-    @ConditionalOnProperty(prefix = "com.jianlier.boot", name = "pro", havingValue = "false", matchIfMissing = true)
+    @ConditionalOnProperty(prefix = "com.jianli.boot", name = "pro", havingValue = "false", matchIfMissing = true)
     @PropertySource(value = "file:/usr/local/src/tools/config.properties", encoding="UTF-8")
     class DevConfig {
     }
