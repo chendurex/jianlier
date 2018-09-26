@@ -4,6 +4,7 @@ import com.jianli.commons.BeanUtils;
 import com.jianli.domain.User;
 import com.jianli.dto.UserParam;
 import com.jianli.dto.UserVO;
+import com.jianli.exception.AuthenticException;
 import com.jianli.repo.UserRepo;
 import com.jianli.response.ResResult;
 import com.jianli.response.ResStat;
@@ -40,15 +41,9 @@ public class UserServiceImpl implements UserService {
         if (origin == null) {
             return ResUtils.fail(ResStat.TICKET_NOT_EXISTS, "您的凭证已过期，请重新登录");
         }
-        // todo 不需要主动刷新，让客户端调其它接口被动刷新
-        if (!isOwner(origin.getId(), origin.getAccessToken())) {
-            UserParam info = authInvoker.refreshAccessToken(origin.getRefreshToken());
-            userRepo.refreshToken(info.getAccessToken(), (int)(System.currentTimeMillis()/1000) + info.getExpiresIn(), origin.getId());
-            origin.setAccessToken(info.getAccessToken());
-        }
-        /*if (origin.getExpiresTime() < (System.currentTimeMillis()/1000)) {
+        if (origin.getExpiresTime() < (System.currentTimeMillis()/1000)) {
             throw new AuthenticException();
-        }*/
+        }
         UserVO vo = BeanUtils.copy(origin, UserVO.class);
         vo.setResumeId(resumeService.getResumeIdByUid(origin.getId()));
         return ResUtils.data(vo);
@@ -64,7 +59,8 @@ public class UserServiceImpl implements UserService {
             return ResUtils.data(ticket);
         }
         UserParam info = authInvoker.refreshAccessToken(origin.getRefreshToken());
-        userRepo.refreshToken(info.getAccessToken(), (int)(System.currentTimeMillis()/1000) + info.getExpiresIn(), origin.getId());
+        //userRepo.refreshToken(info.getAccessToken(), (int)(System.currentTimeMillis()/1000) + info.getExpiresIn(), origin.getId());
+        userRepo.refreshToken(info.getAccessToken(), (int)(System.currentTimeMillis()/1000) + 60, origin.getId());
         return ResUtils.data(info.getAccessToken());
     }
 
@@ -79,7 +75,8 @@ public class UserServiceImpl implements UserService {
                 .province(info.getProvince()).city(info.getCity()).sex(info.getSex()).unionId(info.getUnionId())
                 .accessToken(param.getAccessToken()).expiresIn(param.getExpiresIn())
                 .openid(param.getOpenid()).refreshToken(param.getRefreshToken()).scope(param.getScope())
-                .expiresTime((int)(System.currentTimeMillis()/1000) + param.getExpiresIn())
+                //.expiresTime((int)(System.currentTimeMillis()/1000) + param.getExpiresIn())
+                .expiresTime((int)(System.currentTimeMillis()/1000) + 60)
                 .build();
 
         User origin = userRepo.getByOpenid(user.getOpenid());
