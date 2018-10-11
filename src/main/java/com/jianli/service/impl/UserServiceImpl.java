@@ -74,8 +74,7 @@ public class UserServiceImpl implements UserService {
                 .province(info.getProvince()).city(info.getCity()).sex(info.getSex()).unionId(info.getUnionId())
                 .accessToken(param.getAccessToken()).expiresIn(param.getExpiresIn())
                 .openid(param.getOpenid()).refreshToken(param.getRefreshToken()).scope(param.getScope())
-                //.expiresTime((int)(System.currentTimeMillis()/1000) + param.getExpiresIn())
-                .expiresTime((int)(System.currentTimeMillis()/1000) + 60)
+                .expiresTime((int)(System.currentTimeMillis()/1000) + param.getExpiresIn())
                 .build();
 
         User origin = userRepo.getByOpenid(user.getOpenid());
