@@ -59,8 +59,7 @@ public class UserServiceImpl implements UserService {
             return ResUtils.data(ticket);
         }
         UserParam info = authInvoker.refreshAccessToken(origin.getRefreshToken());
-        //userRepo.refreshToken(info.getAccessToken(), (int)(System.currentTimeMillis()/1000) + info.getExpiresIn(), origin.getId());
-        userRepo.refreshToken(info.getAccessToken(), (int)(System.currentTimeMillis()/1000) + 60, origin.getId());
+        userRepo.refreshToken(info.getAccessToken(), (int)(System.currentTimeMillis()/1000) + info.getExpiresIn(), origin.getId());
         return ResUtils.data(info.getAccessToken());
     }
 
